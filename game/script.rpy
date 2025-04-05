@@ -5,7 +5,7 @@
 
 # 게임에서 사용할 캐릭터를 정의합니다.
 define e = Character('아이린', color="#c8ffc8")
-define e1 = Character("박민수")
+define e1 = Character("신승환")
 
 default password_0 = False
 default password_1 = False
