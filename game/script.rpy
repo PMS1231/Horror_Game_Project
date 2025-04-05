@@ -247,7 +247,7 @@ label hallway_loop:
 
         "뒤로 돌아간다":
             if current_bg == current_data["correct"]:
-                p "뒤로 돌아갔더니... 여전히 같은 복도다."
+                p "뒤로 돌아갔더니... 처음으로 돌아왔다. 다시 해보자."
                 $ progress = 1
                 jump hallway_loop
             else:
