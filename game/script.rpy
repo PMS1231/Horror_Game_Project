@@ -174,19 +174,19 @@
 # image 문을 사용해 이미지를 정의합니다.
 init:
     # 복도 1 이미지
-    image bg hallway1_base = "images/bg/hallway1_base.png"
-    image bg hallway1_diff1 = "images/bg/hallway1_diff1.png"
-    image bg hallway1_diff2 = "images/bg/hallway1_diff2.png"
+    image bg hallway1_base = "images/bg/hallway1_base.jpg"
+    image bg hallway1_diff1 = "images/bg/hallway1_diff1.jpg"
+    image bg hallway1_diff2 = "images/bg/hallway1_diff2.jpg"
 
     # 복도 2 이미지
-    image bg hallway2_base = "images/bg/hallway2_base.png"
-    image bg hallway2_diff1 = "images/bg/hallway2_diff1.png"
-    image bg hallway2_diff2 = "images/bg/hallway2_diff2.png"
+    image bg hallway2_base = "images/bg/hallway2_base.jpg"
+    image bg hallway2_diff1 = "images/bg/hallway2_diff1.jpg"
+    image bg hallway2_diff2 = "images/bg/hallway2_diff2.jpg"
 
     # 복도 3 이미지
-    image bg hallway3_base = "images/bg/hallway3_base.png"
-    image bg hallway3_diff1 = "images/bg/hallway3_diff1.png"
-    image bg hallway3_diff2 = "images/bg/hallway3_diff2.png"
+    image bg hallway3_base = "images/bg/hallway3_base.jpg"
+    image bg hallway3_diff1 = "images/bg/hallway3_diff1.jpg"
+    image bg hallway3_diff2 = "images/bg/hallway3_diff2.jpg"
 
     image bg next_room = "images/bg/next_room.png"
 
@@ -198,21 +198,21 @@ init python:
 
     hallway_data = {
         1: {
-            "correct": "hallway1_base.png",
-            "options": ["hallway1_base.png", "hallway1_diff1.png", "hallway1_diff2.png"]
+            "correct": "hallway1_base.jpg",
+            "options": ["hallway1_base.jpg", "hallway1_diff1.jpg", "hallway1_diff2.jpg"]
         },
         2: {
-            "correct": "hallway2_base.png",
-            "options": ["hallway2_base.png", "hallway2_diff1.png", "hallway2_diff2.png"]
+            "correct": "hallway2_base.jpg",
+            "options": ["hallway2_base.jpg", "hallway2_diff1.jpg", "hallway2_diff2.jpg"]
         },
         3: {
-            "correct": "hallway3_base.png",
-            "options": ["hallway3_base.png", "hallway3_diff1.png", "hallway3_diff2.png"]
+            "correct": "hallway3_base.jpg",
+            "options": ["hallway3_base.jpg", "hallway3_diff1.jpg", "hallway3_diff2.jpg"]
         }
     }
 
     progress = 1
-    current_bg = "hallway1_base.png"
+    current_bg = "hallway1_base.jpg"
 
 label start:
     scene black
