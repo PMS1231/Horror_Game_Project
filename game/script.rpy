@@ -77,6 +77,7 @@ init python:
     }
 
     progress = 1
+    clears = 0
     current_bg = "hallway1_base.jpg"
 
 # # 게임에서 사용할 캐릭터를 정의합니다.
@@ -355,7 +356,8 @@ label garret:
 label hallway:
     scene black
     with dissolve
-    m "이상하다. 계속 같은 곳을 돌고있는 기분이 들어."
+    scene hallway1_base
+    m "이 복도..."
     jump hallway_stage
 
 label hallway_stage:
@@ -369,7 +371,7 @@ label hallway_stage:
 label hallway_show_answer_1:
     scene bg hallway1_base
     with dissolve
-    m "이 복도... 뭔가 낯설지 않게 느껴져."
+    m "이상하다. 계속 같은 곳을 돌고있는 기분이 들어."
     pause 2
     m "으윽.. 머리가.."
     scene black with fade
@@ -468,6 +470,3 @@ label happy_ending:
 
 label bad_ending:
     "해피엔딩"
-
-
-
