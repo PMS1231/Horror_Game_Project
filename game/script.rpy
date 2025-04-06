@@ -331,43 +331,45 @@ label library:
             jump two_stair   
 
 label inner_room:
+    if safe_password:
+        if password_3:
+            "아무것도 없다."
+        else:
+            scene black with fade #안방 이미지
+            "당신은 방 구석에서 잠긴 금고를 발견했다"
+            "옆에는 수상한 종이가 함께 있다."
+            jump hidden_word
 
-    if password_3:
-        "아무것도 없다."
-    else:
-        scene black with fade #안방 이미지
-        "당신은 방 구석에서 잠긴 금고를 발견했다"
-        "옆에는 수상한 종이가 함께 있다."
-        jump hidden_word
+            label hidden_word:
+            show hidden_word with fade
 
-        label hidden_word:
-        show hidden_word with fade
+            m "아까 얻은 종이에 뭔가 단서가 있을 것 같아..."
+            m "단어를 찾아 입력해보자."
 
-        m "아까 얻은 종이에 뭔가 단서가 있을 것 같아..."
-        m "단어를 찾아 입력해보자."
+            $ correct_answer = "secret"
 
-        $ correct_answer = "secret"
+            label input_loop:
+                $ player_input = renpy.input("숨겨진 단어는 무엇일까?").strip().lower()
+                if player_input == correct_answer:
+                    "끼익... 금고가 열리는 소리가 들린다."
+                    "당신은 안방의 금고에서 네번째 일기장을 찾았다."
+                    $ password_3 = True
+                    jump diary4
+                else:
+                    m "그건 아닌 것 같아... 다시 생각해보자."
+                    jump input_ㄴloop
 
-        label input_loop:
-            $ player_input = renpy.input("숨겨진 단어는 무엇일까?").strip().lower()
-            if player_input == correct_answer:
-                "끼익... 금고가 열리는 소리가 들린다."
-                "당신은 안방의 금고에서 네번째 일기장을 찾았다."
-                $ password_3 = True
-                jump diary4
-            else:
-                m "그건 아닌 것 같아... 다시 생각해보자."
-                jump input_loop
-
-        label diary4:
-            nvl clear
-            n "일기내용 어쩌고 저쩌고.."
-            
-            menu:
-                "어디로 갈까?"
+            label diary4:
+                nvl clear
+                n "일기내용 어쩌고 저쩌고.."
                 
-                "나간다":
-                    jump two_stair
+                menu:
+                    "어디로 갈까?"
+                    
+                    "나간다":
+                        jump two_stair
+    else:
+        "금고가 있지만 열리지 않는다."
 
 label garret:
 
