@@ -306,8 +306,6 @@ label underground:
         $ safe_password = True
         "당신은 금고의 비밀번호를 찾았다."
     
-
-
     menu:
         "어디로 갈까?"
 
@@ -357,7 +355,7 @@ label inner_room:
                     jump diary4
                 else:
                     m "그건 아닌 것 같아... 다시 생각해보자."
-                    jump input_ㄴloop
+                    jump input_loop
 
             label diary4:
                 nvl clear
@@ -370,6 +368,7 @@ label inner_room:
                         jump two_stair
     else:
         "금고가 있지만 열리지 않는다."
+        jump two_stair
 
 label garret:
 
