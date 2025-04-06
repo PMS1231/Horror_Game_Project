@@ -171,7 +171,7 @@ label first_event:
     scene surprise_attack
 
     n "……!!"
-
+    play audio "칼소리.mp3"
     n "순간, 아르망은 비명을 지르며 칼을 휘두른다."
 
     scene black
@@ -179,7 +179,7 @@ label first_event:
     m "사라져라아아앗!! 벨포르의 이름으로!! 이 망령아아아!!"
 
     n "그 순간—"
-
+    play audio "여자비명.mp3"
     g "꺄아아아악!!!!!"
 
     n "처절하고 놀란, 분명 여자아이의 비명소리가 터져나온다."
