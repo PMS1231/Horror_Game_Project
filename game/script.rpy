@@ -229,7 +229,7 @@ label hallway_loop:
     scene expression "bg/" + current_bg
     with dissolve
 
-    p "이 복도... 무언가 이상하다."
+    p "이 복도... 무언가 수상하다."
 
     menu:
         "앞으로 나아간다":
