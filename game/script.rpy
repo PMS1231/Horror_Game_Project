@@ -1,4 +1,4 @@
-﻿# 이 파일에 게임 스크립트를 입력합니다.
+﻿#이 파일에 게임 스크립트를 입력합니다.
 
 define sounds = ['audio/Man_Typing_long.mp3', 'audio/Man_Typing_short.mp3']
 define sounds2 = ['audio/Woman_Typing_long.mp3', 'audio/Woman_Typing_short.mp3']
@@ -54,7 +54,10 @@ init:
     image bg next_room = "images/bg/next_room.png"
     image forest = "images/bg/forest.png"
     image surprise_attack = "images/event/scary.png"
-
+    
+    # 아델린 표정정
+    image adeline_surprise = "images/chr/adeline_surprise.png"
+    image black = "images/bg/black.jpg"
 init python:
     import random
 
@@ -76,8 +79,8 @@ init python:
     progress = 1
     current_bg = "hallway1_base.jpg"
 
-# 게임에서 사용할 캐릭터를 정의합니다.
-define m = Character('아르망', color="#c8ffc8", callback=type_sound)
+# # 게임에서 사용할 캐릭터를 정의합니다.
+define m = Character('아르망', color="#c8ffc8")#, callback=type_sound)
 define g = Character("아델린", callback=type_sound2)
 define h = Character("마주", callback=type_sound2)
 define n = Character("")
@@ -170,6 +173,8 @@ label first_event:
 
     n "순간, 아르망은 비명을 지르며 칼을 휘두른다."
 
+    scene black
+
     m "사라져라아아앗!! 벨포르의 이름으로!! 이 망령아아아!!"
 
     n "그 순간—"
@@ -179,6 +184,8 @@ label first_event:
     n "처절하고 놀란, 분명 여자아이의 비명소리가 터져나온다."
 
     n "아르망의 검이 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
+
+    show adeline_surprise at Transform(xalign=0.5, yalign=0.2) 
 
     n "그리고… 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
 
@@ -348,10 +355,52 @@ label garret:
 label hallway:
     scene black
     with dissolve
-    #play music "효과음" fadein 2.0
+    m "이상하다. 계속 같은 곳을 돌고있는 기분이 들어."
+    jump hallway_stage
 
-    m "여기는... 계속 같은 복도 같은데...?"
+label hallway_stage:
+    if progress == 1:
+        jump hallway_show_answer_1
+    elif progress == 2:
+        jump hallway_show_answer_2
+    elif progress == 3:
+        jump hallway_show_answer_3
+
+label hallway_show_answer_1:
+    scene bg hallway1_base
+    with dissolve
+    m "이 복도... 뭔가 낯설지 않게 느껴져."
+    pause 2
+    m "으윽.. 머리가.."
+    scene black with fade
+    pause 1
     jump hallway_loop
+label hallway_show_answer_2:
+    scene bg hallway2_base
+    with dissolve
+    m "두 번째 복도군... 눈에 익혀둬야겠어."
+    pause 2
+    m "크윽.. 또 머리가.."
+    scene black with fade
+    pause 1
+    m "또인가..? 젠장!"
+    jump hallway_loop
+label hallway_show_answer_3:
+    scene bg hallway3_base
+    with dissolve
+    m "이게 마지막 복도... 잘 기억해둬야 해."
+    pause 2
+    m "으윽.."
+    scene black with fade
+    pause 1
+    m "익숙해지기 힘든 감각이군.."
+    jump hallway_loop
+
+label hallway_entry:
+    if clears == 0:
+        jump hallway_stage
+    else:
+        jump hallway_loop
 
 label hallway_loop:
     $ current_data = hallway_data[progress]
@@ -360,37 +409,50 @@ label hallway_loop:
     scene expression "bg/" + current_bg
     with dissolve
 
-    m "이 복도... 무언가 너무너무 수상하다."
+    m "전이랑은 조금 다른 느낌이야. 그런데, 나만 그렇게 느끼는 건가...?"
 
     menu:
         "앞으로 나아간다":
             if current_bg == current_data["correct"]:
-                $ progress += 1
-                if progress > 3:
-                    jump next_room
+                $ clears += 1
+                if clears >= 2:
+                    $ progress += 1
+                    $ clears = 0
+                    if progress > 3:
+                        jump next_room
+                    else:
+                        m "앞으로 나아갔더니, 또 다른 복도가 나타났다..."
+                        jump hallway_entry
                 else:
-                    m "앞으로 나아갔더니, 또 다른 복도가 나타났다..."
+                    m "이 방향이 맞는 것 같다. 하지만 아직 무언가 부족해..."
                     jump hallway_loop
             else:
                 m "앞으로 나아갔지만... 돌아온 것 같다. 처음부터 다시 해보자."
                 $ progress = 1
-                jump hallway_loop
+                $ clears = 0
+                jump hallway_entry
 
         "뒤로 돌아간다":
             if current_bg == current_data["correct"]:
                 m "뒤로 돌아갔더니... 처음으로 돌아왔다. 다시 해보자."
                 $ progress = 1
-                jump hallway_loop
+                $ clears = 0
+                jump hallway_entry
             else:
-                $ progress += 1
-                if progress > 3:
-                    jump next_room
+                $ clears += 1
+                if clears >= 2:
+                    $ progress += 1
+                    $ clears = 0
+                    if progress > 3:
+                        jump next_room
+                    else:
+                        m "뒤로 돌아가자... 다른 복도가 나왔다."
+                        jump hallway_entry
                 else:
-                    m "뒤로 돌아가자... 다른 복도가 나왔다."
+                    m "다른 복도가 나왔군. 하지만 아직 뭔가 부족한 느낌이야."
                     jump hallway_loop
 
 label next_room:
-    #stop music fadeout 2.0
     scene bg next_room
     with fade
     m "여긴... 드디어 마지막 방인가...?"

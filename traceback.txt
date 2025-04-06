@@ -1,24 +1,28 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 90, in script
-    n "(마차 주인은 돌아갔다.)"
-Exception: Sayer 'n' is not defined.
+  File "renpy/common/00start.rpy", line 282, in script
+    python:
+ScriptError: could not find label 'start'.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 90, in script
-    n "(마차 주인은 돌아갔다.)"
-  File "C:\renpy-8.3.7-sdk\renpy\ast.py", line 2586, in execute
-    Say.execute(self)
-  File "C:\renpy-8.3.7-sdk\renpy\ast.py", line 583, in execute
-    who = eval_who(self.who, self.who_fast)
-  File "C:\renpy-8.3.7-sdk\renpy\ast.py", line 472, in eval_who
-    raise Exception("Sayer '%s' is not defined." % who)
-Exception: Sayer 'n' is not defined.
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\bootstrap.py", line 359, in bootstrap
+    renpy.main.main()
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\main.py", line 652, in main
+    run(restart)
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\main.py", line 148, in run
+    renpy.execution.run_context(True)
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\execution.py", line 958, in run_context
+    context.run()
+  File "renpy/common/00start.rpy", line 282, in script
+    python:
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\script.py", line 1103, in lookup
+    raise ScriptError("could not find label '%s'." % str(original))
+ScriptError: could not find label 'start'.
 
-Windows-10-10.0.26100 AMD64
+Windows-10-10.0.19045 AMD64
 Ren'Py 8.3.7.25031702
 Project_Horror 1.0
-Sun Apr  6 19:50:54 2025
+Sun Apr  6 22:13:26 2025
