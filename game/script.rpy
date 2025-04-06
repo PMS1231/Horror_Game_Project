@@ -1,5 +1,49 @@
 ﻿# 이 파일에 게임 스크립트를 입력합니다.
 
+define sounds = ['audio/Man_Typing_long.mp3', 'audio/Man_Typing_short.mp3']
+
+init python:
+    def type_sound(event, interact=True, **kwargs):
+        if not interact:
+            return
+
+        if event == "show": #if text's being written by character, spam typing sounds until the text ends
+            renpy.sound.play(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            #dumb way to do it but it works, dunno if it causes memory leaks but it's almost 6AM :v
+
+        elif event == "slow_done" or event == "end":
+            renpy.sound.stop()
+
 init:
     # 복도 1 이미지
     image bg hallway1_base = "images/bg/hallway1_base.jpg"
@@ -40,8 +84,9 @@ init python:
     current_bg = "hallway1_base.jpg"
 
 # 게임에서 사용할 캐릭터를 정의합니다.
-define m = Character('아르망', color="#c8ffc8")
+define m = Character('아르망', color="#c8ffc8", callback=type_sound)
 define g = Character("아델린")
+define h = Character("마주")
 
 default password_0 = False
 default password_1 = False
@@ -56,6 +101,39 @@ default garret_info = False
 
 label start:
 
+    play audio "마차끄는소리 도착.mp3"
+
+    m "사람들이 사라진다고 하는 저택, 이곳에 도대체 어떤 진실이 숨겨져 있는가…"
+   
+    m "허나 두려움에 진실을 외면하는 것은, 기사로서 가장 비겁한 일이겠지."
+
+    h "허허… 그게 언제적 얘기요?"
+
+    h "귀신이니 실종이니, 다 뻔한 헛소문 아닙니까."
+
+    h "세상 물정 모르는 이들이나 떠드는 이야기죠."
+
+    play music "main_theme.mp3"
+
+    m "벨포르 가의 이름으로 맹세하노니,"
+
+    m "내가 이 저택에 깃든 모든 어둠을 밝혀내리라!!"
+
+    h "벨포르라 했소? 그 가문도 한때 유명하긴 했지."
+
+    h "뭐, 요즘 세상에 기사도니 명예니 따지는 양반은 선생뿐일 겁니다. 하하."
+
+    "마차 주인은 돌아갔다."
+
+    "나무 문은 무겁게 닫혀 있고 녹슨 자물쇠로 굳게 잠겨 있다."
+
+    "옆 담장 아래에는 작고 허름한 구멍 하나가 있다."
+
+    "아르망은 문 앞에서 고민에 빠진다."
+   
+
+label prologue:
+
     m "당신은 문 앞에 섰다."
 
     menu:
@@ -65,7 +143,7 @@ label start:
             if door:
                 $ door = False
                 "문을 부수지 못했다."
-                jump start
+                jump prologue
             else:
                 "다시 한번 두드려 문을 부쉈다."
                 jump mainhall
