@@ -1,4 +1,4 @@
-﻿#이 파일에 게임 스크립트를 입력합니다.
+#이 파일에 게임 스크립트를 입력합니다.
 
 define sounds = ['audio/Man_Typing_long.mp3', 'audio/Man_Typing_short.mp3']
 define sounds2 = ['audio/Woman_Typing_long.mp3', 'audio/Woman_Typing_short.mp3']
@@ -51,6 +51,9 @@ init:
     image bg hallway3_diff1 = "images/bg/hallway3_diff1.jpg"
     image bg hallway3_diff2 = "images/bg/hallway3_diff2.jpg"
 
+    # 안방 이미지
+    image hidden_word = "hidden_word.jpg"
+
     image bg next_room = "images/bg/next_room.png"
     image forest = "images/bg/forest.png"
     image surprise_attack = "images/event/scary.png"
@@ -58,6 +61,7 @@ init:
     # 아델린 표정정
     image adeline_surprise = "images/chr/adeline_surprise.png"
     image black = "images/bg/black.jpg"
+    
 init python:
     import random
 
@@ -84,7 +88,7 @@ init python:
 define m = Character('아르망', color="#c8ffc8")#, callback=type_sound)
 define g = Character("아델린", callback=type_sound2)
 define h = Character("마주", callback=type_sound2)
-define n = Character("")
+define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 
 default password_0 = False
 default password_1 = False
@@ -152,13 +156,13 @@ label prologue:
 label first_event:
     m "오래된 저택이여, 나는 벨포르 가문의 이름으로… 너의 침묵 속에 감춰진 진실을 밝히러 왔노라!"
 
-    n "그 순간, "
+    "그 순간, "
     play audio "old door1.mp3"
 
-    n "갑자기 저 멀리 2층 복도 끝에서 끼익 하고 문이 열리는 소리가 들렸다."
+    "갑자기 저 멀리 2층 복도 끝에서 끼익 하고 문이 열리는 소리가 들렸다."
 
     play audio "걷는소리 구두.mp3"
-    n "또각… 또각… 구두 소리 같은 발걸음이 메아리친다."
+    "또각… 또각… 구두 소리 같은 발걸음이 메아리친다."
 
     play audio "아이 웃는소리 숏.mp3"
     m "…역시, 단순한 소문은 아니였나보군?"
@@ -170,29 +174,29 @@ label first_event:
     play audio "스크림1.mp3"
     scene surprise_attack
 
-    n "……!!"
+    "……!!"
     play audio "칼소리.mp3"
-    n "순간, 아르망은 비명을 지르며 칼을 휘두른다."
+    "순간, 아르망은 비명을 지르며 칼을 휘두른다."
 
     scene black
 
     m "사라져라아아앗!! 벨포르의 이름으로!! 이 망령아아아!!"
 
-    n "그 순간—"
+    "그 순간—"
     play audio "여자비명.mp3"
     g "꺄아아아악!!!!!"
 
-    n "처절하고 놀란, 분명 여자아이의 비명소리가 터져나온다."
+    "처절하고 놀란, 분명 여자아이의 비명소리가 터져나온다."
 
-    n "아르망의 검이 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
+    "아르망의 검이 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
 
     show adeline_surprise at Transform(xalign=0.5, yalign=0.2) 
 
-    n "그리고… 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
+    "그리고… 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
 
     m "…소녀…?"
 
-    n "깜짝 놀란 눈으로 그를 바라보다가, 잠시 정적이 흐른 뒤, 마치 스스로도 민망한 듯 눈을 깜빡인다."
+    "깜짝 놀란 눈으로 그를 바라보다가, 잠시 정적이 흐른 뒤, 마치 스스로도 민망한 듯 눈을 깜빡인다."
 
     g "…아, 맞다. 나… 이미 죽었지…"
 
@@ -328,18 +332,42 @@ label library:
 
 label inner_room:
 
-    if safe_password:
-        "당신은 안방의 금고에서 네번째 비밀번호를 찾았다."
-        $ password_3 = True
+    if password_3:
+        "아무것도 없다."
     else:
-        "금고가 있다."
-        "비밀번호가 걸려있다."
+        scene black with fade #안방 이미지
+        "당신은 방 구석에서 잠긴 금고를 발견했다"
+        "옆에는 수상한 종이가 함께 있다."
+        jump hidden_word
 
-    menu:
-        "어디로 갈까?"
+        label hidden_word:
+        show hidden_word with fade
 
-        "나간다":
-            jump two_stair
+        m "아까 얻은 종이에 뭔가 단서가 있을 것 같아..."
+        m "단어를 찾아 입력해보자."
+
+        $ correct_answer = "secret"
+
+        label input_loop:
+            $ player_input = renpy.input("숨겨진 단어는 무엇일까?").strip().lower()
+            if player_input == correct_answer:
+                "끼익... 금고가 열리는 소리가 들린다."
+                "당신은 안방의 금고에서 네번째 일기장을 찾았다."
+                $ password_3 = True
+                jump diary4
+            else:
+                m "그건 아닌 것 같아... 다시 생각해보자."
+                jump input_loop
+
+        label diary4:
+            nvl clear
+            n "일기내용 어쩌고 저쩌고.."
+            
+            menu:
+                "어디로 갈까?"
+                
+                "나간다":
+                    jump two_stair
 
 label garret:
 
