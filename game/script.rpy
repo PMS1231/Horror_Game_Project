@@ -175,7 +175,7 @@
 init:
     # 복도 1 이미지
     image bg hallway1_base = "images/bg/hallway1_base.jpg"
-    image bg hallway1_diff1 = "images/bg/hallway1_diff1.jpg"
+    image bg hallway1_diff1 = "images/bg/hallway1_diff1.png"
     image bg hallway1_diff2 = "images/bg/hallway1_diff2.jpg"
 
     # 복도 2 이미지
@@ -199,7 +199,7 @@ init python:
     hallway_data = {
         1: {
             "correct": "hallway1_base.jpg",
-            "options": ["hallway1_base.jpg", "hallway1_diff1.jpg", "hallway1_diff2.jpg"]
+            "options": ["hallway1_base.jpg", "hallway1_diff1.png", "hallway1_diff2.jpg"]
         },
         2: {
             "correct": "hallway2_base.jpg",
@@ -229,7 +229,7 @@ label hallway_loop:
     scene expression "bg/" + current_bg
     with dissolve
 
-    p "이 복도... 무언가 이상하다."
+    p "이 복도... 무언가 너무너무 수상하다."
 
     menu:
         "앞으로 나아간다":
