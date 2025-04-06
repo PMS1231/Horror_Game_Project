@@ -54,7 +54,10 @@ init:
     image bg next_room = "images/bg/next_room.png"
     image forest = "images/bg/forest.png"
     image surprise_attack = "images/event/scary.png"
-
+    
+    # 아델린 표정정
+    image adeline_surprise = "images/chr/adeline_surprise.png"
+    image black = "images/bg/black.jpg"
 init python:
     import random
 
@@ -170,6 +173,8 @@ label first_event:
 
     n "순간, 아르망은 비명을 지르며 칼을 휘두른다."
 
+    scene black
+
     m "사라져라아아앗!! 벨포르의 이름으로!! 이 망령아아아!!"
 
     n "그 순간—"
@@ -179,6 +184,8 @@ label first_event:
     n "처절하고 놀란, 분명 여자아이의 비명소리가 터져나온다."
 
     n "아르망의 검이 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
+
+    show adeline_surprise at Transform(xalign=0.5, yalign=0.2) 
 
     n "그리고… 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
 
