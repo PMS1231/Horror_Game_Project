@@ -1,24 +1,24 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 234, in script
-    p "여기는... 계속 같은 복도 같은데...?"
-Exception: Sayer 'p' is not defined.
+  File "game/script.rpy", line 90, in script
+    n "(마차 주인은 돌아갔다.)"
+Exception: Sayer 'n' is not defined.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 234, in script
-    p "여기는... 계속 같은 복도 같은데...?"
+  File "game/script.rpy", line 90, in script
+    n "(마차 주인은 돌아갔다.)"
   File "C:\renpy-8.3.7-sdk\renpy\ast.py", line 2586, in execute
     Say.execute(self)
   File "C:\renpy-8.3.7-sdk\renpy\ast.py", line 583, in execute
     who = eval_who(self.who, self.who_fast)
   File "C:\renpy-8.3.7-sdk\renpy\ast.py", line 472, in eval_who
     raise Exception("Sayer '%s' is not defined." % who)
-Exception: Sayer 'p' is not defined.
+Exception: Sayer 'n' is not defined.
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
 Project_Horror 1.0
-Sun Apr  6 18:57:19 2025
+Sun Apr  6 19:50:54 2025

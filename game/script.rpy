@@ -1,5 +1,40 @@
 ﻿# 이 파일에 게임 스크립트를 입력합니다.
 
+define sounds = ['audio/Man_Typing_long.mp3', 'audio/Man_Typing_short.mp3']
+define sounds2 = ['audio/Woman_Typing_long.mp3', 'audio/Woman_Typing_short.mp3']
+
+init python:
+    def type_sound(event, interact=True, **kwargs):
+        if not interact:
+            return
+
+        if event == "show": #if text's being written by character, spam typing sounds until the text ends
+            renpy.sound.play(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            #dumb way to do it but it works, dunno if it causes memory leaks but it's almost 6AM :v
+
+        elif event == "slow_done" or event == "end":
+            renpy.sound.stop()
+
+init python:
+    def type_sound2(event, interact=True, **kwargs):
+        if not interact:
+            return
+
+        if event == "show": #if text's being written by character, spam typing sounds until the text ends
+            renpy.sound.play(renpy.random.choice(sounds2))
+            renpy.sound.queue(renpy.random.choice(sounds2))
+            renpy.sound.queue(renpy.random.choice(sounds2))
+            renpy.sound.queue(renpy.random.choice(sounds2))
+            renpy.sound.queue(renpy.random.choice(sounds2))
+            #dumb way to do it but it works, dunno if it causes memory leaks but it's almost 6AM :v
+
+        elif event == "slow_done" or event == "end":
+            renpy.sound.stop()
+
 init:
     # 복도 1 이미지
     image bg hallway1_base = "images/bg/hallway1_base.jpg"
@@ -17,6 +52,8 @@ init:
     image bg hallway3_diff2 = "images/bg/hallway3_diff2.jpg"
 
     image bg next_room = "images/bg/next_room.png"
+    image forest = "images/bg/forest.png"
+    image surprise_attack = "images/event/scary.png"
 
 init python:
     import random
@@ -40,8 +77,10 @@ init python:
     current_bg = "hallway1_base.jpg"
 
 # 게임에서 사용할 캐릭터를 정의합니다.
-define m = Character('아르망', color="#c8ffc8")
-define g = Character("아델린")
+define m = Character('아르망', color="#c8ffc8", callback=type_sound)
+define g = Character("아델린", callback=type_sound2)
+define h = Character("마주", callback=type_sound2)
+define n = Character("")
 
 default password_0 = False
 default password_1 = False
@@ -55,23 +94,103 @@ default underground_lock = True
 default garret_info = False
 
 label start:
+    scene forest
 
-    m "당신은 문 앞에 섰다."
+    play audio "마차끄는소리 도착.mp3"
+
+    m "사람들이 사라진다고 하는 저택, 이곳에 도대체 어떤 진실이 숨겨져 있는가…"
+   
+    m "허나 두려움에 진실을 외면하는 것은, 기사로서 가장 비겁한 일이겠지."
+
+    h "허허… 그게 언제적 얘기요?"
+
+    h "귀신이니 실종이니, 다 뻔한 헛소문 아닙니까."
+
+    play music "main_theme.mp3"
+
+    m "벨포르 가의 이름으로 맹세하노니,"
+
+    m "내가 이 저택에 깃든 모든 어둠을 밝혀내리라!!"
+
+    h "벨포르라 했소? 그 가문도 한때 유명하긴 했지."
+
+    h "뭐, 요즘 세상에 기사도니 명예니 따지는 양반은 선생뿐일 겁니다. 하하."
+
+    "마차 주인은 돌아갔다."
+
+    "나무 문은 무겁게 닫혀 있고 녹슨 자물쇠로 굳게 잠겨 있다."
+
+    "옆 담장 아래에는 작고 허름한 구멍 하나가 있다."
+
+    "아르망은 문 앞에서 고민에 빠진다."
+   
+
+label prologue:
+
+    m "이를 어쩐다."
 
     menu:
         "골라라"
 
         "정문":
             if door:
+                play sound "검으로 벽을 두드리는 소리.mp3"
                 $ door = False
                 "문을 부수지 못했다."
-                jump start
+                jump prologue
             else:
                 "다시 한번 두드려 문을 부쉈다."
-                jump mainhall
+                jump first_event
 
         "개구멍":
-            jump mainhall
+            jump first_event
+
+label first_event:
+    m "오래된 저택이여, 나는 벨포르 가문의 이름으로… 너의 침묵 속에 감춰진 진실을 밝히러 왔노라!"
+
+    n "그 순간, "
+    play audio "old door1.mp3"
+
+    n "갑자기 저 멀리 2층 복도 끝에서 끼익 하고 문이 열리는 소리가 들렸다."
+
+    play audio "걷는소리 구두.mp3"
+    n "또각… 또각… 구두 소리 같은 발걸음이 메아리친다."
+
+    play audio "아이 웃는소리 숏.mp3"
+    m "…역시, 단순한 소문은 아니였나보군?"
+
+    m "2층 난간 위, 붉은 눈만이 어둠 속에서 번뜩인다."
+
+    m "누구냐! 지금 당장 모습을 드러내지 않으면!"
+
+    play audio "스크림1.mp3"
+    scene surprise_attack
+
+    n "……!!"
+
+    n "순간, 아르망은 비명을 지르며 칼을 휘두른다."
+
+    m "사라져라아아앗!! 벨포르의 이름으로!! 이 망령아아아!!"
+
+    n "그 순간—"
+
+    g "꺄아아아악!!!!!"
+
+    n "처절하고 놀란, 분명 여자아이의 비명소리가 터져나온다."
+
+    n "아르망의 검이 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
+
+    n "그리고… 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
+
+    m "…소녀…?"
+
+    n "깜짝 놀란 눈으로 그를 바라보다가, 잠시 정적이 흐른 뒤, 마치 스스로도 민망한 듯 눈을 깜빡인다."
+
+    g "…아, 맞다. 나… 이미 죽었지…"
+
+    g "후훗… 미안, 네가 그렇게까지 반응할 줄은 몰랐어. 오랜만에 만난 사람이라."
+
+    jump mainhall
 
 label mainhall:
     if password_0:
