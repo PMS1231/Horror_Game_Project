@@ -178,6 +178,7 @@ default underground_lock = True
 default garret_info = False
 
 label start:
+    stop music 
     play audio "마차소리.mp3"
     scene black 
     centered "{size=+40}{font=tway_sky.ttf}1 9 X X{/font}{/size}"
@@ -281,7 +282,7 @@ label prologue:
             jump first_event
 
 label first_event:
-    stop music
+    stop music 
 
     scene black
     m "오래된 저택이여, 나는 벨포르 가문의 이름으로…"
