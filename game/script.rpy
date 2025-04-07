@@ -139,6 +139,7 @@ init:
     image adeline_surprise = "images/chr/adeline_surprise.png"
     image 마주 = "images/chr/마차 주인.png"
     image 마주생각 = "images/chr/마차 주인 생각.png"
+
 # 게임에서 사용할 캐릭터를 정의합니다.
 define m = Character('아르망', color="#c8ffc8", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
 define g = Character("아델린", callback=type_sound2, what_font="tway_air.ttf")
@@ -492,8 +493,15 @@ label ghost_chase_success:
     m "헉... 헉... 힘들어......"
     #show image 열쇠
     "당신은 열쇠를 되찾았다."
+    $ dining_room_lock = False
+    m "이건.. 식당 열쇠인가?"
+    m "한번 확인해봐야겠군."
 
-    m "여긴 더 볼일이 없는 것 같다.."
+    menu:
+        "어디로 갈까?"
+        
+        "나간다":
+            jump mainhall
 
     if diary_0:
         "아무것도 없다."
@@ -511,9 +519,6 @@ label ghost_chase_success:
         n "아가씨는 자꾸 혼잣말을 하거나, 거울을 오래 바라본다."
         
         nvl clear
-
-        $ dining_room_lock = False
-        "당신은 드라이버를 찾았다."
 
     menu:
         "어디로 갈까?"
