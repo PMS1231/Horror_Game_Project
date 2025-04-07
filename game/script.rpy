@@ -67,7 +67,22 @@ init:
     image bg hallway3_diff1 = "images/bg/hallway3_diff1.jpg"
     image bg hallway3_diff2 = "images/bg/hallway3_diff2.jpg"
 
+<<<<<<< HEAD
+    # 안방 이미지
+    image hidden_word = "hidden_word.jpg"
+
+    image bg dream = "images/bg/dream.png"
+    image forest = "images/bg/forest.png"
+    image surprise_attack = "images/event/scary.png"
+    
+    # 아델린 표정
+    
+    # 배경 이미지
+    image black = "images/bg/black.jpg"
+    
+=======
 #특수복도 이미지 랜덤 생성 모듈    
+>>>>>>> a26c6bce6a70ac69f04d2180291cca91fdbf01cf
 init python:
     import random
 
@@ -102,6 +117,7 @@ define m = Character('아르망', color="#c8ffc8")#, callback=type_sound)
 define g = Character("아델린", callback=type_sound2)
 define h = Character("마주", callback=type_sound2)
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
+define l = Character('꼬마 유령', color="#b2cd68")
 
 default password_0 = False
 default password_1 = False
@@ -201,7 +217,7 @@ label first_event:
 
     "아르망의 검이 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
 
-    show adeline_surprise at Transform(xalign=0.5, yalign=0.2) 
+    show adeline surprise at Transform(xalign=0.5, yalign=0.2) 
 
     "그리고… 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
 
@@ -211,7 +227,36 @@ label first_event:
 
     g "…아, 맞다. 나… 이미 죽었지…"
 
+    show adeline embrassed at Transform(xalign=0.5, yalign=0.2) 
+    
     g "후훗… 미안, 네가 그렇게까지 반응할 줄은 몰랐어. 오랜만에 만난 사람이라."
+    
+    g "무슨일로 왔니?"
+
+    m "나는 벨포르 가문의 아르망 드 벨포르! 이 저택에서 귀신이 사람을 잡아간다는 이야기를 듣고 해결하러 왔다!"
+
+    m "너가 그 귀신인가?"
+
+    show adeline 호기심 at Transform(xalign=0.5, yalign=0.2) 
+
+    g "아니. 나의 이름은 아델린 드 로르망. 이 저택의 주인 로르망 백작의 첫째 딸이야."
+
+    g "그리고 너가 찾는 귀신은 아마도 저택 지하실 깊은 곳에 있는 악령일꺼야."
+
+    m "그런 정보를 왜 나에게 알려주지?"
+
+    show adeline sad at Transform(xalign=0.5, yalign=0.2) 
+
+    g "그 악령은 나를 괴롭히거든......"
+
+    g "그래서 너가 그 악령을 처리해주면 나는 좋은 일이니까."
+
+    m "그런가. 그럼 나는 악령을 처리하러 가겠다."
+
+    g "아. 이 집에는 많은 유령이 있어. 멀쩡한 유령은 아마 나뿐일꺼야. 조심해."
+
+    m "헛된 걱정이다!"
+
 
     jump mainhall
 
@@ -278,6 +323,35 @@ label two_stair:
                 jump mainhall
 
 label room:
+    m "흠, 책상 위에 상자가 있군."
+
+    play audio "걷는 소리2.mp3"
+
+    play audio "old door3.mp3"
+
+    m "음? 열쇠가 있군."
+
+    l "히히히, 내꺼야~" (가져간다)
+
+    m "이놈, 내놔라!"
+
+    l "나 잡으면 줄게!"
+
+    m "이 망할 유령!"
+
+    l "여기야, 여기~"
+
+    m "헉... 헉..."
+
+    l "여기야 여기! 빨리~"
+
+    m "헉... 헉..."
+
+    # gimmick "위의 대사 랜덤 반복 5회"
+
+    l "즐거웠어! 자, 여기 가져가~ 꺄르륵!"
+
+    m "헉... 헉... 힘들어......"
 
     if password_0:
         "아무것도 없다."
