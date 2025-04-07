@@ -1,6 +1,7 @@
 #이 파일에 게임 스크립트를 입력합니다.
 define sounds = ['audio/Man_Typing_long.mp3', 'audio/Man_Typing_short.mp3']
 define sounds2 = ['audio/Woman_Typing_long.mp3', 'audio/Woman_Typing_short.mp3']
+define sounds3 = ['audio/아이 웃는소리.mp3', 'audio/아이 웃는소리 숏.mp3']
 
 # 사운드 관련 코드
 init python:
@@ -33,6 +34,17 @@ init python:
 
         elif event == "slow_done" or event == "end":
             renpy.sound.stop()
+            
+    def type_sound3(event, interact=True, **kwargs):
+        if not interact:
+            return
+
+        if event == "show": #if text's being written by character, spam typing sounds until the text ends
+            renpy.sound.play(renpy.random.choice(sounds3))
+            renpy.sound.queue(renpy.random.choice(sounds3))
+            renpy.sound.queue(renpy.random.choice(sounds3))
+            renpy.sound.queue(renpy.random.choice(sounds3))
+            renpy.sound.queue(renpy.random.choice(sounds3))
 #좌/우 사운드 기믹
 init python:
     import random
@@ -145,7 +157,7 @@ define m = Character('아르망', color="#c8ffc8", font="tway_sky.ttf", what_fon
 define g = Character("아델린", callback=type_sound2, what_font="tway_air.ttf")
 define h = Character("마주", callback=type_sound2)
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
-define l = Character('꼬마 유령', color="#b2cd68")
+define l = Character('꼬마 유령', color="#b2cd68", callback=type_sound3)
 
 default p_bar = [0, 0]
 default diary_0 = False
@@ -189,9 +201,10 @@ label start:
     m "{size=+10}내가 이 저택에 깃든 모든 어둠을 밝혀내리라!!{/size}"
     
     show 마주생각 at Transform(xalign=0.5, yalign=0.2) 
-
     h "벨포르라 했소? 그 가문도 한때 유명하긴 했지."
     
+    hide 마주생각
+
     show 마주 at Transform(xalign=0.5, yalign=0.2) 
 
     h "뭐, 요즘 세상에 기사도니 명예니 따지는 양반은 선생뿐일 겁니다. 하하."
@@ -253,14 +266,16 @@ label first_event:
     play audio "걷는소리 구두.mp3"
     "또각… 또각… 구두 소리 같은 발걸음이 메아리친다."
 
-    play audio "아이 웃는소리 숏.mp3"
+    play music "여자 콧노래.mp3"
     m "…역시, 단순한 소문은 아니였나보군?"
 
     m "2층 난간 위, 붉은 눈만이 어둠 속에서 번뜩인다."
 
     m "누구냐! 지금 당장 모습을 드러내지 않으면!"
-
+    
+    stop music 
     play audio "스크림1.mp3"
+
     scene surprise_attack
 
     "……!!"
@@ -268,7 +283,7 @@ label first_event:
     "순간, 아르망은 비명을 지르며 칼을 휘두른다."
 
     scene black
-
+    play audio "칼 휘두름.mp3"
     m "사라져라아아앗!! 벨포르의 이름으로!! 이 망령아아아!!"
 
     "그 순간—"
@@ -334,7 +349,7 @@ label mainhall:
                     jump hallway
     menu:
         
-        "자, 그럼 이제 어디로 가볼까까?"
+        "자, 그럼 이제 어디로 가볼까?"
 
         "지하실":
             if underground_lock:
@@ -362,7 +377,7 @@ label mainhall:
                 jump dining_room
         "계단":
             play audio "걷는소리 구두.mp3"
-            scene black 
+            scene black with fade
             jump two_stair
 
 label two_stair:
@@ -382,7 +397,7 @@ label two_stair:
 
             "내려간다":
                 play audio "걷는소리 구두.mp3"
-                scene black 
+                scene black with fade
                 jump mainhall
     else:
         menu:
@@ -396,21 +411,30 @@ label two_stair:
 
             "내려간다":
                 play audio "걷는소리 구두.mp3"
-                scene black 
+                scene black with fade
                 jump mainhall
 
 label room:
+    stop music
     scene room
+    play audio "old door2.mp3"
+
     m "흠, 책상 위에 상자가 있군."
 
-    play audio "걷는 소리2.mp3"
+    play audio "뛰는소리 구두.mp3"
 
-    play audio "old door3.mp3"
     show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
     m "음? 열쇠가 있군."
+
+    play audio "뛰는소리 구두.mp3"
     
-    show 꼬마 유령 at Transform(xalign=0.5, yalign=0.2) 
     l "히히히, 내꺼야~" 
+
+    show 꼬마 유령 at Transform(xalign=1.2, yalign=0.2)
+    hide 열쇠 
+    show 꼬마 유령 at Transform(xalign=-1.2, yalign=0.2) with move
+
+    m "이놈, 내놔라!"
     m "뭐?! 당장 돌려줘!"
     jump ghost_chase_game
 
@@ -493,15 +517,8 @@ label ghost_chase_success:
     m "헉... 헉... 힘들어......"
     #show image 열쇠
     "당신은 열쇠를 되찾았다."
-    $ dining_room_lock = False
-    m "이건.. 식당 열쇠인가?"
-    m "한번 확인해봐야겠군."
 
-    menu:
-        "어디로 갈까?"
-        
-        "나간다":
-            jump mainhall
+    m "여긴 더 볼일이 없는 것 같다.."
 
     if diary_0:
         "아무것도 없다."
@@ -519,6 +536,9 @@ label ghost_chase_success:
         n "아가씨는 자꾸 혼잣말을 하거나, 거울을 오래 바라본다."
         
         nvl clear
+
+        $ dining_room_lock = False
+        "당신은 열쇠를 찾았다."
 
     menu:
         "어디로 갈까?"
