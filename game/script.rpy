@@ -45,7 +45,10 @@ init python:
             renpy.sound.queue(renpy.random.choice(sounds3))
             renpy.sound.queue(renpy.random.choice(sounds3))
             renpy.sound.queue(renpy.random.choice(sounds3))
-            
+init python:
+    renpy.music.register_channel("laugh1", "sfx", loop=False)
+    renpy.music.register_channel("laugh2", "sfx", loop=False)     
+
 #좌/우 사운드 기믹
 init python:
     import random
@@ -486,12 +489,15 @@ label ghost_chase_loop:
 
     if direction == "left":
         $ sound_file = random.choice(left_sounds)
-        play sound sound_file
-        $ renpy.music.set_pan(-1.0, 0.0, channel="sound")
+        stop laugh1
+        play laugh1 sound_file
+        $ renpy.music.set_pan(-1.0, 0.0, channel="laugh1")
+
     else:
         $ sound_file = random.choice(right_sounds)
-        play sound sound_file
-        $ renpy.music.set_pan(1.0, 0.0, channel="sound")
+        stop laugh2
+        play laugh2 sound_file
+        $ renpy.music.set_pan(1.0, 0.0, channel="laugh2")
 
     menu:
         "어디서 소리가 났을까?"
@@ -499,6 +505,8 @@ label ghost_chase_loop:
             $ choice = "left"
         "오른쪽":
             $ choice = "right"
+    stop laugh1
+    stop laugh2
 
     if choice == direction:
         $ ghost_lines = [
@@ -554,32 +562,6 @@ label ghost_chase_success:
     menu:
         "어디로 갈까?"
         
-        "나간다":
-            jump mainhall
-
-    if diary_0:
-        "아무것도 없다."
-    else:
-        $ diary_0 = True
-        "당신은 첫번째 일기를 찾았다."
-        show 일기 at Transform(xalign=0.5, yalign=0.2) 
-
-        n "유모의 일기장"
-
-        n "오늘 도련님이 태어났다."
-
-        n "백작 부부는 날이 갈수록 도련님에게만 신경을 쏟는다."
-
-        n "아가씨는 자꾸 혼잣말을 하거나, 거울을 오래 바라본다."
-        
-        nvl clear
-
-        $ dining_room_lock = False
-        "당신은 열쇠를 찾았다."
-
-    menu:
-        "어디로 갈까?"
-
         "나간다":
             jump mainhall
 
