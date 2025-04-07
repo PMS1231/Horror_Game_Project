@@ -1,30 +1,32 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 213, in script
-    show adeline embrassed at Transform(xalign=0.5, yalign=0.2)
-Exception: Image 'adeline' does not accept attributes 'embrassed'.
+  File "game/script.rpy", line 316, in script
+    l "히히히, 내꺼야~" (가져간다)
+  File "game/script.rpy", line 316, in <module>
+    l "히히히, 내꺼야~" (가져간다)
+NameError: name '가져간다' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 213, in script
-    show adeline embrassed at Transform(xalign=0.5, yalign=0.2)
-  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\ast.py", line 1124, in execute
-    show_imspec(self.imspec, atl=getattr(self, "atl", None))
-  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\ast.py", line 1087, in show_imspec
-    renpy.config.show(name,
-  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\exports\displayexports.py", line 477, in show
-    if not base.find_target() and renpy.config.missing_show:
-  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\display\image.py", line 421, in find_target
-    self.target = target._duplicate(a)
-  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\display\displayable.py", line 249, in _duplicate
-    args.extraneous()
-  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\display\displayable.py", line 109, in extraneous
-    raise Exception("Image '{}' does not accept attributes '{}'.".format(
-Exception: Image 'adeline' does not accept attributes 'embrassed'.
+  File "game/script.rpy", line 316, in script
+    l "히히히, 내꺼야~" (가져간다)
+  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\ast.py", line 2586, in execute
+    Say.execute(self)
+  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\ast.py", line 609, in execute
+    args, kwargs = self.arguments.evaluate()
+  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\parameter.py", line 503, in evaluate
+    value = renpy.python.py_eval(v, locals=scope)
+  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\python.py", line 1218, in py_eval
+    return py_eval_bytecode(code, globals, locals)
+  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\python.py", line 1211, in py_eval_bytecode
+    return eval(bytecode, globals, locals)
+  File "game/script.rpy", line 316, in <module>
+    l "히히히, 내꺼야~" (가져간다)
+NameError: name '가져간다' is not defined
 
 Windows-10-10.0.19045 AMD64
 Ren'Py 8.3.7.25031702
 Project_Horror 1.0
-Mon Apr  7 11:08:50 2025
+Mon Apr  7 12:34:22 2025
