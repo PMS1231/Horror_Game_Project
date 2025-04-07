@@ -1194,9 +1194,9 @@ label next_room:
     m "여긴... 대체...?"
     
     menu:
-        "해피엔딩":
+        "해피엔딩이다":
             jump happy_ending
-        "배드엔딩":
+        "배드엔딩이다":
             jump bad_ending
 
 label happy_ending:
