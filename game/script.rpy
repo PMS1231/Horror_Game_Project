@@ -54,14 +54,12 @@ init:
     # 안방 이미지
     image hidden_word = "hidden_word.jpg"
 
-    image bg next_room = "images/bg/next_room.png"
+    image bg dream = "images/bg/dream.png"
     image forest = "images/bg/forest.png"
     image surprise_attack = "images/event/scary.png"
     
     # 아델린 표정
-   
-    
-    # 배경 이미지
+    image adeline_surprise = "images/chr/adeline_surprise.png"
     image black = "images/bg/black.jpg"
     
 init python:
@@ -153,11 +151,9 @@ label prologue:
                 jump first_event
 
         "개구멍":
-            play sound "기어가다.mp3"
             jump first_event
 
 label first_event:
-    scene mainhall
     m "오래된 저택이여, 나는 벨포르 가문의 이름으로… 너의 침묵 속에 감춰진 진실을 밝히러 왔노라!"
 
     "그 순간, "
@@ -188,47 +184,23 @@ label first_event:
 
     "그 순간—"
     play audio "여자비명.mp3"
-    scene mainhall
-    show adeline superise at Transform(xalign=0.5, yalign=0.2) 
     g "꺄아아아악!!!!!"
 
     "처절하고 놀란, 분명 여자아이의 비명소리가 터져나온다."
 
     "아르망의 검이 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
 
-    
+    show adeline_surprise at Transform(xalign=0.5, yalign=0.2) 
 
     "그리고… 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
 
     m "…소녀…?"
 
     "깜짝 놀란 눈으로 그를 바라보다가, 잠시 정적이 흐른 뒤, 마치 스스로도 민망한 듯 눈을 깜빡인다."
-    show adeline embrassed at Transform(xalign=0.5, yalign=0.2) 
 
     g "…아, 맞다. 나… 이미 죽었지…"
-    show adeline idle at Transform(xalign=0.5, yalign=0.2)
+
     g "후훗… 미안, 네가 그렇게까지 반응할 줄은 몰랐어. 오랜만에 만난 사람이라."
-    g "무슨일로 왔니?"
-
-    m "나는 벨포르 가문의 아르망 드 벨포르! 이 저택에서 귀신이 사람을 잡아간다는 이야기를 듣고 해결하러 왔다!"
-
-    m "너가 그 귀신인가?"
-    show adeline 호기심 at Transform(xalign=0.5, yalign=0.2)
-    g "아니. 나의 이름은 아델린 드 로르망. 이 저택의 주인 로르망 백작의 첫째 딸이야."
-
-    g "그리고 너가 찾는 귀신은 아마도 저택 지하실 깊은 곳에 있는 악령일꺼야."
-
-    m "그런 정보를 왜 나에게 알려주지?"
-    show adeline sad at Transform(xalign=0.5, yalign=0.2)
-    g "그 악령은 나를 괴롭히거든......"
-
-    g "그래서 너가 그 악령을 처리해주면 나는 좋은 일이니까."
-
-    m "그런가. 그럼 나는 악령을 처리하러 가겠다."
-
-    g "아. 이 집에는 많은 유령이 있어. 멀쩡한 유령은 아마 나뿐일꺼야. 조심해."
-
-    m "헛된 걱정이다!"
 
     jump mainhall
 
@@ -250,14 +222,6 @@ label mainhall:
                     jump underground
                 else:
                     "아무것도 안보인다."
-
-                    "끼이익 학고 문이 열린다"
-
-                    "아르망이 들어 갈려고 하자 여성의 비명소리가 들리며 무언가가 다가온다"
-
-                    "어떠한 힘에 아르망은 뒤로 밀려 넘어져 들어가지 못하였다"
-
-                    m "크윽.... 내가 이런 굴욕을 받다니"
                     jump mainhall
         "방":
             jump room
@@ -304,35 +268,8 @@ label two_stair:
 
 label room:
 
-    if password_0: # b는 남자 아이 귀신
-        m "흠, 책상 위에 상자가 있군."
-
-        play audio "걷는 소리 2.mp3"
-
-        play audio "old door3.mp3"
-
-        m "음? 열쇠가 있군."
-
-        # b "히히히, 내꺼야~" (가져간다)
-
-        play audio "뛰는소리 구두.mp3"
-        m "이놈, 내놔라!"
-
-        # b "나 잡으면 줄게!"
-
-        m "이 망할 유령!"
-
-        # b "여기야, 여기~"
-
-        m "헉... 헉..."
-
-        # b "여기야 여기! 빨리~"
-
-        m "헉... 헉..."
-
-        # b "즐거웠어! 자, 여기 가져가~ 꺄르륵!"
-
-        m "헉... 헉... 힘들어......"
+    if password_0:
+        "아무것도 없다."
     else:
         $ password_0 = True
         "당신은 첫번째 비밀번호를 찾았다."
@@ -547,7 +484,7 @@ label hallway_loop:
                     jump hallway_loop
 
 label next_room:
-    scene bg next_room
+    scene bg dream
     with fade
     m "여긴... 드디어 마지막 방인가...?"
     
