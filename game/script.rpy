@@ -1,6 +1,7 @@
 #이 파일에 게임 스크립트를 입력합니다.
 define sounds = ['audio/Man_Typing_long.mp3', 'audio/Man_Typing_short.mp3']
 define sounds2 = ['audio/Woman_Typing_long.mp3', 'audio/Woman_Typing_short.mp3']
+define sounds3 = ['audio/아이 웃는소리.mp3', 'audio/아이 웃는소리 숏.mp3']
 
 # 사운드 관련 코드
 init python:
@@ -33,6 +34,22 @@ init python:
 
         elif event == "slow_done" or event == "end":
             renpy.sound.stop()
+            
+    def type_sound3(event, interact=True, **kwargs):
+        if not interact:
+            return
+
+        if event == "show": #if text's being written by character, spam typing sounds until the text ends
+            renpy.sound.play(renpy.random.choice(sounds3))
+            renpy.sound.queue(renpy.random.choice(sounds3))
+            renpy.sound.queue(renpy.random.choice(sounds3))
+            renpy.sound.queue(renpy.random.choice(sounds3))
+            renpy.sound.queue(renpy.random.choice(sounds3))
+#좌/우 사운드 기믹
+init python:
+    import random
+    left_sounds = ["audio/laughmech_left1.mp3","audio/laughmech_left2.mp3","audio/laughmech_left3.mp3"]
+    right_sounds = ["audio/laughmech_right1.mp3","audio/laughmech_right2.mp3","audio/laughmech_right1.mp3"]
 
 #호감도 바 관련 코드
 init:
@@ -128,25 +145,25 @@ init python:
     clears = 0
     current_bg = "hallway1_base.jpg"
 
-#캐릭터 이미지
+#캐릭터 이미지 변경
 init:
-    # 아르망
-    #image ??? = "???"
     # 아델린
     image adeline_surprise = "images/chr/adeline_surprise.png"
+    image 마주 = "images/chr/마차 주인.png"
+    image 마주생각 = "images/chr/마차 주인 생각.png"
 
 # 게임에서 사용할 캐릭터를 정의합니다.
 define m = Character('아르망', color="#c8ffc8", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
-define g = Character("아델린", callback=type_sound2)
+define g = Character("아델린", callback=type_sound2, what_font="tway_air.ttf")
 define h = Character("마주", callback=type_sound2)
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
-define l = Character('꼬마 유령', color="#b2cd68")
+define l = Character('꼬마 유령', color="#b2cd68", callback=type_sound3)
 
 default p_bar = [0, 0]
-default password_0 = False
-default password_1 = False
-default password_2 = False
-default password_3 = False
+default diary_0 = False
+default diary_1 = False
+default diary_2 = False
+default diary_3 = False
 default door = True
 default safe_password = False
 default light = False
@@ -171,18 +188,28 @@ label start:
    
     m "허나 두려움에 진실을 외면하는 것은, 기사로서 가장 비겁한 일이겠지."
 
+    show 마주 at Transform(xalign=0.5, yalign=0.2) 
     h "허허… 그게 언제적 얘기요?"
 
     h "귀신이니 실종이니, 다 뻔한 헛소문 아닙니까."
+
+    hide 마주
 
     m "벨포르 가의 이름으로 맹세하노니,"
     scene 저택 with vpunch
 
     m "{size=+10}내가 이 저택에 깃든 모든 어둠을 밝혀내리라!!{/size}"
-
+    
+    show 마주생각 at Transform(xalign=0.5, yalign=0.2) 
     h "벨포르라 했소? 그 가문도 한때 유명하긴 했지."
+    
+    hide 마주생각
+
+    show 마주 at Transform(xalign=0.5, yalign=0.2) 
 
     h "뭐, 요즘 세상에 기사도니 명예니 따지는 양반은 선생뿐일 겁니다. 하하."
+    
+    hide 마주 with dissolve
 
     "마차 주인은 돌아갔다."
     
@@ -239,14 +266,16 @@ label first_event:
     play audio "걷는소리 구두.mp3"
     "또각… 또각… 구두 소리 같은 발걸음이 메아리친다."
 
-    play audio "아이 웃는소리 숏.mp3"
+    play music "여자 콧노래.mp3"
     m "…역시, 단순한 소문은 아니였나보군?"
 
     m "2층 난간 위, 붉은 눈만이 어둠 속에서 번뜩인다."
 
     m "누구냐! 지금 당장 모습을 드러내지 않으면!"
-
+    
+    stop music 
     play audio "스크림1.mp3"
+
     scene surprise_attack
 
     "……!!"
@@ -254,7 +283,7 @@ label first_event:
     "순간, 아르망은 비명을 지르며 칼을 휘두른다."
 
     scene black
-
+    play audio "칼 휘두름.mp3"
     m "사라져라아아앗!! 벨포르의 이름으로!! 이 망령아아아!!"
 
     "그 순간—"
@@ -302,6 +331,8 @@ label first_event:
     g "그래서 너가 그 악령을 처리해주면 나는 좋은 일이니까."
 
     m "그런가. 그럼 나는 악령을 처리하러 가겠다."
+    
+    show adeline idle at Transform(xalign=0.5, yalign=0.2) 
 
     g "아. 이 집에는 많은 유령이 있어. 멀쩡한 유령은 아마 나뿐일꺼야. 조심해."
 
@@ -311,17 +342,18 @@ label first_event:
 
 label mainhall:
     scene mainhall 
-    if password_0:
-        if password_1:
-            if password_2:
-                if password_3:
+    if diary_0:
+        if diary_1:
+            if diary_2:
+                if diary_3:
                     jump hallway
     menu:
         
-        "여긴 mainhall이다. 어디로 가지?"
+        "자, 그럼 이제 어디로 가볼까?"
 
         "지하실":
             if underground_lock:
+                play audio "자물쇠 잠긴소리.mp3"
                 "지하실이 잠겨 있다."
                 jump mainhall
             else:
@@ -331,20 +363,25 @@ label mainhall:
                     "아무것도 안보인다."
                     jump mainhall
         "방":
+            play audio "Open door.mp3"
             jump room
 
         "식당":
             if dining_room_lock:
+                play audio "자물쇠 잠긴소리.mp3"
                 "식당 문이 잠겨있다."
                 jump mainhall
             else:
+                play audio "열쇠로 문따는 소리.mp3"
                 "식당 문을 열었다."
                 jump dining_room
         "계단":
+            play audio "걷는소리 구두.mp3"
+            scene black with fade
             jump two_stair
 
 label two_stair:
-    scene mainhall2 
+    scene mainhall2 with fade
     if garret_info:
         menu:
             "어디로 가지?"
@@ -359,6 +396,8 @@ label two_stair:
                 jump inner_room
 
             "내려간다":
+                play audio "걷는소리 구두.mp3"
+                scene black with fade
                 jump mainhall
     else:
         menu:
@@ -371,52 +410,121 @@ label two_stair:
                 jump inner_room
 
             "내려간다":
+                play audio "걷는소리 구두.mp3"
+                scene black with fade
                 jump mainhall
 
 label room:
+    stop music
     scene room
+    play audio "old door2.mp3"
+
     m "흠, 책상 위에 상자가 있군."
 
-    play audio "걷는 소리2.mp3"
+    play audio "뛰는소리 구두.mp3"
 
-    play audio "old door3.mp3"
     show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
     m "음? 열쇠가 있군."
+
+    play audio "뛰는소리 구두.mp3"
     
-    show 꼬마 유령 at Transform(xalign=0.5, yalign=0.2) 
     l "히히히, 내꺼야~" 
-    
+
+    show 꼬마 유령 at Transform(xalign=1.2, yalign=0.2)
+    hide 열쇠 
+    show 꼬마 유령 at Transform(xalign=-1.2, yalign=0.2) with move
+
     m "이놈, 내놔라!"
+    m "뭐?! 당장 돌려줘!"
+    jump ghost_chase_game
 
-    l "나 잡으면 줄게!"
+label ghost_chase_game:
+    $ correct_guesses = 0
+    $ wrong_guesses = 0
+    $ directions = ["left", "right"]
 
-    m "이 망할 유령!"
+    scene black
+    with fade
 
+    "열쇠를 든 유령이 어둠 속으로 사라졌다..."
+    "소리를 잘 듣고 방향을 맞춰야 해..."
 
-    l "여기야, 여기~" # 랜덤 사운드 재생
+    jump ghost_chase_loop
 
-    l "여기야, 여기~"
+label ghost_chase_loop:
+    $ direction = random.choice(directions)
 
-    m "헉... 헉..."
+    if direction == "left":
+        $ sound_file = random.choice(left_sounds)
+        play sound sound_file
+        $ renpy.music.set_pan(-1.0, 0.0, channel="sound")
+    else:
+        $ sound_file = random.choice(right_sounds)
+        play sound sound_file
+        $ renpy.music.set_pan(1.0, 0.0, channel="sound")
 
-    l "여기야 여기! 빨리~"
+    menu:
+        "어디서 소리가 났을까?"
+        "왼쪽":
+            $ choice = "left"
+        "오른쪽":
+            $ choice = "right"
 
-    m "헉... 헉..."
+    if choice == direction:
+        $ ghost_lines = [
+            "여기야~ 여기~!",
+            "아슬아슬했는걸~?",
+            "으하하! 잡아봐라~!"
+            ]
+        $ player_lines = [
+            "헉... 헉... 거기냐?!",
+            "이제 잡을 수 있을 것 같아!",
+            "거기 서!! 이번엔 놓치지 않아!"
+            ]
+        $ correct_guesses += 1
+        $ g_line = random.choice(ghost_lines)
+        $ p_line = random.choice(player_lines)
+        l "[g_line]"
+        m "[p_line]"
+    else:
+        $ ghost_lines = [
+            "유령: 엇~ 틀렸어~ ㅋㅋ",
+            "유령: 반대쪽이야~ 바보~",
+            "유령: 캬하하! 아직 멀었는걸~"
+            ]
+        $ player_lines = [
+            "주인공: 이런... 놓쳤다...",
+            "주인공: 다시 집중해야겠어...",
+            "주인공: 어디로 간 거지...?"
+            ]
+        $ wrong_guesses += 1
+        $ g_line = random.choice(ghost_lines)
+        $ p_line = random.choice(player_lines)
+        l "[g_line]"
+        m "[p_line]"
 
-    # gimmick "위의 대사 랜덤 반복 5회"
+    if correct_guesses >= 5:
+        jump ghost_chase_success
+    elif wrong_guesses >= 2:
+        jump ghost_chase_fail
+    else:
+        jump ghost_chase_loop
+
+label ghost_chase_success:
     hide 꼬마 유령 at Transform(xalign=0.5, yalign=0.2) with dissolve
     play audio "아이 웃는소리 숏.mp3"
     l "즐거웠어! 자, 여기 가져가~ 꺄르륵!"
-
     m "헉... 헉... 힘들어......"
+    #show image 열쇠
+    "당신은 열쇠를 되찾았다."
 
     m "여긴 더 볼일이 없는 것 같다.."
 
-    if password_0:
+    if diary_0:
         "아무것도 없다."
     else:
-        $ password_0 = True
-        "당신은 첫번째 비밀번호를 찾았다."
+        $ diary_0 = True
+        "당신은 첫번째 일기를 찾았다."
         show 일기 at Transform(xalign=0.5, yalign=0.2) 
 
         n "유모의 일기장"
@@ -430,13 +538,30 @@ label room:
         nvl clear
 
         $ dining_room_lock = False
-        "당신은 드라이버를 찾았다."
+        "당신은 열쇠를 찾았다."
 
     menu:
         "어디로 갈까?"
 
         "나간다":
             jump mainhall
+
+label ghost_chase_fail:
+    #play sound "audio/jumpscare.mp3"
+    #scene expression "images/jumpscare.jpg" with vpunch 갑툭튀 이미지나 사운드 
+    "갑툭튀 사진이 나와서 주인공은 죽었다."
+    jump ghost_chase_retry
+
+label ghost_chase_retry:
+    scene black with dissolve
+    $ correct_guesses = 0
+    $ wrong_guesses = 0
+    m "크윽.. 잠시 정신을 잃었었나 봐..."
+    m "하지만 열쇠는 반드시 찾아야 해..."
+
+    "유령의 숨소리가 다시 들리기 시작했다..."
+
+    jump ghost_chase_loop
 
 label dining_room:
     scene 식당
@@ -453,10 +578,10 @@ label dining_room:
     
     m "(천천히 안으로 걸으며) 기묘하군... 의자가 모두 붙어 있는데, 저 하나만 왜 저렇게 떨어져 있지?"
 
-    if password_1:
+    if diary_1:
         "아무것도 없다."
     else:
-        $ password_1 = True
+        $ diary_1 = True
         "당신은 세번째 비밀번호를 찾았다."
         show 일기 at Transform(xalign=0.5, yalign=0.2) 
         n "주방장의 일기장"
@@ -510,7 +635,7 @@ label library:
     if safe_password:
         "아무것도 없다."
     else:
-        $ password_2 = True
+        $ diary_2 = True
         "당신은 두번째 비밀번호를 찾았다."
         show 일기 at Transform(xalign=0.5, yalign=0.2) 
         n "집사의 일기장"
@@ -535,7 +660,7 @@ label library:
 label inner_room:
     scene 안방 
     if safe_password:
-        if password_3:
+        if diary_3:
             "아무것도 없다."
         else:
             scene black with fade #안방 이미지
@@ -557,7 +682,7 @@ label inner_room:
                     "끼익... 금고가 열리는 소리가 들린다."
                     "당신은 안방의 금고에서 네번째 일기장을 찾았다."
                     
-                    $ password_3 = True
+                    $ diary_3 = True
                     jump diary4
                 else:
                     m "그건 아닌 것 같아... 다시 생각해보자."
