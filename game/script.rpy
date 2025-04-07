@@ -45,6 +45,7 @@ init python:
             renpy.sound.queue(renpy.random.choice(sounds3))
             renpy.sound.queue(renpy.random.choice(sounds3))
             renpy.sound.queue(renpy.random.choice(sounds3))
+            
 #좌/우 사운드 기믹
 init python:
     import random
