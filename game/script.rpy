@@ -939,7 +939,7 @@ label hallway_loop:
 
 label next_room:
     scene bg dream
-        with fade
+    with fade
        
     m "여긴... 드디어 마지막 방인가...?"
     
