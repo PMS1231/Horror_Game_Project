@@ -80,8 +80,9 @@ init:
     image bg dream = "images/bg/dream.png"
     image forest = "images/bg/forest.png"
     image surprise_attack = "images/event/scary.png"
-    
     image black = "images/bg/black.jpg"
+    image 저택 = "images/bg/저택.png"
+    image 자물쇠 = "images/bg/자물쇠.png"
 
 # 안방 이미지
 init:
@@ -135,7 +136,7 @@ init:
     image adeline_surprise = "images/chr/adeline_surprise.png"
 
 # 게임에서 사용할 캐릭터를 정의합니다.
-define m = Character('아르망', color="#c8ffc8")#, callback=type_sound)
+define m = Character('아르망', color="#c8ffc8", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
 define g = Character("아델린", callback=type_sound2)
 define h = Character("마주", callback=type_sound2)
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
@@ -154,8 +155,15 @@ default underground_lock = True
 default garret_info = False
 
 label start:
-    scene forest
     play audio "마차끄는소리 도착.mp3"
+    scene black 
+    centered "{font=tway_sky.ttf}19XX{/font}"
+    scene black 
+    play music "bgm_garden.mp3"
+    centered "{font=tway_sky.ttf}영국, 어느 지방{/font}"
+    scene black 
+    scene forest with fade
+    
     show screen stat_overlay
 
     m "사람들이 사라진다고 하는 저택, 이곳에 도대체 어떤 진실이 숨겨져 있는가…"
@@ -167,18 +175,18 @@ label start:
 
     h "귀신이니 실종이니, 다 뻔한 헛소문 아닙니까."
 
-    play music "main_theme.mp3"
-
     m "벨포르 가의 이름으로 맹세하노니,"
+    scene 저택 with vpunch
 
-    m "내가 이 저택에 깃든 모든 어둠을 밝혀내리라!!"
+    m "{size=+10}내가 이 저택에 깃든 모든 어둠을 밝혀내리라!!{/size}"
 
     h "벨포르라 했소? 그 가문도 한때 유명하긴 했지."
 
     h "뭐, 요즘 세상에 기사도니 명예니 따지는 양반은 선생뿐일 겁니다. 하하."
 
     "마차 주인은 돌아갔다."
-
+    
+    scene 자물쇠 
     "나무 문은 무겁게 닫혀 있고 녹슨 자물쇠로 굳게 잠겨 있다."
 
     "옆 담장 아래에는 작고 허름한 구멍 하나가 있다."
@@ -199,15 +207,29 @@ label prologue:
                 "문을 부수지 못했다."
                 jump prologue
             else:
+                play sound "검으로 벽을 두드리는 소리.mp3"
                 "다시 한번 두드려 문을 부쉈다."
+                play sound "철문여는소리.mp3"
+                "문이 열렸다."
                 jump first_event
 
         "개구멍":
+            m "생각해보면 큰 문제도 작게 보이는 법"
+            m "무리하게 정문을 부수는 것은 경박함의 상징이 될 수도 있으니."
+            "아르망은 조심스레 개구멍 앞에 쪼그려 앉는다."
+            scene black
+            play audio "기어가다.mp3"
+            m "명예란 때로…"
+            extend "상황에 따라 형태를 바꾸는 법이지… "
+            extend "하아…"
             jump first_event
 
 label first_event:
-    scene mainhall
-    m "오래된 저택이여, 나는 벨포르 가문의 이름으로… 너의 침묵 속에 감춰진 진실을 밝히러 왔노라!"
+    stop music
+
+    scene black
+    m "오래된 저택이여, 나는 벨포르 가문의 이름으로…"
+    m "{size=+10}너의 침묵 속에 감춰진 진실을 밝히러 왔노라!{/size}"
 
     "그 순간, "
     play audio "old door1.mp3"
@@ -243,10 +265,10 @@ label first_event:
     "처절하고 놀란, 분명 여자아이의 비명소리가 터져나온다."
 
     "아르망의 검이 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
-    
     scene mainhall
     show adeline surprise at Transform(xalign=0.5, yalign=0.2) 
 
+    play music "bgm_main.mp3"
     "그리고… 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
 
     m "…소녀…?"
@@ -265,7 +287,7 @@ label first_event:
 
     m "너가 그 귀신인가?"
 
-    show adeline 호기심 at Transform(xalign=0.5, yalign=0.2) 
+    show adeline idle at Transform(xalign=0.5, yalign=0.2) 
 
     g "아니. 나의 이름은 아델린 드 로르망. 이 저택의 주인 로르망 백작의 첫째 딸이야."
 
@@ -284,7 +306,6 @@ label first_event:
     g "아. 이 집에는 많은 유령이 있어. 멀쩡한 유령은 아마 나뿐일꺼야. 조심해."
 
     m "헛된 걱정이다!"
-
 
     jump mainhall
 
@@ -374,6 +395,8 @@ label room:
 
     l "여기야, 여기~" # 랜덤 사운드 재생
 
+    l "여기야, 여기~"
+
     m "헉... 헉..."
 
     l "여기야 여기! 빨리~"
@@ -415,6 +438,7 @@ label room:
 
 label dining_room:
     scene 식당
+
     play audio "열쇠로 문따는 소리.mp3"
     "방에서 얻은 열쇠로 문을 연다"
     play audio "철문여는소리.mp3"
