@@ -234,14 +234,23 @@ label prologue:
 
         "정문":
             if door:
-                play sound "검으로 벽을 두드리는 소리.mp3"
+                
                 $ door = False
-                "문을 부수지 못했다."
+                
+                m "하등한 자는 담장을 넘고, 도둑은 어둠을 틈타나… 그러나 나는 기사!"
+                m "벨포르 가문의 아르망! 명예로운 자는 언제나 정문으로 들어가는 법!"
+                play audio "검으로 벽을 두드리는 소리.mp3"
+                m "(검을 들어 자물쇠와 손잡이를 단숨에 내리친다. 하지만 자물쇠와 문은 끄떡도 하지 않는다.)"
+                
                 jump prologue
             else:
-                play sound "검으로 벽을 두드리는 소리.mp3"
-                "다시 한번 두드려 문을 부쉈다."
-                play sound "철문여는소리.mp3"
+                
+                m "문 하나쯤 내 의지로 열지 못한다면, 이 검은 과연 무엇을 위해 존재한단 말인가!"
+                
+                play audio "검으로 벽을 두드리는 소리.mp3"
+                m "(다시 한번 검을 들어 자물쇠와 손잡이를 단숨에 내리친다. 문이 쾅 소리와 함께 열리며 먼지가 풀풀 날린다.)"
+                
+                play audio "철문여는소리.mp3"
                 "문이 열렸다."
                 jump first_event
 
@@ -359,13 +368,19 @@ label mainhall:
         "지하실":
             if underground_lock:
                 play audio "자물쇠 잠긴소리.mp3"
-                "지하실이 잠겨 있다."
+                m "굴욕적이지만 여긴 지금 나로선 갈수가 없다...."
                 jump mainhall
             else:
                 if light:
                     jump underground
                 else:
-                    "아무것도 안보인다."
+                    n "끼이익 하고 문이 열린다."
+
+                    n "아르망이 들어가려 하자, 여성의 비명소리가 들리며 무언가가 다가온다."
+                    show 지하실괴물 at Transform(xalign=0.5, yalign=0.2) 
+                    n "어떠한 힘에 의해 아르망은 뒤로 밀려 넘어져 들어가지 못하였다."
+
+                    m "크윽... 내가 이런 굴욕을 받다니..."
                     jump mainhall
         "방":
             play audio "Open door.mp3"
@@ -374,7 +389,7 @@ label mainhall:
         "식당":
             if dining_room_lock:
                 play audio "자물쇠 잠긴소리.mp3"
-                "식당 문이 잠겨있다."
+                m "문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다. 열쇠를 찾아보자"
                 jump mainhall
             else:
                 play audio "열쇠로 문따는 소리.mp3"
@@ -392,6 +407,8 @@ label two_stair:
             "어디로 가지?"
 
             "다락방":
+                "천장을 유심히 보니 뭔가 이상한곳이있다"
+                "천장을 쌔게 쳐보니 계단이 내려온다"
                 jump garret
 
             "서재":
@@ -615,6 +632,21 @@ label dining_room:
 
 label underground:
     scene 지하실
+    n "지하실로 들어가려 하자 또다시 바람이 불어온다."  # 중간에 괴물출현 시킬지
+
+    n "바람을 등지고 등불에 불을 켜고 앞으로 나아가자 바람이 멈췄다."
+
+    m "이 불빛만이... 어둠 속 길을 비춰주리라...."
+
+    n "등불을 켠 채 지하실 안으로 들어서자, 발소리가 메아리치며 울려 퍼진다."
+
+    n "차가운 기운이 바닥에서부터 올라오는 듯, 그의 몸을 감싼다."
+
+    m "나의 발걸음 소리마저... 이곳의 침묵을 깨트리는군...."
+
+    n "지하실 안쪽 끝, 낡은 책상과 침대가 놓여 있다. 누군가가 생활했던 흔적이 있다."
+
+    m "단순히 버려진 창고가 아니군... 누군가가 여기서 살았던 거 같군."
 
     if safe_password:
         scene 지하실괴물 # at center
@@ -807,7 +839,21 @@ label inner_room:
 
 label garret:
     scene 다락방
-    show 등불 at Transform(xalign=0.5, yalign=0.2) 
+    n "오래된 목제가 비명 지르듯 '끼이이익 - 텅' 소리를 낸다."
+
+    n "주변 공기는 싸늘하고 무겁다."
+
+    m "이런 곳에 다락방으로 가는 계단이 있었군."
+
+    n "사다리를 조심스레 밟고 올라간다."
+
+    n "숨이 막힐 듯한 어둠 속에 은은한 달빛이 틈새로 스며든다."
+
+    n "갑자기 안쪽에서 오르골 소리가 들려온다."
+
+    m ".....날 환영하는 소린가?"
+
+    show 등불 at Transform(xalign=0.5, yalign=0.2)
     "다락방이다. 등불을 얻었다."
 
     $ light = True
