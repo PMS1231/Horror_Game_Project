@@ -34,6 +34,43 @@ init python:
         elif event == "slow_done" or event == "end":
             renpy.sound.stop()
 
+#호감도 바 관련 코드
+init:
+    screen stat_overlay:
+        # 호감도 창
+        frame:
+            padding (15, 15)
+            background "#70798380"
+            align (1.0, 0.0)
+            xmaximum 250
+            ymaximum 200
+
+            vbox:
+                text "기사도{space=15}[p_bar[0]]" size 16 color "#FFFFFF"
+                bar:
+                    value AnimatedValue(p_bar[0], 100, delay=1.0)
+                    range 100
+                    style "fixed_bar"
+
+                text " " size 3
+
+                text "호감도{space=15}[p_bar[1]]" size 16 color "#FFFFFF"
+                bar:
+                    value AnimatedValue(p_bar[1], 100, delay=1.0)
+                    range 100
+                    xalign 0.0
+                    style "fixed_bar"
+init -5 python:
+    # 호감도 스타일
+    style.fixed_bar = Style(style.default)
+
+    style.fixed_bar.xmaximum = 200
+    style.fixed_bar.ymaximum = 15
+    style.fixed_bar.left_gutter = 0
+    style.fixed_bar.right_gutter = 0
+    style.fixed_bar.left_bar = Frame("images/bar/bar_full.png", 0, 0)
+    style.fixed_bar.right_bar = Frame("images/bar/bar_empty.png", 0, 0)
+    
 ## 앞에서 부터 이미지 차례대로 공간별로 구분해서 넣어주세요. ##
 ## init: <-- 폴더처럼 쓰시면 돼요(이미지, 캐릭터 정의 등 간단한것만) ##
 ## init python: <-- 실제로 동작하는 코드들 (함수, 계산, 복잡한 동작이 이루어지는 것들) ##
@@ -67,22 +104,7 @@ init:
     image bg hallway3_diff1 = "images/bg/hallway3_diff1.jpg"
     image bg hallway3_diff2 = "images/bg/hallway3_diff2.jpg"
 
-<<<<<<< HEAD
-    # 안방 이미지
-    image hidden_word = "hidden_word.jpg"
-
-    image bg dream = "images/bg/dream.png"
-    image forest = "images/bg/forest.png"
-    image surprise_attack = "images/event/scary.png"
-    
-    # 아델린 표정
-    
-    # 배경 이미지
-    image black = "images/bg/black.jpg"
-    
-=======
 #특수복도 이미지 랜덤 생성 모듈    
->>>>>>> a26c6bce6a70ac69f04d2180291cca91fdbf01cf
 init python:
     import random
 
@@ -119,6 +141,7 @@ define h = Character("마주", callback=type_sound2)
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#b2cd68")
 
+default p_bar = [0, 0]
 default password_0 = False
 default password_1 = False
 default password_2 = False
@@ -133,8 +156,10 @@ default garret_info = False
 label start:
     scene forest
     play audio "마차끄는소리 도착.mp3"
+    show screen stat_overlay
 
     m "사람들이 사라진다고 하는 저택, 이곳에 도대체 어떤 진실이 숨겨져 있는가…"
+    $ p_bar[0] += 10
    
     m "허나 두려움에 진실을 외면하는 것은, 기사로서 가장 비겁한 일이겠지."
 

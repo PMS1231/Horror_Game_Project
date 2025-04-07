@@ -1,32 +1,85 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 316, in script
-    l "히히히, 내꺼야~" (가져간다)
-  File "game/script.rpy", line 316, in <module>
-    l "히히히, 내꺼야~" (가져간다)
-NameError: name '가져간다' is not defined
+  File "game/script.rpy", line 162, in script
+    m "사람들이 사라진다고 하는 저택, 이곳에 도대체 어떤 진실이 숨겨져 있는가…"
+  File "renpy/common/000window.rpy", line 132, in _window_auto_callback
+    _window_show(auto=True)
+  File "renpy/common/000window.rpy", line 75, in _window_show
+    renpy.with_statement(trans)
+  File "game/script.rpy", line 39, in execute
+    screen stat_overlay:
+  File "game/script.rpy", line 39, in execute
+    screen stat_overlay:
+  File "game/script.rpy", line 41, in execute
+    frame:
+  File "game/script.rpy", line 48, in execute
+    vbox:
+  File "game/script.rpy", line 49, in execute
+    text "기사도{space=15}[p_bar[0]][color="#ffffff"]" size 16
+Exception: String '기사도{space=15}[p_bar[0]][color=' ends with an open format operation.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 316, in script
-    l "히히히, 내꺼야~" (가져간다)
-  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\ast.py", line 2586, in execute
+  File "game/script.rpy", line 162, in script
+    m "사람들이 사라진다고 하는 저택, 이곳에 도대체 어떤 진실이 숨겨져 있는가…"
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 2586, in execute
     Say.execute(self)
-  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\ast.py", line 609, in execute
-    args, kwargs = self.arguments.evaluate()
-  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\parameter.py", line 503, in evaluate
-    value = renpy.python.py_eval(v, locals=scope)
-  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\python.py", line 1218, in py_eval
-    return py_eval_bytecode(code, globals, locals)
-  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\python.py", line 1211, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-  File "game/script.rpy", line 316, in <module>
-    l "히히히, 내꺼야~" (가져간다)
-NameError: name '가져간다' is not defined
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 591, in execute
+    statement_name(stmt_name)
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 58, in statement_name
+    i(name)
+  File "renpy/common/000window.rpy", line 132, in _window_auto_callback
+    _window_show(auto=True)
+  File "renpy/common/000window.rpy", line 75, in _window_show
+    renpy.with_statement(trans)
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\exports\statementexports.py", line 257, in with_statement
+    return renpy.game.interface.do_with(trans, paired, clear=clear)
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 1581, in do_with
+    return self.interact(trans_pause=True,
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2218, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  [Previous line repeated 1 more time]
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 480, in visit_all
+    callback(self)
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 491, in per_interact
+    self.update()
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 700, in update
+    self.screen.function(**self.scope)
+  File "game/script.rpy", line 39, in execute
+    screen stat_overlay:
+  File "game/script.rpy", line 39, in execute
+    screen stat_overlay:
+  File "game/script.rpy", line 41, in execute
+    frame:
+  File "game/script.rpy", line 48, in execute
+    vbox:
+  File "game/script.rpy", line 49, in execute
+    text "기사도{space=15}[p_bar[0]][color="#ffffff"]" size 16
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\text\text.py", line 2177, in _scope
+    return self.set_text(self.text_parameter, scope, self.substitute, update)
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\text\text.py", line 2216, in set_text
+    i, did_sub = renpy.substitutions.substitute(i, scope, substitute) # type: ignore
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\substitutions.py", line 373, in substitute
+    s = interpolate(s, variables) # type: ignore
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\substitutions.py", line 49, in interpolate
+    for lit, expr, conv, fmt in parse(s):
+  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\substitutions.py", line 252, in parse
+    raise Exception('String {!r} ends with an open format operation.'.format(s))
+Exception: String '기사도{space=15}[p_bar[0]][color=' ends with an open format operation.
 
 Windows-10-10.0.19045 AMD64
 Ren'Py 8.3.7.25031702
 Project_Horror 1.0
-Mon Apr  7 12:34:22 2025
+Mon Apr  7 14:29:37 2025
