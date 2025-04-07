@@ -205,8 +205,7 @@ label start:
     play music "bgm_garden.mp3"
     centered "{size=+40}{font=tway_sky.ttf}영국, 어느 지방{/font}{/size}"
     stop audio
-    play audio "bgm_garden.mp3"
-    play music "비.mp3"
+    play audio "비.mp3"
     scene black 
     scene forest with fade
     
@@ -301,6 +300,7 @@ label prologue:
 
 label first_event:
     stop music 
+    stop audio
 
     scene black
     m "오래된 저택이여, 나는 벨포르 가문의 이름으로…"
@@ -971,9 +971,11 @@ label input_loop:
     $ player_input = renpy.input("숨겨진 단어는 무엇일까?").strip().lower()
 
     if player_input == correct_answer:
-        show 단어퍼즐답 with dissolve
+        show 단어퍼즐답 at Transform(xalign=0.5, yalign=0.2) with dissolve
         "끼익... 금고가 열리는 소리가 들린다."
         "당신은 안방의 금고에서 네번째 일기장을 찾았다."
+        hide 단어퍼즐
+        hide 단어퍼즐답
         $ diary_3 = True
         jump diary4
     else:
