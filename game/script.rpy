@@ -1,8 +1,8 @@
 #이 파일에 게임 스크립트를 입력합니다.
-
 define sounds = ['audio/Man_Typing_long.mp3', 'audio/Man_Typing_short.mp3']
 define sounds2 = ['audio/Woman_Typing_long.mp3', 'audio/Woman_Typing_short.mp3']
 
+# 사운드 관련 코드
 init python:
     def type_sound(event, interact=True, **kwargs):
         if not interact:
@@ -18,7 +18,6 @@ init python:
 
         elif event == "slow_done" or event == "end":
             renpy.sound.stop()
-
 init python:
     def type_sound2(event, interact=True, **kwargs):
         if not interact:
@@ -35,6 +34,23 @@ init python:
         elif event == "slow_done" or event == "end":
             renpy.sound.stop()
 
+## 앞에서 부터 이미지 차례대로 공간별로 구분해서 넣어주세요. ##
+## init: <-- 폴더처럼 쓰시면 돼요(이미지, 캐릭터 정의 등 간단한것만) ##
+## init python: <-- 실제로 동작하는 코드들 (함수, 계산, 복잡한 동작이 이루어지는 것들) ##
+
+###### 아직 정리 안된 이미지들  #####
+init:
+    image bg dream = "images/bg/dream.png"
+    image forest = "images/bg/forest.png"
+    image surprise_attack = "images/event/scary.png"
+    
+    image black = "images/bg/black.jpg"
+
+# 안방 이미지
+init:
+    image hidden_word = "hidden_word.jpg"
+
+#특수복도 이미지
 init:
     # 복도 1 이미지
     image bg hallway1_base = "images/bg/hallway1_base.jpg"
@@ -51,18 +67,7 @@ init:
     image bg hallway3_diff1 = "images/bg/hallway3_diff1.jpg"
     image bg hallway3_diff2 = "images/bg/hallway3_diff2.jpg"
 
-    # 안방 이미지
-    image hidden_word = "hidden_word.jpg"
-
-    image bg dream = "images/bg/dream.png"
-    image forest = "images/bg/forest.png"
-    image surprise_attack = "images/event/scary.png"
-    
-    # 아델린 표정
-    
-    # 배경 이미지
-    image black = "images/bg/black.jpg"
-    
+#특수복도 이미지 랜덤 생성 모듈    
 init python:
     import random
 
@@ -85,7 +90,14 @@ init python:
     clears = 0
     current_bg = "hallway1_base.jpg"
 
-# # 게임에서 사용할 캐릭터를 정의합니다.
+#캐릭터 이미지
+init:
+    # 아르망
+    #image ??? = "???"
+    # 아델린
+    image adeline_surprise = "images/chr/adeline_surprise.png"
+
+# 게임에서 사용할 캐릭터를 정의합니다.
 define m = Character('아르망', color="#c8ffc8")#, callback=type_sound)
 define g = Character("아델린", callback=type_sound2)
 define h = Character("마주", callback=type_sound2)
@@ -104,7 +116,6 @@ default garret_info = False
 
 label start:
     scene forest
-
     play audio "마차끄는소리 도착.mp3"
 
     m "사람들이 사라진다고 하는 저택, 이곳에 도대체 어떤 진실이 숨겨져 있는가…"
@@ -132,7 +143,6 @@ label start:
     "옆 담장 아래에는 작고 허름한 구멍 하나가 있다."
 
     "아르망은 문 앞에서 고민에 빠진다."
-   
 
 label prologue:
 
@@ -191,7 +201,7 @@ label first_event:
 
     "아르망의 검이 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
 
-    show adeline surprise at Transform(xalign=0.5, yalign=0.2) 
+    show adeline_surprise at Transform(xalign=0.5, yalign=0.2) 
 
     "그리고… 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
 
@@ -201,36 +211,7 @@ label first_event:
 
     g "…아, 맞다. 나… 이미 죽었지…"
 
-    show adeline embrassed at Transform(xalign=0.5, yalign=0.2) 
-    
     g "후훗… 미안, 네가 그렇게까지 반응할 줄은 몰랐어. 오랜만에 만난 사람이라."
-    
-    g "무슨일로 왔니?"
-
-    m "나는 벨포르 가문의 아르망 드 벨포르! 이 저택에서 귀신이 사람을 잡아간다는 이야기를 듣고 해결하러 왔다!"
-
-    m "너가 그 귀신인가?"
-
-    show adeline 호기심 at Transform(xalign=0.5, yalign=0.2) 
-
-    g "아니. 나의 이름은 아델린 드 로르망. 이 저택의 주인 로르망 백작의 첫째 딸이야."
-
-    g "그리고 너가 찾는 귀신은 아마도 저택 지하실 깊은 곳에 있는 악령일꺼야."
-
-    m "그런 정보를 왜 나에게 알려주지?"
-
-    show adeline sad at Transform(xalign=0.5, yalign=0.2) 
-
-    g "그 악령은 나를 괴롭히거든......"
-
-    g "그래서 너가 그 악령을 처리해주면 나는 좋은 일이니까."
-
-    m "그런가. 그럼 나는 악령을 처리하러 가겠다."
-
-    g "아. 이 집에는 많은 유령이 있어. 멀쩡한 유령은 아마 나뿐일꺼야. 조심해."
-
-    m "헛된 걱정이다!"
-
 
     jump mainhall
 
