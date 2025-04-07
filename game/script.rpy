@@ -154,7 +154,7 @@ init:
     image 마주생각 = "images/chr/마차 주인 생각.png"
 
 # 게임에서 사용할 캐릭터를 정의합니다.
-define m = Character('아르망', color="#c8ffc8", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
+define m = Character('아르망', color="#044604", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
 define g = Character("아델린", callback=type_sound2, what_font="tway_air.ttf")
 define h = Character("마주", callback=type_sound2)
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
@@ -178,8 +178,8 @@ label start:
     scene black 
     centered "{font=tway_sky.ttf}19XX{/font}"
     scene black 
-    play music "bgm_garden.mp3"
     centered "{font=tway_sky.ttf}영국, 어느 지방{/font}"
+    play music "bgm_garden.mp3"
     scene black 
     scene forest with fade
     
@@ -189,11 +189,16 @@ label start:
     $ p_bar[0] += 10
    
     m "허나 두려움에 진실을 외면하는 것은, 기사로서 가장 비겁한 일이겠지."
-
+    m "저 저택 근처에서는 귀신이 나타나서 사람을 잡아간다고 들었소"
+    m "혹시 그대 이 이야기에 대해서 자세히 알고있는가?"
+    
     show 마주 at Transform(xalign=0.5, yalign=0.2) 
     h "허허… 그게 언제적 얘기요?"
 
     h "귀신이니 실종이니, 다 뻔한 헛소문 아닙니까."
+    h "물론 이 근방에 사는 사람들이라면 모두 알고있는 내용이네만"
+    h "이젠 다들 웃어넘기는 옛 소문이오"
+    h "귀신보다는 세금이 더 무섭지"
 
     hide 마주
 
@@ -203,13 +208,16 @@ label start:
     m "{size=+10}내가 이 저택에 깃든 모든 어둠을 밝혀내리라!!{/size}"
     
     show 마주생각 at Transform(xalign=0.5, yalign=0.2) 
-    h "벨포르라 했소? 그 가문도 한때 유명하긴 했지."
+    h "음...?"
+    h "벨포르라 했소?"
+    h "허허, 그 가문도 한 때 유명하긴 했었지"
     
     hide 마주생각
 
     show 마주 at Transform(xalign=0.5, yalign=0.2) 
 
-    h "뭐, 요즘 세상에 기사도니 명예니 따지는 양반은 선생뿐일 겁니다. 하하."
+    h "뭐, 요즘 세상에 기사도니 명예니 따지는 양반은 선생밖에 없을거요."
+    h "하하하"
     
     hide 마주 with dissolve
 
@@ -227,7 +235,7 @@ label prologue:
     m "이를 어쩐다."
 
     menu:
-        "골라라"
+        "어떡할까?"
 
         "정문":
             if door:
@@ -438,7 +446,8 @@ label room:
         show 꼬마 유령 at Transform(xalign=-1.2, yalign=0.2) with move
 
         m "이놈, 내놔라!"
-        m "뭐?! 당장 돌려줘!"
+        l "메롱, 잡을 수 있으면 잡아봐!" 
+        m "뭐?! 당장 이리내!"
         jump ghost_chase_game
     else:
         if not diary_0:
@@ -466,9 +475,9 @@ label ghost_chase_game:
 
     scene black
     with fade
-
-    "열쇠를 든 유령이 어둠 속으로 사라졌다..."
-    "소리를 잘 듣고 방향을 맞춰야 해..."
+    
+    "열쇠를 가로챈 유령이 어둠 속으로 사라졌다..."
+    "소리를 잘 듣고 위치를 찾아야 해..."
 
     jump ghost_chase_loop
 
