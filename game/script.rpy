@@ -54,11 +54,11 @@ init:
     # 안방 이미지
     image hidden_word = "hidden_word.jpg"
 
-    image bg next_room = "images/bg/next_room.png"
+    image bg dream = "images/bg/dream.png"
     image forest = "images/bg/forest.png"
     image surprise_attack = "images/event/scary.png"
     
-    # 아델린 표정정
+    # 아델린 표정
     image adeline_surprise = "images/chr/adeline_surprise.png"
     image black = "images/bg/black.jpg"
     
@@ -484,7 +484,7 @@ label hallway_loop:
                     jump hallway_loop
 
 label next_room:
-    scene bg next_room
+    scene bg dream
     with fade
     m "여긴... 드디어 마지막 방인가...?"
     
