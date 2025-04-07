@@ -128,16 +128,15 @@ init python:
     clears = 0
     current_bg = "hallway1_base.jpg"
 
-#캐릭터 이미지
+#캐릭터 이미지 변경
 init:
-    # 아르망
-    #image ??? = "???"
     # 아델린
     image adeline_surprise = "images/chr/adeline_surprise.png"
-
+    image 마주 = "images/chr/마차 주인.png"
+    image 마주생각 = "images/chr/마차 주인 생각.png"
 # 게임에서 사용할 캐릭터를 정의합니다.
 define m = Character('아르망', color="#c8ffc8", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
-define g = Character("아델린", callback=type_sound2)
+define g = Character("아델린", callback=type_sound2, what_font="tway_air.ttf")
 define h = Character("마주", callback=type_sound2)
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#b2cd68")
@@ -171,18 +170,27 @@ label start:
    
     m "허나 두려움에 진실을 외면하는 것은, 기사로서 가장 비겁한 일이겠지."
 
+    show 마주 at Transform(xalign=0.5, yalign=0.2) 
     h "허허… 그게 언제적 얘기요?"
 
     h "귀신이니 실종이니, 다 뻔한 헛소문 아닙니까."
+
+    hide 마주
 
     m "벨포르 가의 이름으로 맹세하노니,"
     scene 저택 with vpunch
 
     m "{size=+10}내가 이 저택에 깃든 모든 어둠을 밝혀내리라!!{/size}"
+    
+    show 마주생각 at Transform(xalign=0.5, yalign=0.2) 
 
     h "벨포르라 했소? 그 가문도 한때 유명하긴 했지."
+    
+    show 마주 at Transform(xalign=0.5, yalign=0.2) 
 
     h "뭐, 요즘 세상에 기사도니 명예니 따지는 양반은 선생뿐일 겁니다. 하하."
+    
+    hide 마주 with dissolve
 
     "마차 주인은 돌아갔다."
     
@@ -302,6 +310,8 @@ label first_event:
     g "그래서 너가 그 악령을 처리해주면 나는 좋은 일이니까."
 
     m "그런가. 그럼 나는 악령을 처리하러 가겠다."
+    
+    show adeline idle at Transform(xalign=0.5, yalign=0.2) 
 
     g "아. 이 집에는 많은 유령이 있어. 멀쩡한 유령은 아마 나뿐일꺼야. 조심해."
 
@@ -318,10 +328,11 @@ label mainhall:
                     jump hallway
     menu:
         
-        "여긴 mainhall이다. 어디로 가지?"
+        "자, 그럼 이제 어디로 가볼까까?"
 
         "지하실":
             if underground_lock:
+                play audio "자물쇠 잠긴소리.mp3"
                 "지하실이 잠겨 있다."
                 jump mainhall
             else:
@@ -331,20 +342,25 @@ label mainhall:
                     "아무것도 안보인다."
                     jump mainhall
         "방":
+            play audio "Open door.mp3"
             jump room
 
         "식당":
             if dining_room_lock:
+                play audio "자물쇠 잠긴소리.mp3"
                 "식당 문이 잠겨있다."
                 jump mainhall
             else:
+                play audio "열쇠로 문따는 소리.mp3"
                 "식당 문을 열었다."
                 jump dining_room
         "계단":
+            play audio "걷는소리 구두.mp3"
+            scene black 
             jump two_stair
 
 label two_stair:
-    scene mainhall2 
+    scene mainhall2 with fade
     if garret_info:
         menu:
             "어디로 가지?"
@@ -359,6 +375,8 @@ label two_stair:
                 jump inner_room
 
             "내려간다":
+                play audio "걷는소리 구두.mp3"
+                scene black 
                 jump mainhall
     else:
         menu:
@@ -371,6 +389,8 @@ label two_stair:
                 jump inner_room
 
             "내려간다":
+                play audio "걷는소리 구두.mp3"
+                scene black 
                 jump mainhall
 
 label room:
