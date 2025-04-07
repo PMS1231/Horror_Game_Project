@@ -165,10 +165,11 @@ init:
 # 게임에서 사용할 캐릭터를 정의합니다.
 define m = Character('아르망', color="#044604", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
 define g = Character("아델린", callback=type_sound2, what_font="tway_air.ttf")
-define h = Character("마주", callback=type_sound2)
+define h = Character("마부", callback=type_sound2)
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#b2cd68", callback=type_sound3)
 define l2 = Character('꼬마 유령', color="#b2cd68")
+define G = Character('???')
 
 default p_bar = [0, 0]
 default diary_0 = False
@@ -194,49 +195,54 @@ default photo_count = 0
 default inner_room_first = True
 
 label start:
-    play audio "마차끄는소리 도착.mp3"
+    stop music 
+    play audio "마차소리.mp3"
     scene black 
-    centered "{font=tway_sky.ttf}19XX{/font}"
+    centered "{size=+40}{font=tway_sky.ttf}1 9 X X{/font}{/size}"
+    stop audio 
+    play audio "마차소리 도착.mp3"
     scene black 
     play music "bgm_garden.mp3"
-    centered "{font=tway_sky.ttf}영국, 어느 지방{/font}"
+    centered "{size=+40}{font=tway_sky.ttf}영국, 어느 지방{/font}{/size}"
+    stop audio
+    play audio "bgm_garden.mp3"
+    play music "비.mp3"
     scene black 
     scene forest with fade
     
     show screen stat_overlay
-
-    m "사람들이 사라진다고 하는 저택, 이곳에 도대체 어떤 진실이 숨겨져 있는가…"
+    h "도착이오"
+    h "이 곳이 바로 ??? 저택이오"
+    m "......"
+    m "이 곳인가..."
+    m "{alpha=*0.5}사람들이 계속 사라진다는 대저택...{/alpha}"
+    m "{alpha=*0.5}이곳엔 대체 어떤 진실이 숨겨져 있는가...{/alpha}"
     $ p_bar[0] += 10
    
-    m "허나 두려움에 진실을 외면하는 것은, 기사로서 가장 비겁한 일이겠지."
-    m "저 저택 근처에서는 귀신이 나타나서 사람을 잡아간다고 들었소"
-    m "혹시 그대 이 이야기에 대해서 자세히 알고있는가?"
-    
-    show 마주 at Transform(xalign=0.5, yalign=0.2) 
-    h "허허… 그게 언제적 얘기요?"
-
-    h "귀신이니 실종이니, 다 뻔한 헛소문 아닙니까."
-    h "물론 이 근방에 사는 사람들이라면 모두 알고있는 내용이네만"
-    h "이젠 다들 웃어넘기는 옛 소문이오"
-    h "귀신보다는 세금이 더 무섭지"
-
-    hide 마주
-
-    m "벨포르 가의 이름으로 맹세하노니,"
+    m "{alpha=*0.5}두려움으로부터 진실을 외면하는 것은, 기사로서 가장 비겁한 일{/alpha}"
+    m "벨포르 가의 이름으로 맹세하노니"
     scene 저택 with vpunch
 
-    m "{size=+10}내가 이 저택에 깃든 모든 어둠을 밝혀내리라!!{/size}"
+    m "{size=+10}내가 이 저택에 깃든 모든 어둠을 밝혀내리라!{/size}"
     
     show 마주생각 at Transform(xalign=0.5, yalign=0.2) 
     h "음...?"
-    h "벨포르라 했소?"
-    h "허허, 그 가문도 한 때 유명하긴 했었지"
+    h "벨포르 가문이라고 했소?"
+    h "벨포르라… 오랜만에 듣는 이름이로군"
+    h "허허, 그 가문도 한때는 꽤 이름을 날렸지"
+    h "하지만 요즘은 그 이름을 아는 이조차 많지 않겠소만"
     
+    m "저 저택 근처에서는 귀신이 나타나서 사람을 잡아간다고 들었소"
+    m "그대는 혹시 이 이야기에 대해 알고있는가?"
     hide 마주생각
-
     show 마주 at Transform(xalign=0.5, yalign=0.2) 
+    h "하하 그게 언제적 얘기요?"
+    h "귀신이니 실종이니, 다 뻔한 헛소문 아니오"
+    h "물론 이 근방에 사는 사람들이라면 모두 알고있는 내용이네만"
+    h "이제는 다들 웃어넘기는 옛 소문일뿐이오"
+    h "귀신보다는 세금이 더 무섭지"    
 
-    h "뭐, 요즘 세상에 기사도니 명예니 따지는 양반은 선생밖에 없을거요."
+    h "요즘 세상에 기사도니 명예니 따지는 양반은 아마 선생밖에 없을거요."
     h "하하하"
     
     hide 마주 with dissolve
@@ -255,25 +261,28 @@ label prologue:
     m "이를 어쩐다."
 
     menu:
-        "어떡할까?"
+        "선택하자"
 
         "정문":
             if door:
                 
                 $ door = False
                 
-                m "하등한 자는 담장을 넘고, 도둑은 어둠을 틈타나… 그러나 나는 기사!"
-                m "벨포르 가문의 아르망! 명예로운 자는 언제나 정문으로 들어가는 법!"
+                m "하등한 자는 담장을 넘고, 도둑은 어둠을 틈타지만… 그러나 나는 기사."
+                m "벨포르 가문의 아르망! 명예로운 자는 언제나 정문으로 들어가는 법"
                 play audio "검으로 벽을 두드리는 소리.mp3"
-                m "(검을 들어 자물쇠와 손잡이를 단숨에 내리친다. 하지만 자물쇠와 문은 끄떡도 하지 않는다.)"
+                "검을 들어 자물쇠를 단숨에 내리친다."
+                "자물쇠와 문은 끄떡도 하지 않는다."
                 
                 jump prologue
             else:
                 
-                m "문 하나쯤 내 의지로 열지 못한다면, 이 검은 과연 무엇을 위해 존재한단 말인가!"
+                m "이깟 문조차 내 의지로 열지 못한다면, 이 검은 무얼위해 존재한단 말인가!"
                 
                 play audio "검으로 벽을 두드리는 소리.mp3"
-                m "(다시 한번 검을 들어 자물쇠와 손잡이를 단숨에 내리친다. 문이 쾅 소리와 함께 열리며 먼지가 풀풀 날린다.)"
+                "다시 한번 검을 들어 자물쇠를 단숨에 내리친다." 
+
+                "문이 쾅 소리와 함께 열리며 먼지가 풀풀 날린다."
                 
                 play audio "철문여는소리.mp3"
                 "문이 열렸다."
@@ -291,7 +300,7 @@ label prologue:
             jump first_event
 
 label first_event:
-    stop music
+    stop music 
 
     scene black
     m "오래된 저택이여, 나는 벨포르 가문의 이름으로…"
@@ -306,11 +315,14 @@ label first_event:
     "또각… 또각… 구두 소리 같은 발걸음이 메아리친다."
 
     play music "여자 콧노래.mp3"
-    m "…역시, 단순한 소문은 아니였나보군?"
+    
+    m "이 소리는 뭐지...?"
+    m "......"
+    m "역시, 단순한 소문은 아니였던 모양이로군"
 
     "2층 난간 위, 어둠 속 소녀의 콧노래만이 들릴 뿐이다."
 
-    m "누구냐! 지금 당장 모습을 드러내지 않으면!"
+    m "누구냐! 지금 당장 모습을 드러내라!"
     
     stop music 
     play audio "스크림1.mp3"
@@ -334,7 +346,7 @@ label first_event:
 
     "아르망의 검이 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
     scene mainhall
-    show adeline surprise at Transform(xalign=0.5, yalign=0.2) 
+    show adeline surprise at Transform(xalign=0.5, yalign=0.2) with dissolve
 
     play music "bgm_main.mp3"
     "그리고… 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
@@ -554,20 +566,24 @@ label room:
 
     if room_first_visit:
         $ room_first_visit = False
-        m "흠, 책상 위에 상자가 있군."
-
+        "책상 위에 상자가 놓여있다."
+        m "어디보자, 열쇠는..."
+        m "이건가...?"
         play audio "뛰는소리 구두.mp3"
 
         show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
-        m "음? 열쇠가 있군."
-
-        play audio "뛰는소리 구두.mp3"
-    
-        l "히히히, 내꺼야~" 
+        "바닥에 떨어진 열쇠를 주우려는 순간"
 
         show 꼬마 유령 at Transform(xalign=1.2, yalign=0.2)
         hide 열쇠 
         show 꼬마 유령 at Transform(xalign=-1.2, yalign=0.2) with move
+        "어둠 속 무엇인가, 내 손을 낚아챘다."
+
+        play audio "아이 웃는소리 숏.mp3"
+    
+        l "히히히, 내꺼야~" 
+
+       
 
         m "이놈, 내놔라!"
         l "메롱, 잡을 수 있으면 잡아봐!" 
