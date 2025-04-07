@@ -59,7 +59,8 @@ init:
     image surprise_attack = "images/event/scary.png"
     
     # 아델린 표정
-    image adeline_surprise = "images/chr/adeline_surprise.png"
+    
+    # 배경 이미지
     image black = "images/bg/black.jpg"
     
 init python:
@@ -190,7 +191,7 @@ label first_event:
 
     "아르망의 검이 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
 
-    show adeline_surprise at Transform(xalign=0.5, yalign=0.2) 
+    show adeline surprise at Transform(xalign=0.5, yalign=0.2) 
 
     "그리고… 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
 
@@ -200,7 +201,36 @@ label first_event:
 
     g "…아, 맞다. 나… 이미 죽었지…"
 
+    show adeline embrassed at Transform(xalign=0.5, yalign=0.2) 
+    
     g "후훗… 미안, 네가 그렇게까지 반응할 줄은 몰랐어. 오랜만에 만난 사람이라."
+    
+    g "무슨일로 왔니?"
+
+    m "나는 벨포르 가문의 아르망 드 벨포르! 이 저택에서 귀신이 사람을 잡아간다는 이야기를 듣고 해결하러 왔다!"
+
+    m "너가 그 귀신인가?"
+
+    show adeline 호기심 at Transform(xalign=0.5, yalign=0.2) 
+
+    g "아니. 나의 이름은 아델린 드 로르망. 이 저택의 주인 로르망 백작의 첫째 딸이야."
+
+    g "그리고 너가 찾는 귀신은 아마도 저택 지하실 깊은 곳에 있는 악령일꺼야."
+
+    m "그런 정보를 왜 나에게 알려주지?"
+
+    show adeline sad at Transform(xalign=0.5, yalign=0.2) 
+
+    g "그 악령은 나를 괴롭히거든......"
+
+    g "그래서 너가 그 악령을 처리해주면 나는 좋은 일이니까."
+
+    m "그런가. 그럼 나는 악령을 처리하러 가겠다."
+
+    g "아. 이 집에는 많은 유령이 있어. 멀쩡한 유령은 아마 나뿐일꺼야. 조심해."
+
+    m "헛된 걱정이다!"
+
 
     jump mainhall
 
