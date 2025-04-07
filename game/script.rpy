@@ -167,6 +167,7 @@ default diary_3 = False
 default door = True
 default safe_password = False
 default light = False
+default room_first_visit = True
 default dining_room_lock = True
 default underground_lock = True
 default garret_info = False
@@ -415,28 +416,47 @@ label two_stair:
                 jump mainhall
 
 label room:
-    stop music
     scene room
     play audio "old door2.mp3"
 
-    m "흠, 책상 위에 상자가 있군."
+    if room_first_visit:
+        $ room_first_visit = False
+        m "흠, 책상 위에 상자가 있군."
 
-    play audio "뛰는소리 구두.mp3"
+        play audio "뛰는소리 구두.mp3"
 
-    show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
-    m "음? 열쇠가 있군."
+        show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
+        m "음? 열쇠가 있군."
 
-    play audio "뛰는소리 구두.mp3"
+        play audio "뛰는소리 구두.mp3"
     
-    l "히히히, 내꺼야~" 
+        l "히히히, 내꺼야~" 
 
-    show 꼬마 유령 at Transform(xalign=1.2, yalign=0.2)
-    hide 열쇠 
-    show 꼬마 유령 at Transform(xalign=-1.2, yalign=0.2) with move
+        show 꼬마 유령 at Transform(xalign=1.2, yalign=0.2)
+        hide 열쇠 
+        show 꼬마 유령 at Transform(xalign=-1.2, yalign=0.2) with move
 
-    m "이놈, 내놔라!"
-    m "뭐?! 당장 돌려줘!"
-    jump ghost_chase_game
+        m "이놈, 내놔라!"
+        m "뭐?! 당장 돌려줘!"
+        jump ghost_chase_game
+    else:
+        if not diary_0:
+            $ diary_0 = True
+            m "다시 이 방에 돌아왔다..."
+            show 일기 at Transform(xalign=0.5, yalign=0.2)
+            "구석에서 아까 못보던 일기장을 발견했다."
+            m "음? 일기장..? 누구의 일기장이지?"
+            n "유모의 일기장"
+            n "오늘 도련님이 태어났다."
+            n "백작 부부는 날이 갈수록 도련님에게만 신경을 쏟는다."
+            n "아가씨는 자꾸 혼잣말을 하거나, 거울을 오래 바라본다."
+            nvl clear
+        else:
+            m "이제 더 이상 찾을 건 없는 것 같다."
+    menu:
+        "어디로 갈까?"
+        "나간다":
+            jump mainhall
 
 label ghost_chase_game:
     $ correct_guesses = 0
@@ -517,8 +537,15 @@ label ghost_chase_success:
     m "헉... 헉... 힘들어......"
     #show image 열쇠
     "당신은 열쇠를 되찾았다."
+    $ dining_room_lock = False
+    m "이건.. 식당 열쇠인가?"
+    m "한번 확인해봐야겠군."
 
-    m "여긴 더 볼일이 없는 것 같다.."
+    menu:
+        "어디로 갈까?"
+        
+        "나간다":
+            jump mainhall
 
     if diary_0:
         "아무것도 없다."
