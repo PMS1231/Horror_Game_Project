@@ -80,8 +80,9 @@ init:
     image bg dream = "images/bg/dream.png"
     image forest = "images/bg/forest.png"
     image surprise_attack = "images/event/scary.png"
-    
     image black = "images/bg/black.jpg"
+    image 저택 = "images/bg/저택.png"
+    image 자물쇠 = "images/bg/자물쇠.png"
 
 # 안방 이미지
 init:
@@ -135,7 +136,7 @@ init:
     image adeline_surprise = "images/chr/adeline_surprise.png"
 
 # 게임에서 사용할 캐릭터를 정의합니다.
-define m = Character('아르망', color="#c8ffc8")#, callback=type_sound)
+define m = Character('아르망', color="#c8ffc8", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
 define g = Character("아델린", callback=type_sound2)
 define h = Character("마주", callback=type_sound2)
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
@@ -154,8 +155,15 @@ default underground_lock = True
 default garret_info = False
 
 label start:
-    scene forest
     play audio "마차끄는소리 도착.mp3"
+    scene black 
+    centered "{font=tway_sky.ttf}19XX{/font}"
+    scene black 
+    play music "bgm_garden.mp3"
+    centered "{font=tway_sky.ttf}영국, 어느 지방{/font}"
+    scene black 
+    scene forest with fade
+    
     show screen stat_overlay
 
     m "사람들이 사라진다고 하는 저택, 이곳에 도대체 어떤 진실이 숨겨져 있는가…"
@@ -167,18 +175,18 @@ label start:
 
     h "귀신이니 실종이니, 다 뻔한 헛소문 아닙니까."
 
-    play music "main_theme.mp3"
-
     m "벨포르 가의 이름으로 맹세하노니,"
+    scene 저택 with vpunch
 
-    m "내가 이 저택에 깃든 모든 어둠을 밝혀내리라!!"
+    m "{size=+10}내가 이 저택에 깃든 모든 어둠을 밝혀내리라!!{/size}"
 
     h "벨포르라 했소? 그 가문도 한때 유명하긴 했지."
 
     h "뭐, 요즘 세상에 기사도니 명예니 따지는 양반은 선생뿐일 겁니다. 하하."
 
     "마차 주인은 돌아갔다."
-
+    
+    scene 자물쇠 
     "나무 문은 무겁게 닫혀 있고 녹슨 자물쇠로 굳게 잠겨 있다."
 
     "옆 담장 아래에는 작고 허름한 구멍 하나가 있다."
@@ -199,14 +207,29 @@ label prologue:
                 "문을 부수지 못했다."
                 jump prologue
             else:
+                play sound "검으로 벽을 두드리는 소리.mp3"
                 "다시 한번 두드려 문을 부쉈다."
+                play sound "철문여는소리.mp3"
+                "문이 열렸다."
                 jump first_event
 
         "개구멍":
+            m "생각해보면 큰 문제도 작게 보이는 법"
+            m "무리하게 정문을 부수는 것은 경박함의 상징이 될 수도 있으니."
+            "아르망은 조심스레 개구멍 앞에 쪼그려 앉는다."
+            scene black
+            play audio "기어가다.mp3"
+            m "명예란 때로…"
+            extend "상황에 따라 형태를 바꾸는 법이지… "
+            extend "하아…"
             jump first_event
 
 label first_event:
-    m "오래된 저택이여, 나는 벨포르 가문의 이름으로… 너의 침묵 속에 감춰진 진실을 밝히러 왔노라!"
+    stop music
+
+    scene black
+    m "오래된 저택이여, 나는 벨포르 가문의 이름으로…"
+    m "{size=+10}너의 침묵 속에 감춰진 진실을 밝히러 왔노라!{/size}"
 
     "그 순간, "
     play audio "old door1.mp3"
@@ -235,15 +258,17 @@ label first_event:
     m "사라져라아아앗!! 벨포르의 이름으로!! 이 망령아아아!!"
 
     "그 순간—"
+    
     play audio "여자비명.mp3"
     g "꺄아아아악!!!!!"
 
     "처절하고 놀란, 분명 여자아이의 비명소리가 터져나온다."
 
     "아르망의 검이 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
-
+    scene mainhall
     show adeline surprise at Transform(xalign=0.5, yalign=0.2) 
 
+    play music "bgm_main.mp3"
     "그리고… 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
 
     m "…소녀…?"
@@ -262,7 +287,7 @@ label first_event:
 
     m "너가 그 귀신인가?"
 
-    show adeline 호기심 at Transform(xalign=0.5, yalign=0.2) 
+    show adeline idle at Transform(xalign=0.5, yalign=0.2) 
 
     g "아니. 나의 이름은 아델린 드 로르망. 이 저택의 주인 로르망 백작의 첫째 딸이야."
 
@@ -282,16 +307,17 @@ label first_event:
 
     m "헛된 걱정이다!"
 
-
     jump mainhall
 
 label mainhall:
+    scene mainhall 
     if password_0:
         if password_1:
             if password_2:
                 if password_3:
                     jump hallway
     menu:
+        
         "여긴 mainhall이다. 어디로 가지?"
 
         "지하실":
@@ -318,7 +344,7 @@ label mainhall:
             jump two_stair
 
 label two_stair:
-
+    scene mainhall2 
     if garret_info:
         menu:
             "어디로 가지?"
@@ -348,14 +374,16 @@ label two_stair:
                 jump mainhall
 
 label room:
+    scene room
     m "흠, 책상 위에 상자가 있군."
 
     play audio "걷는 소리2.mp3"
 
     play audio "old door3.mp3"
-
+    show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
     m "음? 열쇠가 있군."
-
+    
+    show 꼬마 유령 at Transform(xalign=0.5, yalign=0.2) 
     l "히히히, 내꺼야~" 
     
     m "이놈, 내놔라!"
@@ -363,6 +391,9 @@ label room:
     l "나 잡으면 줄게!"
 
     m "이 망할 유령!"
+
+
+    l "여기야, 여기~" # 랜덤 사운드 재생
 
     l "여기야, 여기~"
 
@@ -373,17 +404,31 @@ label room:
     m "헉... 헉..."
 
     # gimmick "위의 대사 랜덤 반복 5회"
-
+    hide 꼬마 유령 at Transform(xalign=0.5, yalign=0.2) with dissolve
     play audio "아이 웃는소리 숏.mp3"
     l "즐거웠어! 자, 여기 가져가~ 꺄르륵!"
 
     m "헉... 헉... 힘들어......"
+
+    m "여긴 더 볼일이 없는 것 같다.."
 
     if password_0:
         "아무것도 없다."
     else:
         $ password_0 = True
         "당신은 첫번째 비밀번호를 찾았다."
+        show 일기 at Transform(xalign=0.5, yalign=0.2) 
+
+        n "유모의 일기장"
+
+        n "오늘 도련님이 태어났다."
+
+        n "백작 부부는 날이 갈수록 도련님에게만 신경을 쏟는다."
+
+        n "아가씨는 자꾸 혼잣말을 하거나, 거울을 오래 바라본다."
+        
+        nvl clear
+
         $ dining_room_lock = False
         "당신은 드라이버를 찾았다."
 
@@ -394,12 +439,15 @@ label room:
             jump mainhall
 
 label dining_room:
+    scene 식당
+
     play audio "열쇠로 문따는 소리.mp3"
     "방에서 얻은 열쇠로 문을 연다"
     play audio "철문여는소리.mp3"
     "묵직한 소리와 함께 문이 열린다"
     
     m "식당 문 열쇠였군"
+
     scene 식당
     "어둡고 넓은 식당 내부, 오래된 식탁과 의자들이 줄지어 놓여있다."
     
@@ -410,6 +458,17 @@ label dining_room:
     else:
         $ password_1 = True
         "당신은 세번째 비밀번호를 찾았다."
+        show 일기 at Transform(xalign=0.5, yalign=0.2) 
+        n "주방장의 일기장"
+
+        n "오늘 아가씨는 혼자 밥을 먹는다."
+
+        n "백작님은 회의로 바쁘시고 백작부인은 아들만 돌보신다."
+
+        n "아가씨가 웃는걸 본적아 언제였던가...."
+
+        nvl clear
+
         $ underground_lock = False
         "당신은 지하실 문 열쇠를 찾았다."
 
@@ -420,6 +479,7 @@ label dining_room:
             jump mainhall    
 
 label underground:
+    scene 지하실
 
     if safe_password:
         "아무것도 없다."
@@ -451,6 +511,17 @@ label library:
     else:
         $ password_2 = True
         "당신은 두번째 비밀번호를 찾았다."
+        show 일기 at Transform(xalign=0.5, yalign=0.2) 
+        n "집사의 일기장"
+
+        n "백작님은 도련님에게만 관심을 갖지고 계신다."
+
+        n "업무가 많아 요즘 아가씨를 뵙지 못하였다."
+
+        n "아가씨를 마지막으로 본게 언제 였더라...."
+        
+        nvl clear
+
         $ garret_info = True
         "당신은 다락방 정보에 대해 알았다."
 
@@ -461,6 +532,7 @@ label library:
             jump two_stair   
 
 label inner_room:
+    scene 안방 
     if safe_password:
         if password_3:
             "아무것도 없다."
@@ -483,6 +555,100 @@ label inner_room:
                 if player_input == correct_answer:
                     "끼익... 금고가 열리는 소리가 들린다."
                     "당신은 안방의 금고에서 네번째 일기장을 찾았다."
+                    n "금고 -일기장"
+
+                    n "18xx년 4월 6일"
+
+                    n "오늘, 저택에 낯선 이가 찾아왔다."
+
+                    n "오늘, 저택에 낯선 이가 찾아왔다."
+
+                    n "검은 수도복을 입고, 커다란 성경을 들고,"
+
+                    n "십자가를 흔들며 중얼거리는 남자."
+
+                    n "사람들은 그를 ‘신부님’이라 불렀다."
+
+                    n "처음엔, 그가 나를 구하러 온 줄 알았다."
+
+                    n "그는 어쩌면… 내 외로움을 이해해줄지도 모른다고 생각했다."
+
+                    n "하지만 그는 나를 구원하러 온 게 아니었다."
+
+                    n "그의 입은 ‘악령 퇴치’만을 말했고,"
+
+                    n "그의 눈엔… 내가 사람이 아니었다."
+
+                    n "그래서… 나는 그를 멈췄다."
+
+                    n "그의 목은 너무 가늘었고, 심장은 너무 여렸어."
+
+                    n ""
+
+                    n "18xx년 9월 18일"
+
+                    n "신부가 죽은 그날 이후, 사람들은 더 이상 이 집에 오지 않게 되었다."
+
+                    n "그 신부가 죽기 전 집에 무슨 짓을 한 게 분명하다."
+
+                    n "나는 매일 문 앞을 지켰고, 매일 누구도 오지 않았다."
+
+                    n "가끔 그 신부의 얼굴이 떠오른다."
+
+                    n "그때 그냥… 잠시만 참았더라면…"
+
+                    n ""
+
+                    n "19xx년 1월 6일"
+
+                    n "웃는 연습을 했다."
+
+                    n "말하는 연습도 했다."
+
+                    n "혹시라도 누군가 오면… 반갑게 맞이하고 싶었으니까."
+
+                    n "하지만 오지 않았다."
+
+                    n "거울에 비친 내 얼굴이 낯설다."
+
+                    n "나는 아직 웃고 있는 걸까?"
+
+                    n "아니면 울고 있는 걸까?"
+
+                    n ""
+
+                    n "19xx년 4월 6일"
+
+                    n "오늘, 누군가 왔다."
+
+                    n "거창하게 명예니 뭐니 외치더니,"
+
+                    n "살짝 놀래켜주니 놀라서 마구잡이로 칼을 휘둘렀다."
+
+                    n "정말이지. 웃겨서 죽을 뻔했잖아."
+
+                    n "아, 난 이미 죽었지. 참."
+
+                    n "정말 이상한 사람이다."
+
+                    n "시끄럽고 허세도 많고… 좀 무례하고…"
+
+                    n "그런데 묘하게, 따뜻했다."
+
+                    n "정말 오랜만에, 무언가가 내 안에서 움직이는 느낌이 들었다."
+
+                    n ""
+
+                    n "생각해봤다."
+
+                    n "이번엔… 놓치지 않을 거야."
+
+                    n "어차피 이 집은 나 혼자 쓰기엔 너무 넓고, 너무 외로우니까."
+
+                    n "그러니, 그 남자를 여기에 남겨버리자."
+
+                    n "영원히. 나와 함께."
+
                     $ password_3 = True
                     jump diary4
                 else:
@@ -503,8 +669,9 @@ label inner_room:
         jump two_stair
 
 label garret:
-
-    "다락방이다. 불을 켰다."
+    scene 다락방
+    show 등불 at Transform(xalign=0.5, yalign=0.2) 
+    "다락방이다. 등불을 얻었다."
 
     $ light = True
 
