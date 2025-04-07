@@ -45,6 +45,11 @@ init python:
             renpy.sound.queue(renpy.random.choice(sounds3))
             renpy.sound.queue(renpy.random.choice(sounds3))
             renpy.sound.queue(renpy.random.choice(sounds3))
+#좌/우 사운드 기믹
+init python:
+    import random
+    left_sounds = ["audio/laughmech_left1.mp3","audio/laughmech_left2.mp3","audio/laughmech_left3.mp3"]
+    right_sounds = ["audio/laughmech_right1.mp3","audio/laughmech_right2.mp3","audio/laughmech_right1.mp3"]
 
 #호감도 바 관련 코드
 init:
@@ -155,10 +160,10 @@ define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#b2cd68", callback=type_sound3)
 
 default p_bar = [0, 0]
-default password_0 = False
-default password_1 = False
-default password_2 = False
-default password_3 = False
+default diary_0 = False
+default diary_1 = False
+default diary_2 = False
+default diary_3 = False
 default door = True
 default safe_password = False
 default light = False
@@ -337,10 +342,10 @@ label first_event:
 
 label mainhall:
     scene mainhall 
-    if password_0:
-        if password_1:
-            if password_2:
-                if password_3:
+    if diary_0:
+        if diary_1:
+            if diary_2:
+                if diary_3:
                     jump hallway
     menu:
         
@@ -430,36 +435,96 @@ label room:
     show 꼬마 유령 at Transform(xalign=-1.2, yalign=0.2) with move
 
     m "이놈, 내놔라!"
+    m "뭐?! 당장 돌려줘!"
+    jump ghost_chase_game
 
-    l "나 잡으면 줄게!"
+label ghost_chase_game:
+    $ correct_guesses = 0
+    $ wrong_guesses = 0
+    $ directions = ["left", "right"]
 
-    m "이 망할 유령!"
+    scene black
+    with fade
 
+    "열쇠를 든 유령이 어둠 속으로 사라졌다..."
+    "소리를 잘 듣고 방향을 맞춰야 해..."
 
-    l "여기야, 여기~" # 랜덤 사운드 재생
+    jump ghost_chase_loop
 
-    l "여기야, 여기~"
+label ghost_chase_loop:
+    $ direction = random.choice(directions)
 
-    m "헉... 헉..."
+    if direction == "left":
+        $ sound_file = random.choice(left_sounds)
+        play sound sound_file
+        $ renpy.music.set_pan(-1.0, 0.0, channel="sound")
+    else:
+        $ sound_file = random.choice(right_sounds)
+        play sound sound_file
+        $ renpy.music.set_pan(1.0, 0.0, channel="sound")
 
-    l "여기야 여기! 빨리~"
+    menu:
+        "어디서 소리가 났을까?"
+        "왼쪽":
+            $ choice = "left"
+        "오른쪽":
+            $ choice = "right"
 
-    m "헉... 헉..."
+    if choice == direction:
+        $ ghost_lines = [
+            "여기야~ 여기~!",
+            "아슬아슬했는걸~?",
+            "으하하! 잡아봐라~!"
+            ]
+        $ player_lines = [
+            "헉... 헉... 거기냐?!",
+            "이제 잡을 수 있을 것 같아!",
+            "거기 서!! 이번엔 놓치지 않아!"
+            ]
+        $ correct_guesses += 1
+        $ g_line = random.choice(ghost_lines)
+        $ p_line = random.choice(player_lines)
+        l "[g_line]"
+        m "[p_line]"
+    else:
+        $ ghost_lines = [
+            "유령: 엇~ 틀렸어~ ㅋㅋ",
+            "유령: 반대쪽이야~ 바보~",
+            "유령: 캬하하! 아직 멀었는걸~"
+            ]
+        $ player_lines = [
+            "주인공: 이런... 놓쳤다...",
+            "주인공: 다시 집중해야겠어...",
+            "주인공: 어디로 간 거지...?"
+            ]
+        $ wrong_guesses += 1
+        $ g_line = random.choice(ghost_lines)
+        $ p_line = random.choice(player_lines)
+        l "[g_line]"
+        m "[p_line]"
 
-    # gimmick "위의 대사 랜덤 반복 5회"
+    if correct_guesses >= 5:
+        jump ghost_chase_success
+    elif wrong_guesses >= 2:
+        jump ghost_chase_fail
+    else:
+        jump ghost_chase_loop
+
+label ghost_chase_success:
     hide 꼬마 유령 at Transform(xalign=0.5, yalign=0.2) with dissolve
     play audio "아이 웃는소리 숏.mp3"
     l "즐거웠어! 자, 여기 가져가~ 꺄르륵!"
-
     m "헉... 헉... 힘들어......"
+    #show image 열쇠
+    "당신은 열쇠를 되찾았다."
 
     m "여긴 더 볼일이 없는 것 같다.."
 
-    if password_0:
+    if diary_0:
         "아무것도 없다."
     else:
-        $ password_0 = True
-        "당신은 첫번째 비밀번호를 찾았다."
+        $ diary_0 = True
+        "당신은 첫번째 일기를 찾았다."
         show 일기 at Transform(xalign=0.5, yalign=0.2) 
 
         n "유모의 일기장"
@@ -481,6 +546,23 @@ label room:
         "나간다":
             jump mainhall
 
+label ghost_chase_fail:
+    #play sound "audio/jumpscare.mp3"
+    #scene expression "images/jumpscare.jpg" with vpunch 갑툭튀 이미지나 사운드 
+    "갑툭튀 사진이 나와서 주인공은 죽었다."
+    jump ghost_chase_retry
+
+label ghost_chase_retry:
+    scene black with dissolve
+    $ correct_guesses = 0
+    $ wrong_guesses = 0
+    m "크윽.. 잠시 정신을 잃었었나 봐..."
+    m "하지만 열쇠는 반드시 찾아야 해..."
+
+    "유령의 숨소리가 다시 들리기 시작했다..."
+
+    jump ghost_chase_loop
+
 label dining_room:
     scene 식당
 
@@ -496,10 +578,10 @@ label dining_room:
     
     m "(천천히 안으로 걸으며) 기묘하군... 의자가 모두 붙어 있는데, 저 하나만 왜 저렇게 떨어져 있지?"
 
-    if password_1:
+    if diary_1:
         "아무것도 없다."
     else:
-        $ password_1 = True
+        $ diary_1 = True
         "당신은 세번째 비밀번호를 찾았다."
         show 일기 at Transform(xalign=0.5, yalign=0.2) 
         n "주방장의 일기장"
@@ -552,7 +634,7 @@ label library:
     if safe_password:
         "아무것도 없다."
     else:
-        $ password_2 = True
+        $ diary_2 = True
         "당신은 두번째 비밀번호를 찾았다."
         show 일기 at Transform(xalign=0.5, yalign=0.2) 
         n "집사의 일기장"
@@ -577,7 +659,7 @@ label library:
 label inner_room:
     scene 안방 
     if safe_password:
-        if password_3:
+        if diary_3:
             "아무것도 없다."
         else:
             scene black with fade #안방 이미지
@@ -692,7 +774,7 @@ label inner_room:
 
                     n "영원히. 나와 함께."
 
-                    $ password_3 = True
+                    $ diary_3 = True
                     jump diary4
                 else:
                     m "그건 아닌 것 같아... 다시 생각해보자."
