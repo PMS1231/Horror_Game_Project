@@ -2,9 +2,53 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 336: expected ':' not found.
-    else
-        ^
+File "game/script.rpy", line 392: expected statement.
+    nvl "유모의 일기장"
+       ^
+
+File "game/script.rpy", line 394: expected statement.
+    nvl "오늘 도련님이 태어났다."
+       ^
+
+File "game/script.rpy", line 396: expected statement.
+    nvl "백작 부부는 날이 갈수록 도련님에게만 신경을 쏟는다."
+       ^
+
+File "game/script.rpy", line 398: expected statement.
+    nvl "아가씨는 자꾸 혼잣말을 하거나, 거울을 오래 바라본다."
+       ^
+
+File "game/script.rpy", line 428: expected statement.
+    nvl "주방장의 일기장"
+       ^
+
+File "game/script.rpy", line 430: expected statement.
+    nvl "오늘 아가씨는 혼자 밥을 먹는다."
+       ^
+
+File "game/script.rpy", line 432: expected statement.
+    nvl "백작님은 회의로 바쁘시고 백작부인은 아들만 돌보신다."
+       ^
+
+File "game/script.rpy", line 434: expected statement.
+    nvl "아가씨가 웃는걸 본적아 언제였던가...."
+       ^
+
+File "game/script.rpy", line 479: expected statement.
+    nvl "집사의 일기장"
+       ^
+
+File "game/script.rpy", line 481: expected statement.
+    nvl "백작님은 도련님에게만 관심을 갖지고 계신다."
+       ^
+
+File "game/script.rpy", line 483: expected statement.
+    nvl "업무가 많아 요즘 아가씨를 뵙지 못하였다."
+       ^
+
+File "game/script.rpy", line 485: expected statement.
+    nvl "아가씨를 마지막으로 본게 언제 였더라...."
+       ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Sun Apr  6 23:30:39 2025
+Mon Apr  7 15:19:01 2025
