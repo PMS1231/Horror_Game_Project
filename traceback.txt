@@ -1,26 +1,30 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 417, in script
-    $ clears += 1
-  File "game/script.rpy", line 417, in <module>
-    $ clears += 1
-NameError: name 'clears' is not defined
+  File "game/script.rpy", line 213, in script
+    show adeline embrassed at Transform(xalign=0.5, yalign=0.2)
+Exception: Image 'adeline' does not accept attributes 'embrassed'.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 417, in script
-    $ clears += 1
-  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\seung\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/script.rpy", line 417, in <module>
-    $ clears += 1
-NameError: name 'clears' is not defined
+  File "game/script.rpy", line 213, in script
+    show adeline embrassed at Transform(xalign=0.5, yalign=0.2)
+  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\ast.py", line 1124, in execute
+    show_imspec(self.imspec, atl=getattr(self, "atl", None))
+  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\ast.py", line 1087, in show_imspec
+    renpy.config.show(name,
+  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\exports\displayexports.py", line 477, in show
+    if not base.find_target() and renpy.config.missing_show:
+  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\display\image.py", line 421, in find_target
+    self.target = target._duplicate(a)
+  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\display\displayable.py", line 249, in _duplicate
+    args.extraneous()
+  File "C:\Users\Home\Desktop\renpy-8.3.7-sdk\renpy\display\displayable.py", line 109, in extraneous
+    raise Exception("Image '{}' does not accept attributes '{}'.".format(
+Exception: Image 'adeline' does not accept attributes 'embrassed'.
 
 Windows-10-10.0.19045 AMD64
 Ren'Py 8.3.7.25031702
 Project_Horror 1.0
-Sun Apr  6 22:34:55 2025
+Mon Apr  7 11:08:50 2025
