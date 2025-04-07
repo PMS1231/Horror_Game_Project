@@ -45,6 +45,7 @@ init python:
             renpy.sound.queue(renpy.random.choice(sounds3))
             renpy.sound.queue(renpy.random.choice(sounds3))
             renpy.sound.queue(renpy.random.choice(sounds3))
+            
 #좌/우 사운드 기믹
 init python:
     import random
@@ -167,6 +168,7 @@ default diary_3 = False
 default door = True
 default safe_password = False
 default light = False
+default room_first_visit = True
 default dining_room_lock = True
 default underground_lock = True
 default garret_info = False
@@ -415,28 +417,47 @@ label two_stair:
                 jump mainhall
 
 label room:
-    stop music
     scene room
     play audio "old door2.mp3"
 
-    m "흠, 책상 위에 상자가 있군."
+    if room_first_visit:
+        $ room_first_visit = False
+        m "흠, 책상 위에 상자가 있군."
 
-    play audio "뛰는소리 구두.mp3"
+        play audio "뛰는소리 구두.mp3"
 
-    show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
-    m "음? 열쇠가 있군."
+        show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
+        m "음? 열쇠가 있군."
 
-    play audio "뛰는소리 구두.mp3"
+        play audio "뛰는소리 구두.mp3"
     
-    l "히히히, 내꺼야~" 
+        l "히히히, 내꺼야~" 
 
-    show 꼬마 유령 at Transform(xalign=1.2, yalign=0.2)
-    hide 열쇠 
-    show 꼬마 유령 at Transform(xalign=-1.2, yalign=0.2) with move
+        show 꼬마 유령 at Transform(xalign=1.2, yalign=0.2)
+        hide 열쇠 
+        show 꼬마 유령 at Transform(xalign=-1.2, yalign=0.2) with move
 
-    m "이놈, 내놔라!"
-    m "뭐?! 당장 돌려줘!"
-    jump ghost_chase_game
+        m "이놈, 내놔라!"
+        m "뭐?! 당장 돌려줘!"
+        jump ghost_chase_game
+    else:
+        if not diary_0:
+            $ diary_0 = True
+            m "다시 이 방에 돌아왔다..."
+            show 일기 at Transform(xalign=0.5, yalign=0.2)
+            "구석에서 아까 못보던 일기장을 발견했다."
+            m "음? 일기장..? 누구의 일기장이지?"
+            n "유모의 일기장"
+            n "오늘 도련님이 태어났다."
+            n "백작 부부는 날이 갈수록 도련님에게만 신경을 쏟는다."
+            n "아가씨는 자꾸 혼잣말을 하거나, 거울을 오래 바라본다."
+            nvl clear
+        else:
+            m "이제 더 이상 찾을 건 없는 것 같다."
+    menu:
+        "어디로 갈까?"
+        "나간다":
+            jump mainhall
 
 label ghost_chase_game:
     $ correct_guesses = 0
@@ -517,8 +538,15 @@ label ghost_chase_success:
     m "헉... 헉... 힘들어......"
     #show image 열쇠
     "당신은 열쇠를 되찾았다."
+    $ dining_room_lock = False
+    m "이건.. 식당 열쇠인가?"
+    m "한번 확인해봐야겠군."
 
-    m "여긴 더 볼일이 없는 것 같다.."
+    menu:
+        "어디로 갈까?"
+        
+        "나간다":
+            jump mainhall
 
     if diary_0:
         "아무것도 없다."
@@ -607,6 +635,7 @@ label underground:
     scene 지하실
 
     if safe_password:
+        scene 지하실괴물 # at center
         "아무것도 없다."
     else:
         $ safe_password = True
@@ -680,100 +709,7 @@ label inner_room:
                 if player_input == correct_answer:
                     "끼익... 금고가 열리는 소리가 들린다."
                     "당신은 안방의 금고에서 네번째 일기장을 찾았다."
-                    n "금고 -일기장"
-
-                    n "18xx년 4월 6일"
-
-                    n "오늘, 저택에 낯선 이가 찾아왔다."
-
-                    n "오늘, 저택에 낯선 이가 찾아왔다."
-
-                    n "검은 수도복을 입고, 커다란 성경을 들고,"
-
-                    n "십자가를 흔들며 중얼거리는 남자."
-
-                    n "사람들은 그를 ‘신부님’이라 불렀다."
-
-                    n "처음엔, 그가 나를 구하러 온 줄 알았다."
-
-                    n "그는 어쩌면… 내 외로움을 이해해줄지도 모른다고 생각했다."
-
-                    n "하지만 그는 나를 구원하러 온 게 아니었다."
-
-                    n "그의 입은 ‘악령 퇴치’만을 말했고,"
-
-                    n "그의 눈엔… 내가 사람이 아니었다."
-
-                    n "그래서… 나는 그를 멈췄다."
-
-                    n "그의 목은 너무 가늘었고, 심장은 너무 여렸어."
-
-                    n ""
-
-                    n "18xx년 9월 18일"
-
-                    n "신부가 죽은 그날 이후, 사람들은 더 이상 이 집에 오지 않게 되었다."
-
-                    n "그 신부가 죽기 전 집에 무슨 짓을 한 게 분명하다."
-
-                    n "나는 매일 문 앞을 지켰고, 매일 누구도 오지 않았다."
-
-                    n "가끔 그 신부의 얼굴이 떠오른다."
-
-                    n "그때 그냥… 잠시만 참았더라면…"
-
-                    n ""
-
-                    n "19xx년 1월 6일"
-
-                    n "웃는 연습을 했다."
-
-                    n "말하는 연습도 했다."
-
-                    n "혹시라도 누군가 오면… 반갑게 맞이하고 싶었으니까."
-
-                    n "하지만 오지 않았다."
-
-                    n "거울에 비친 내 얼굴이 낯설다."
-
-                    n "나는 아직 웃고 있는 걸까?"
-
-                    n "아니면 울고 있는 걸까?"
-
-                    n ""
-
-                    n "19xx년 4월 6일"
-
-                    n "오늘, 누군가 왔다."
-
-                    n "거창하게 명예니 뭐니 외치더니,"
-
-                    n "살짝 놀래켜주니 놀라서 마구잡이로 칼을 휘둘렀다."
-
-                    n "정말이지. 웃겨서 죽을 뻔했잖아."
-
-                    n "아, 난 이미 죽었지. 참."
-
-                    n "정말 이상한 사람이다."
-
-                    n "시끄럽고 허세도 많고… 좀 무례하고…"
-
-                    n "그런데 묘하게, 따뜻했다."
-
-                    n "정말 오랜만에, 무언가가 내 안에서 움직이는 느낌이 들었다."
-
-                    n ""
-
-                    n "생각해봤다."
-
-                    n "이번엔… 놓치지 않을 거야."
-
-                    n "어차피 이 집은 나 혼자 쓰기엔 너무 넓고, 너무 외로우니까."
-
-                    n "그러니, 그 남자를 여기에 남겨버리자."
-
-                    n "영원히. 나와 함께."
-
+                    
                     $ diary_3 = True
                     jump diary4
                 else:
@@ -781,8 +717,102 @@ label inner_room:
                     jump input_loop
 
             label diary4:
+                
+                n "금고 -일기장"
+
+                n "18xx년 4월 6일"
+
+                n "오늘, 저택에 낯선 이가 찾아왔다."
+
+                n "오늘, 저택에 낯선 이가 찾아왔다."
+
+                n "검은 수도복을 입고, 커다란 성경을 들고,"
+
+                n "십자가를 흔들며 중얼거리는 남자."
+
+                n "사람들은 그를 ‘신부님’이라 불렀다."
+
+                n "처음엔, 그가 나를 구하러 온 줄 알았다."
+
+                n "그는 어쩌면… 내 외로움을 이해해줄지도 모른다고 생각했다."
+
+                n "하지만 그는 나를 구원하러 온 게 아니었다."
+
+                n "그의 입은 ‘악령 퇴치’만을 말했고,"
+
+                n "그의 눈엔… 내가 사람이 아니었다."
+
+                n "그래서… 나는 그를 멈췄다."
+
+                n "그의 목은 너무 가늘었고, 심장은 너무 여렸어."
+
+                n ""
+
+                n "18xx년 9월 18일"
+
+                n "신부가 죽은 그날 이후, 사람들은 더 이상 이 집에 오지 않게 되었다."
+
+                n "그 신부가 죽기 전 집에 무슨 짓을 한 게 분명하다."
+
+                n "나는 매일 문 앞을 지켰고, 매일 누구도 오지 않았다."
+
+                n "가끔 그 신부의 얼굴이 떠오른다."
+
+                n "그때 그냥… 잠시만 참았더라면…"
+
+                n ""
+
+                n "19xx년 1월 6일"
+
+                n "웃는 연습을 했다."
+
+                n "말하는 연습도 했다."
+
+                n "혹시라도 누군가 오면… 반갑게 맞이하고 싶었으니까."
+
+                n "하지만 오지 않았다."
+
+                n "거울에 비친 내 얼굴이 낯설다."
+
+                n "나는 아직 웃고 있는 걸까?"
+
+                n "아니면 울고 있는 걸까?"
+
+                n ""
+
+                n "19xx년 4월 6일"
+
+                n "오늘, 누군가 왔다."
+
+                n "거창하게 명예니 뭐니 외치더니,"
+
+                n "살짝 놀래켜주니 놀라서 마구잡이로 칼을 휘둘렀다."
+
+                n "정말이지. 웃겨서 죽을 뻔했잖아."
+
+                n "아, 난 이미 죽었지. 참."
+
+                n "정말 이상한 사람이다."
+
+                n "시끄럽고 허세도 많고… 좀 무례하고…"
+
+                n "그런데 묘하게, 따뜻했다."
+
+                n "정말 오랜만에, 무언가가 내 안에서 움직이는 느낌이 들었다."
+
+                n ""
+
+                n "생각해봤다."
+
+                n "이번엔… 놓치지 않을 거야."
+
+                n "어차피 이 집은 나 혼자 쓰기엔 너무 넓고, 너무 외로우니까."
+
+                n "그러니, 그 남자를 여기에 남겨버리자."
+
+                n "영원히. 나와 함께."
+
                 nvl clear
-                n "일기내용 어쩌고 저쩌고.."
                 
                 menu:
                     "어디로 갈까?"
@@ -910,6 +940,7 @@ label hallway_loop:
 label next_room:
     scene bg dream
     with fade
+       
     m "여긴... 드디어 마지막 방인가...?"
     
     menu:
