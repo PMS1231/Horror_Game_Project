@@ -3,6 +3,13 @@ define sounds = ['audio/Man_Typing_long.mp3', 'audio/Man_Typing_short.mp3']
 define sounds2 = ['audio/Woman_Typing_long.mp3', 'audio/Woman_Typing_short.mp3']
 define sounds3 = ['audio/아이 웃는소리.mp3', 'audio/아이 웃는소리 숏.mp3']
 
+# 메인홀 브금 재생 관련 코드 
+init python:
+    def bgm_not_playing():
+        return renpy.music.get_playing(channel="music") != "bgm_main.mp3"
+
+    def bgm_not_playing2():
+        return renpy.music.get_playing(channel="music") != "bgm_piano.mp3"
 # 사운드 관련 코드
 init python:
     def type_sound(event, interact=True, **kwargs):
@@ -101,13 +108,12 @@ init:
     image bg dream = "images/bg/dream.png"
     image forest = "images/bg/forest.png"
     image surprise_attack = "images/event/scary.png"
+    image surprise_attack2 = "images/event/scary2.png"
     image black = "images/bg/black.jpg"
     image 저택 = "images/bg/저택.png"
     image 자물쇠 = "images/bg/자물쇠.png"
-
+    image 샹들리에 = "images/obj/샹들리에.png"
 # 안방 이미지
-init:
-    image hidden_word = "hidden_word.jpg"
 
 #특수복도 이미지
 init:
@@ -162,6 +168,7 @@ define g = Character("아델린", callback=type_sound2, what_font="tway_air.ttf"
 define h = Character("마주", callback=type_sound2)
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#b2cd68", callback=type_sound3)
+define l2 = Character('꼬마 유령', color="#b2cd68")
 
 default p_bar = [0, 0]
 default diary_0 = False
@@ -169,20 +176,30 @@ default diary_1 = False
 default diary_2 = False
 default diary_3 = False
 default door = True
-default safe_password = False
+default safe_info = False
 default light = False
 default room_first_visit = True
 default dining_room_lock = True
 default underground_lock = True
+default inner_room_lock = True
 default garret_info = False
+default chandelier_count = 0
+default dining_room_first = True
+default first_event_check = True
+default library_first = True
+default garret_to_first = True
+default underground_first = True
+default safe_password = False
+default photo_count = 0
+default inner_room_first = True
 
 label start:
     play audio "마차끄는소리 도착.mp3"
     scene black 
     centered "{font=tway_sky.ttf}19XX{/font}"
     scene black 
-    centered "{font=tway_sky.ttf}영국, 어느 지방{/font}"
     play music "bgm_garden.mp3"
+    centered "{font=tway_sky.ttf}영국, 어느 지방{/font}"
     scene black 
     scene forest with fade
     
@@ -291,7 +308,7 @@ label first_event:
     play music "여자 콧노래.mp3"
     m "…역시, 단순한 소문은 아니였나보군?"
 
-    m "2층 난간 위, 붉은 눈만이 어둠 속에서 번뜩인다."
+    "2층 난간 위, 어둠 속 소녀의 콧노래만이 들릴 뿐이다."
 
     m "누구냐! 지금 당장 모습을 드러내지 않으면!"
     
@@ -363,12 +380,35 @@ label first_event:
     jump mainhall
 
 label mainhall:
+    # 엔딩 조건
     scene mainhall 
     if diary_0:
         if diary_1:
             if diary_2:
                 if diary_3:
                     jump hallway
+
+    # 샹들리에 이벤트
+    if chandelier_count == 5:
+        $ chandelier_count += 1
+        show 샹들리에 at Transform(xalign=0.5, yalign=0.2) 
+
+        menu:
+            "샹들리에가 떨어져있다."
+
+            "떨어진 샹들리에를 확인해본다":
+                $ safe_password = True
+                m "이건.."
+                show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) 
+                m "어딘가의 암호처럼 보이는데"
+                play audio "item1.ogg"
+                "당신은 비밀번호 힌트를 획득 했다."
+                hide 단어퍼즐
+        hide 샹들리에
+
+    if bgm_not_playing():
+        play music "bgm_main.mp3"
+
     menu:
         
         "자, 그럼 이제 어디로 가볼까?"
@@ -380,14 +420,22 @@ label mainhall:
                 jump mainhall
             else:
                 if light:
+                    stop music
                     jump underground
                 else:
-                    n "끼이익 하고 문이 열린다."
-
-                    n "아르망이 들어가려 하자, 여성의 비명소리가 들리며 무언가가 다가온다."
-                    show 지하실괴물 at Transform(xalign=0.5, yalign=0.2) 
-                    n "어떠한 힘에 의해 아르망은 뒤로 밀려 넘어져 들어가지 못하였다."
-
+                    stop music
+                    play audio "old door2.mp3"
+                    "끼이익 하고 문이 열린다."
+                    scene black with dissolve
+                    play audio "돌풍.mp3"
+                    "칠흑 같은 어둠속엔 바람 소리만 들리며,"
+                    extend "한 치 앞도 보이지 않는다."
+                    "어둠 속으로 들어가려 한 그 순간," 
+                    play audio "Monster5.ogg"
+                    scene 지하실괴물
+                    "괴물의 울음소리가 들리며 무언가가 아르망을 덮쳤다"
+                    hide 지하실 괴물
+                    "아르망은 어떠한 힘에 의해 뒤로 밀려 넘어져 들어가지 못하였다."
                     m "크윽... 내가 이런 굴욕을 받다니..."
                     jump mainhall
         "방":
@@ -400,8 +448,6 @@ label mainhall:
                 m "문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다. 열쇠를 찾아보자"
                 jump mainhall
             else:
-                play audio "열쇠로 문따는 소리.mp3"
-                "식당 문을 열었다."
                 jump dining_room
         "계단":
             play audio "걷는소리 구두.mp3"
@@ -410,25 +456,65 @@ label mainhall:
 
 label two_stair:
     scene mainhall2 with fade
+
+    if chandelier_count == 4:
+        play audio "샹들리에 박살.mp3"
+        m "!!"
+        m "뭐지? 1층에서 난 소리 같은데."
+        $ chandelier_count += 1
+    elif chandelier_count == 5:
+        m "아까 들린 소리가 신경쓰인다."
+        m "1층으로 내려가보자."
+        jump mainhall
+    else:
+        $ chandelier_count += 1
+
+
     if garret_info:
-        menu:
-            "어디로 가지?"
+        if garret_to_first:
+            menu:
+                "어디로 가지?"
 
-            "다락방":
-                "천장을 유심히 보니 뭔가 이상한곳이있다"
-                "천장을 쌔게 쳐보니 계단이 내려온다"
-                jump garret
+                "천장을 살펴본다":
+                    jump garret_first
 
-            "서재":
-                jump library
+                "서재":
+                    jump library
 
-            "안방":
-                jump inner_room
+                "안방":
+                    if inner_room_lock:
+                        play audio "자물쇠 잠긴소리.mp3"
+                        m "문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다. 열쇠를 찾아보자"
+                        jump two_stair
+                    else:
+                        jump inner_room
 
-            "내려간다":
-                play audio "걷는소리 구두.mp3"
-                scene black with fade
-                jump mainhall
+                "내려간다":
+                    play audio "걷는소리 구두.mp3"
+                    scene black with fade
+                    jump mainhall
+        else:            
+            menu:
+                "어디로 가지?"
+
+                "다락방":
+                    jump garret
+
+                "서재":
+                    jump library
+
+                "안방":
+                    if inner_room_lock:
+                        play audio "자물쇠 잠긴소리.mp3"
+                        m "문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다. 열쇠를 찾아보자"
+                        jump two_stair
+                    else:
+                        jump inner_room
+
+                "내려간다":
+                    play audio "걷는소리 구두.mp3"
+                    scene black with fade
+                    jump mainhall
     else:
         menu:
             "어디로 가지?"
@@ -437,14 +523,32 @@ label two_stair:
                 jump library
 
             "안방":
-                jump inner_room
+                if inner_room_lock:
+                    play audio "자물쇠 잠긴소리.mp3"
+                    m "문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다. 열쇠를 찾아보자"
+                    jump two_stair
+                else:
+                    jump inner_room
 
             "내려간다":
                 play audio "걷는소리 구두.mp3"
                 scene black with fade
                 jump mainhall
 
+label garret_first:
+        $ garret_to_first = False
+        "천장을 유심히 보니 뭔가 이상한 곳이 있다"
+        menu: 
+            "강하게 두드려본다.":
+                play audio "문두들기는소리.mp3"
+                scene mainhall2 with vpunch
+                "천장을 쌔게 쳐보니 계단이 내려온다"
+                scene 다락방계단 with dissolve
+        m "호오, 이런 곳에 정말 다락방이 있었군."
+        jump two_stair
+
 label room:
+    stop music
     scene room
     play audio "old door2.mp3"
 
@@ -566,12 +670,15 @@ label ghost_chase_loop:
         jump ghost_chase_loop
 
 label ghost_chase_success:
-    hide 꼬마 유령 at Transform(xalign=0.5, yalign=0.2) with dissolve
-    play audio "아이 웃는소리 숏.mp3"
+    scene room
+    show 꼬마 유령 at Transform(xalign=0.5, yalign=0.2) with dissolve
     l "즐거웠어! 자, 여기 가져가~ 꺄르륵!"
-    m "헉... 헉... 힘들어......"
-    #show image 열쇠
+    show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
+    play audio "item1.ogg"    
     "당신은 열쇠를 되찾았다."
+    hide 열쇠
+    m "헉... 헉... 힘들어......"
+    hide 꼬마 유령 with dissolve
     $ dining_room_lock = False
     m "이건.. 식당 열쇠인가?"
     m "한번 확인해봐야겠군."
@@ -583,9 +690,11 @@ label ghost_chase_success:
             jump mainhall
 
 label ghost_chase_fail:
-    #play sound "audio/jumpscare.mp3"
-    #scene expression "images/jumpscare.jpg" with vpunch 갑툭튀 이미지나 사운드 
-    "갑툭튀 사진이 나와서 주인공은 죽었다."
+    l2 "너.. 제대로 안하지?"
+    l2 "..재미 없어졌어"
+    play audio "여자비명2.mp3"
+    scene surprise_attack2
+    "..!!!"
     jump ghost_chase_retry
 
 label ghost_chase_retry:
@@ -600,265 +709,370 @@ label ghost_chase_retry:
     jump ghost_chase_loop
 
 label dining_room:
-    scene 식당
+    if dining_room_first:
+        $ dining_room_first = False
+        play audio "열쇠로 문따는 소리.mp3"
+        "방에서 얻은 열쇠로 문을 연다"
 
-    play audio "열쇠로 문따는 소리.mp3"
-    "방에서 얻은 열쇠로 문을 연다"
-    play audio "철문여는소리.mp3"
-    "묵직한 소리와 함께 문이 열린다"
+        play audio "철문여는소리.mp3"
+        "묵직한 소리와 함께 문이 열린다"
+
+        m "식당 문 열쇠였군"
+
+        scene 식당 with fade
+
+        "어둡고 넓은 식당 내부, 오래된 식탁과 의자들이 줄지어 놓여있다."
+
+        m "(천천히 안으로 걸으며) 기묘하군... 의자가 모두 붙어 있는데, 저 하나만 왜 저렇게 떨어져 있지?"
     
-    m "식당 문 열쇠였군"
-
     scene 식당
-    "어둡고 넓은 식당 내부, 오래된 식탁과 의자들이 줄지어 놓여있다."
-    
-    m "(천천히 안으로 걸으며) 기묘하군... 의자가 모두 붙어 있는데, 저 하나만 왜 저렇게 떨어져 있지?"
-
-    if diary_1:
-        "아무것도 없다."
-    else:
-        $ diary_1 = True
-        "당신은 세번째 비밀번호를 찾았다."
-        show 일기 at Transform(xalign=0.5, yalign=0.2) 
-        n "주방장의 일기장"
-
-        n "오늘 아가씨는 혼자 밥을 먹는다."
-
-        n "백작님은 회의로 바쁘시고 백작부인은 아들만 돌보신다."
-
-        n "아가씨가 웃는걸 본적아 언제였던가...."
-
-        nvl clear
-
-        $ underground_lock = False
-        "당신은 지하실 문 열쇠를 찾았다."
 
     menu:
-        "어디로 갈까?"
+        "어디를 찾아볼까"
+
+        "선반을 뒤져본다":
+            if underground_lock:
+                play audio "서랍소리1.mp3"
+                $ underground_lock = False
+                "서랍 안에 무언가 있다."
+                show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
+                m "이건.. 지하실 문 열쇠인가?"
+                play audio "item1.ogg"
+                "당신은 지하실 열쇠를 획득 했다."
+                jump dining_room
+            else:
+                "여기엔 더 이상 볼 것이 없다."
+                jump dining_room
+            
+        "식기서랍을 뒤져본다":
+            if diary_1:
+                "여기엔 더 이상 볼 것이 없다."
+                jump dining_room
+            else:
+                $ diary_1 = True
+                play audio "서랍소리1.mp3"
+                "식기서랍 안에 무언가 있다."
+                show 일기 at Transform(xalign=0.5, yalign=0.2) 
+                "이건 일기인가?"
+
+                n "주방장의 일기장"
+
+                n "오늘 아가씨는 혼자 밥을 먹는다."
+
+                n "백작님은 회의로 바쁘시고 백작부인은 아들만 돌보신다."
+
+                n "아가씨가 웃는걸 본적아 언제였던가...."
+
+                nvl clear
+                    
+                play audio "item1.ogg"
+                "당신은 주방장의 일기를 획득 했다."
+                jump dining_room
 
         "나간다":
-            jump mainhall    
+            jump mainhall 
 
 label underground:
-    scene 지하실
-    n "지하실로 들어가려 하자 또다시 바람이 불어온다."  # 중간에 괴물출현 시킬지
 
-    n "바람을 등지고 등불에 불을 켜고 앞으로 나아가자 바람이 멈췄다."
+    if bgm_not_playing2():
+        play music "bgm_piano.mp3"
 
-    m "이 불빛만이... 어둠 속 길을 비춰주리라...."
+    if underground_first:
+        $ underground_first = False
+        scene black with dissolve
 
-    n "등불을 켠 채 지하실 안으로 들어서자, 발소리가 메아리치며 울려 퍼진다."
+        play audio "돌풍.mp3"
+        "지하실로 들어가려 하자 또다시 바람이 불어온다."
 
-    n "차가운 기운이 바닥에서부터 올라오는 듯, 그의 몸을 감싼다."
+        play audio "등불 점화.mp3"
+        scene 지하실 with dissolve
+        "바람을 등지고 등불에 불을 켜고 앞으로 나아가자 바람이 멈췄다."
 
-    m "나의 발걸음 소리마저... 이곳의 침묵을 깨트리는군...."
+        m "이 불빛만이... 어둠 속 길을 비춰주리라...."
 
-    n "지하실 안쪽 끝, 낡은 책상과 침대가 놓여 있다. 누군가가 생활했던 흔적이 있다."
+        play audio "걷는소리 구두.mp3"
 
-    m "단순히 버려진 창고가 아니군... 누군가가 여기서 살았던 거 같군."
+        "등불을 켠 채 지하실 안으로 들어서자, 발소리가 메아리치며 울려 퍼진다."
 
-    if safe_password:
-        scene 지하실괴물 # at center
-        "아무것도 없다."
-    else:
-        $ safe_password = True
-        "당신은 금고의 비밀번호를 찾았다."
+        "차가운 기운이 바닥에서부터 올라오는 듯, 그의 몸을 감싼다."
+
+        m "나의 발걸음 소리마저... 이곳의 침묵을 깨트리는군...."
+
+        "지하실 안쪽 끝, 낡은 책상과 침대가 놓여 있다. 누군가가 생활했던 흔적이 있다."
+
+        m "단순히 버려진 창고가 아니군... 누군가가 여기서 살았던 거 같군."
     
     menu:
-        "어디로 갈까?"
-
+        "주변을 뒤져볼까?":
+            if inner_room_lock:
+                $ inner_room_lock = False
+                m "이건.."
+                show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
+                m "안방 열쇠인 것 같군."
+                play audio "item1.ogg"
+                "당신은 안방열쇠를 획득 했다."
+                jump underground
+            else:
+                "아무것도 없다."
+                jump underground
         "나간다":
             jump mainhall    
 
 label library:
+    if library_first:
+        $ library_first = False
+        play audio "old door2.mp3"
+        "문고리를 당기니 서재의 문이 천천히 열렸다."
+        play audio "돌풍.mp3"
+        "문을 열자 바람이 불며 먼지가 날린다"
+        scene 서재 with dissolve
+        m "음... 서재가 많이 크군"
+
     scene 서재
-    play audio "철문여는소리.mp3"
-
-    "문을 열자 바람이 불며 먼지가 날린다"
-    
-    m "음... 서재가 많이 크군"
-    
-    "그 때 스르륵 무언가 끌리는 소리가 들려온다"
-    
-    m "무언가가 있군.... 피하면서 정보를 찾아야 겠어"
-
-
-    if safe_password:
-        "아무것도 없다."
-    else:
-        $ diary_2 = True
-        "당신은 두번째 비밀번호를 찾았다."
-        show 일기 at Transform(xalign=0.5, yalign=0.2) 
-        n "집사의 일기장"
-
-        n "백작님은 도련님에게만 관심을 갖지고 계신다."
-
-        n "업무가 많아 요즘 아가씨를 뵙지 못하였다."
-
-        n "아가씨를 마지막으로 본게 언제 였더라...."
-        
-        nvl clear
-
-        $ garret_info = True
-        "당신은 다락방 정보에 대해 알았다."
 
     menu:
-        "어디로 갈까?"
+        "어디를 찾아볼까."
 
-        "나간다":
-            jump two_stair   
+        "책장의 책을 살펴본다":
+            if garret_info == False:
+                $ garret_info = True
+                play audio "책 꺼내는 소리1.mp3"
+                "당신은 책장의 책을 꺼냈다."
+                play audio "책넘김.mp3"
+                m "이건.."
+                show 메모 at Transform(xalign=0.5, yalign=0.2) 
+                "책을 넘기는 도중 메모를 발견했다."
+                n "다락방 구석의 작은 창문이 다시 열리지 않습니다."
+                n "지난번 비로 나무틀이 휘어진 듯하니, 다음 수리 일정에 포함해야 할 듯합니다."
+                nvl clear
 
-label inner_room:
-    scene 안방 
-    if safe_password:
-        if diary_3:
-            "아무것도 없다."
-        else:
-            scene black with fade #안방 이미지
-            "당신은 방 구석에서 잠긴 금고를 발견했다"
-            "옆에는 수상한 종이가 함께 있다."
-            jump hidden_word
+                m "호오, 이 집에 다락방이 있었군."
+                m "다시 확인해봐야겠어."
+                play audio "item1.ogg"
+                "당신은 다락방에 관한 정보를 획득 했다."
+                jump library
+            else:
+                "여기엔 더 이상 볼 것이 없다."
+                jump library
+            
+        "책장 위를 살펴본다":
+            if diary_2 == False:
+                $ diary_2 = True
+                play audio "책 꺼내는 소리2.mp3"
+                "책장 위를 살펴보니 그곳엔 책이 1권 있었다."
+                show 일기 at Transform(xalign=0.5, yalign=0.2) 
+                m "이건 일기장인가?"
 
-            label hidden_word:
-            show hidden_word with fade
+                n "집사의 일기장"
 
-            m "아까 얻은 종이에 뭔가 단서가 있을 것 같아..."
-            m "단어를 찾아 입력해보자."
+                n "백작님은 도련님에게만 관심을 갖지고 계신다."
 
-            $ correct_answer = "secret"
+                n "업무가 많아 요즘 아가씨를 뵙지 못하였다."
 
-            label input_loop:
-                $ player_input = renpy.input("숨겨진 단어는 무엇일까?").strip().lower()
-                if player_input == correct_answer:
-                    "끼익... 금고가 열리는 소리가 들린다."
-                    "당신은 안방의 금고에서 네번째 일기장을 찾았다."
-                    
-                    $ diary_3 = True
-                    jump diary4
-                else:
-                    m "그건 아닌 것 같아... 다시 생각해보자."
-                    jump input_loop
-
-            label diary4:
-                
-                n "금고 -일기장"
-
-                n "18xx년 4월 6일"
-
-                n "오늘, 저택에 낯선 이가 찾아왔다."
-
-                n "오늘, 저택에 낯선 이가 찾아왔다."
-
-                n "검은 수도복을 입고, 커다란 성경을 들고,"
-
-                n "십자가를 흔들며 중얼거리는 남자."
-
-                n "사람들은 그를 ‘신부님’이라 불렀다."
-
-                n "처음엔, 그가 나를 구하러 온 줄 알았다."
-
-                n "그는 어쩌면… 내 외로움을 이해해줄지도 모른다고 생각했다."
-
-                n "하지만 그는 나를 구원하러 온 게 아니었다."
-
-                n "그의 입은 ‘악령 퇴치’만을 말했고,"
-
-                n "그의 눈엔… 내가 사람이 아니었다."
-
-                n "그래서… 나는 그를 멈췄다."
-
-                n "그의 목은 너무 가늘었고, 심장은 너무 여렸어."
-
-                n ""
-
-                n "18xx년 9월 18일"
-
-                n "신부가 죽은 그날 이후, 사람들은 더 이상 이 집에 오지 않게 되었다."
-
-                n "그 신부가 죽기 전 집에 무슨 짓을 한 게 분명하다."
-
-                n "나는 매일 문 앞을 지켰고, 매일 누구도 오지 않았다."
-
-                n "가끔 그 신부의 얼굴이 떠오른다."
-
-                n "그때 그냥… 잠시만 참았더라면…"
-
-                n ""
-
-                n "19xx년 1월 6일"
-
-                n "웃는 연습을 했다."
-
-                n "말하는 연습도 했다."
-
-                n "혹시라도 누군가 오면… 반갑게 맞이하고 싶었으니까."
-
-                n "하지만 오지 않았다."
-
-                n "거울에 비친 내 얼굴이 낯설다."
-
-                n "나는 아직 웃고 있는 걸까?"
-
-                n "아니면 울고 있는 걸까?"
-
-                n ""
-
-                n "19xx년 4월 6일"
-
-                n "오늘, 누군가 왔다."
-
-                n "거창하게 명예니 뭐니 외치더니,"
-
-                n "살짝 놀래켜주니 놀라서 마구잡이로 칼을 휘둘렀다."
-
-                n "정말이지. 웃겨서 죽을 뻔했잖아."
-
-                n "아, 난 이미 죽었지. 참."
-
-                n "정말 이상한 사람이다."
-
-                n "시끄럽고 허세도 많고… 좀 무례하고…"
-
-                n "그런데 묘하게, 따뜻했다."
-
-                n "정말 오랜만에, 무언가가 내 안에서 움직이는 느낌이 들었다."
-
-                n ""
-
-                n "생각해봤다."
-
-                n "이번엔… 놓치지 않을 거야."
-
-                n "어차피 이 집은 나 혼자 쓰기엔 너무 넓고, 너무 외로우니까."
-
-                n "그러니, 그 남자를 여기에 남겨버리자."
-
-                n "영원히. 나와 함께."
+                n "아가씨를 마지막으로 본게 언제 였더라...."
 
                 nvl clear
-                
-                menu:
-                    "어디로 갈까?"
-                    
-                    "나간다":
-                        jump two_stair
+                play audio "item1.ogg"
+                "당신은 집사의 일기를 획득 했다."
+                jump library
+            else:
+                "여기엔 더 이상 볼 것이 없다."
+                jump library
+
+        "서랍을 뒤져본다":
+            if safe_info == False:
+                $ safe_info = True
+                play audio "서랍소리2.mp3"
+                show 메모 at Transform(xalign=0.5, yalign=0.2) 
+                "서랍 안에 메모가 있다."
+                n "주인님의 건망증이 점점 심해지고 있습니다."
+                n "안방의 금고 비밀번호를 계속 까먹으셔서 따로 메모 해둬야겠습니다."
+                m "안방에 금고가 있었군."
+                m "다시 한번 찾아봐야겠어."
+                nvl clear
+
+                play audio "item1.ogg"
+                "당신은 안방 금고에 관한 정보를 획득 했다."
+                jump library
+            else:
+                "여기엔 더 이상 볼 것이 없다."
+                jump library
+
+        "나간다":
+            jump two_stair
+
+label inner_room:
+
+    stop music
+
+    if inner_room_first:
+        $ inner_room_first = False
+        play audio "old door3.mp3"
+        "안방의 문을 열어 들어갔다."
+        scene 안방 with dissolve
+        m "음... 여기가 안방인가."
+    
+    scene 안방
+
+    menu:
+        "초상화를 살펴본다.":
+            if photo_count == 0:
+                $ photo_count += 1
+                scene 초상화 with dissolve
+                m "흠, 이상하게 생긴 초상화군"
+                jump inner_room
+            elif photo_count == 1:
+                $ photo_count += 1
+                scene 초상화_눈 with dissolve
+                m "음? 저 초상화 원래 눈을 뜨고 있었나?"
+                jump inner_room
+            else:
+                play audio "스크림1.mp3"
+                scene 초상화_공포 
+                m "으악!"
+                jump inner_room
+
+        "주변을 살펴본다.":
+            if safe_info:
+                if safe_password:
+                    scene black with fade #안방 이미지
+                    "당신은 방 구석에서 잠긴 금고를 발견했다"
+                    m "아까 얻은 종이에 뭔가 단서가 있을 것 같아..."
+                    show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) with dissolve
+                    m "단어를 찾아 입력해보자."
+                    $ correct_answer = "adeline"       
+                    jump input_loop
+                else:
+                    "금고가 있지만 비밀번호를 모르겠다."
+                    jump inner_room
+            else:
+                "주변에 아무것도 안보인다."
+                jump inner_room
+        "나간다" :
+            jump two_stair
+
+label input_loop:
+    $ player_input = renpy.input("숨겨진 단어는 무엇일까?").strip().lower()
+
+    if player_input == correct_answer:
+        show 단어퍼즐답 with dissolve
+        "끼익... 금고가 열리는 소리가 들린다."
+        "당신은 안방의 금고에서 네번째 일기장을 찾았다."
+        $ diary_3 = True
+        jump diary4
     else:
-        "금고가 있지만 열리지 않는다."
-        jump two_stair
+        m "그건 아닌 것 같아... 다시 생각해보자."
+        jump input_loop
+
+label diary4:
+
+    play music "bgm_반전.mp3"
+
+    n "금고 -일기장"
+
+    n "18xx년 4월 6일"
+
+    n "오늘, 저택에 낯선 이가 찾아왔다."
+
+    n "오늘, 저택에 낯선 이가 찾아왔다."
+
+    n "검은 수도복을 입고, 커다란 성경을 들고,"
+
+    n "십자가를 흔들며 중얼거리는 남자."
+
+    n "사람들은 그를 ‘신부님’이라 불렀다."
+
+    n "처음엔, 그가 나를 구하러 온 줄 알았다."
+
+    n "그는 어쩌면… 내 외로움을 이해해줄지도 모른다고 생각했다."
+
+    n "하지만 그는 나를 구원하러 온 게 아니었다."
+
+    n "그의 입은 ‘악령 퇴치’만을 말했고,"
+
+    n "그의 눈엔… 내가 사람이 아니었다."
+
+    n "그래서… 나는 그를 멈췄다."
+
+    n "그의 목은 너무 가늘었고, 심장은 너무 여렸어."
+
+    n ""
+
+    n "18xx년 9월 18일"
+
+    n "신부가 죽은 그날 이후, 사람들은 더 이상 이 집에 오지 않게 되었다."
+
+    n "그 신부가 죽기 전 집에 무슨 짓을 한 게 분명하다."
+
+    n "나는 매일 문 앞을 지켰고, 매일 누구도 오지 않았다."
+
+    n "가끔 그 신부의 얼굴이 떠오른다."
+
+    n "그때 그냥… 잠시만 참았더라면…"
+
+    n ""
+
+    n "19xx년 1월 6일"
+
+    n "웃는 연습을 했다."
+
+    n "말하는 연습도 했다."
+
+    n "혹시라도 누군가 오면… 반갑게 맞이하고 싶었으니까."
+
+    n "하지만 오지 않았다."
+
+    n "거울에 비친 내 얼굴이 낯설다."
+
+    n "나는 아직 웃고 있는 걸까?"
+
+    n "아니면 울고 있는 걸까?"
+
+    n ""
+
+    n "19xx년 4월 6일"
+
+    n "오늘, 누군가 왔다."
+
+    n "거창하게 명예니 뭐니 외치더니,"
+
+    n "살짝 놀래켜주니 놀라서 마구잡이로 칼을 휘둘렀다."
+
+    n "정말이지. 웃겨서 죽을 뻔했잖아."
+
+    n "아, 난 이미 죽었지. 참."
+
+    n "정말 이상한 사람이다."
+
+    n "시끄럽고 허세도 많고… 좀 무례하고…"
+
+    n "그런데 묘하게, 따뜻했다."
+
+    n "정말 오랜만에, 무언가가 내 안에서 움직이는 느낌이 들었다."
+
+    n ""
+
+    n "생각해봤다."
+
+    n "이번엔… 놓치지 않을 거야."
+
+    n "어차피 이 집은 나 혼자 쓰기엔 너무 넓고, 너무 외로우니까."
+
+    n "그러니, 그 남자를 여기에 남겨버리자."
+
+    n "영원히. 나와 함께."
+
+    nvl clear
+
+    jump inner_room
 
 label garret:
-    scene 다락방
-    n "오래된 목제가 비명 지르듯 '끼이이익 - 텅' 소리를 낸다."
 
-    n "주변 공기는 싸늘하고 무겁다."
+    "사다리를 조심스레 밟고 올라간다."
 
-    m "이런 곳에 다락방으로 가는 계단이 있었군."
+    scene 다락방 with dissolve
 
-    n "사다리를 조심스레 밟고 올라간다."
-
-    n "숨이 막힐 듯한 어둠 속에 은은한 달빛이 틈새로 스며든다."
-
-    n "갑자기 안쪽에서 오르골 소리가 들려온다."
+    "갑자기 안쪽에서 오르골 소리가 들려온다."
 
     m ".....날 환영하는 소린가?"
 
@@ -975,10 +1189,9 @@ label hallway_loop:
                     jump hallway_loop
 
 label next_room:
-    scene bg dream
-    with fade
+    scene bg dream with dissolve
        
-    m "여긴... 드디어 마지막 방인가...?"
+    m "여긴... 대체...?"
     
     menu:
         "해피엔딩":
