@@ -128,7 +128,7 @@ init python:
     clears = 0
     current_bg = "hallway1_base.jpg"
 
-#캐릭터 이미지
+#캐릭터 이미지 변경
 init:
     # 아델린
     image adeline_surprise = "images/chr/adeline_surprise.png"
