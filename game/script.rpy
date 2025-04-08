@@ -451,6 +451,10 @@ label mainhall:
                     scene black
                     "아르망은 어떠한 힘에 의해 뒤로 밀려 넘어져 들어가지 못하였다."
                     m "크윽... 내가 이런 굴욕을 받다니..."
+                    scene mainhall
+                    g "지하실은 위험해"  ## 대사 내용 수정 필요
+                    m "저 괴물의 정체는 뭐야?"
+                    g "나도 모르겠어"
                     jump mainhall
         "방":
             play audio "Open door.mp3"
@@ -783,7 +787,7 @@ label dining_room:
 
                 n "백작님은 회의로 바쁘시고 백작부인은 아들만 돌보신다."
 
-                n "아가씨가 웃는걸 본적아 언제였던가...."
+                n "아가씨가 웃는걸 본적이 언제였던가...."
 
                 nvl clear
                     
@@ -955,7 +959,17 @@ label inner_room:
                 play audio "스크림1.mp3"
                 scene 초상화_공포 
                 m "으악!"
-                jump inner_room
+                "아르망은 정신을 잃었다."
+                scene mainhall
+                g "정신이 좀 들어? 너 갑자기 기절했더라고."  ## 대사 수정 필요?
+                m "헉..헉.. 방금 그건 뭐였지?"
+                g "뭘 봤길래 호들갑이야?"
+                m "안방에 걸려있는 초상화말이야!"
+                g "응? 우리 집엔 안방에는 초상화가 없는데?"
+                m "뭐..?"
+                g "잘못본거겠지 안좋은 꿈이라도 꾼거야?"
+                m "아니야 그럴리가 없어.. 다시 확인해보자."
+                jump mainhall
 
         "주변을 살펴본다.":
             if safe_info:
