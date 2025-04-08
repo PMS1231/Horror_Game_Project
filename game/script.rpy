@@ -811,7 +811,6 @@ label underground:
         play music "bgm_piano.mp3"
 
     if underground_first:
-        $ underground_first = False
         scene black with dissolve
 
         play audio "돌풍.mp3"
@@ -878,44 +877,62 @@ label underground:
         nvl clear
         window hide
         pause(1.5)
-        a "……감정이 실체가 된 유령? 이건..."
+        m "……감정이 실체가 된 유령? 이건..."
         scene black with fade
-        show adeline idle with dissolve
+        show adeline idle at Transform(xalign=0.5, yalign=0.2) with dissolve 
         "아델린을 말하는 건가…"
         hide adeline idle with dissolve
 
         "그 순간, 지하의 어둠 속에서 희미한 숨소리가 들려온다."
+        scene 지하실괴물 with dissolve
         "조심스레 안으로 들어서자, 고요한 어둠 속에서 짐승의 울음소리가 울려퍼진다."
+        play audio "monster5.ogg"
 
         m "……크르르르릉……"
 
         "거대한 그림자. 사람보다 크고, 형체가 일그러진 괴물이 서서히 모습을 드러낸다."
         "괴물이 포효하며 전속력으로 달려든다."
+        
+        play audio "칼소리.mp3"
+        "아르망은 옆으로 구르며 칼을 뽑았다."
 
-        "아르망은 옆으로 구르며 칼을 휘둘러 괴물의 어깨를 긋는다."
-        "비명과 함께 피가 튀고, 괴물이 반격하듯 발톱을 휘두른다."
-
+        scene 괴물싸움 with hpunch
         m "키에에에에엑!"
 
-        a "악령이든 짐승이든…"
-        a "너 따위에게 무너질 내가 아니야!!"
-
+        m "악령이든 짐승이든…"
+        m "너 따위에게 무너질 내가 아니야!!"
+        
+        scene black
         "괴물의 발톱에 어깨가 긁혀 피가 흐르지만, 그는 몸을 낮추며 괴물의 밑을 파고든다."
         "마지막 일격—칼을 힘껏 들어 괴물의 심장을 찔러 꽂는다!"
 
-        a "사라져라!!!"
-
+        m "사라져라!!!"
+        
+        scene 괴물죽음 with fade
         "칼끝이 박히며, 괴물의 몸이 뒤틀린다."
         "괴성, 그리고 한 줄기 연기와 함께 괴물의 육체가 무너지기 시작한다."
 
+        scene black
         m "외....로.....워...."
 
         "괴물의 형체가 녹아 사라진다. 아르망은 거친 숨을 쉬며 바닥에 주저앉는다."
         "검 끝에 묻은 피가 천천히 사라지고, 주위는 다시 고요해진다."
 
-        "지하실 안쪽 끝, 낡은 옷장과 책상, 침대가 놓여있다. 누군가가 생활했던 흔적이 있다."   
-
-    scene 지하실
+        menu:
+            "더 깊은 곳으로 들어가볼까?":
+                if underground_first:
+                    $ underground_first = False
+                    "지하실 안쪽 끝, 낡은 옷장과 책상, 침대가 놓여있다. 누군가가 생활했던 흔적이 있다."
+                    m "일기의 내용대로 누군가 살았던 흔적이 있군."
+                    "성수의 희미한 빛이 벽장 너머에서 새어나온다."  
+                    show 성수 at Transform(xalign=0.5, yalign=0.2) 
+                    m "이게 일기에 적혀있던 성수인가..."
+                    
+        menu:
+            "성수가 있다."
+                    
+                    scene 지하실 with dissolve
+    
     menu:        
         "주변을 뒤져볼까?":
             if inner_room_lock:
