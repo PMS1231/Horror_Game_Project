@@ -60,7 +60,60 @@ init python:
     import random
     left_sounds = ["audio/laughmech_left1.mp3","audio/laughmech_left2.mp3","audio/laughmech_left3.mp3"]
     right_sounds = ["audio/laughmech_right1.mp3","audio/laughmech_right2.mp3","audio/laughmech_right1.mp3"]
+    import random
 
+    adeline_conversations = [
+        [
+            "아르망 \"어이 유령\"",
+            "아델린 \"나? 나말인가?\"",
+            "아르망 \"너말고 유령이 어디 또있지?\"",
+            "아델린 \"호오...무슨일이야 기사?\"",
+            "아르망 \"이곳의 소문은 사실인가?\"",
+            "아델린 \"소문? 무슨 소문?\"",
+            "아르망 \"이 근처에 귀신이 나타나 사람을 잡아간다는 소문 말이다\"",
+            "아델린 \"내가 여기에 산지 오래됐지만 그런 이야기는 금시초문인걸\"",
+            "아르망 \"너가 하고 숨긴 건 아니고?\"",
+            "아델린 \"하하하하하 웃기는 소리 잘하네\"",
+            "아르망 \"흠..정말인가 보군\""
+        ],
+        [
+            "아델린 \"어이 기사\"",
+            "아르망 \"........\"",
+            "아델린 \"왜 대답을 안해\"",
+            "아르망 \"........\"",
+            "아델린 \"야 기사 대답좀 해봐\"",
+            "아르망 \"나는 기사가 아니라 아르망이다\"",
+            "아르망 \"아르망이라고 불러라 유령\"",
+            "아델린 \"그럼 너도 유령이라 부르지 말고 아델린이라고 불러\"",
+            "아르망 \"생각해보지\"",
+            "아델린 \"이익........두고보자\""
+        ],
+        [
+            "아델린 \"....아르망\"",
+            "아르망 \"왜 부르지?\"",
+            "아델린 \"그냥...심심해서 불러봤어\"",
+            "아르망 \"뭐야 그게, 유령도 심심은 한가보지?\"",
+            "아델린 \"유령..? 나한테 유령이라고 부른거야 지금?\"",
+            "아델린 \"이름으로 부르기로 한거 아니였어?\"",
+            "아르망 \"물론 기억하지 아델린\"",
+            "아델린 \"잘하네!\"",
+            "아르망 \"칭찬해줘서 영광이군. 유령님 마음에 드셧나?\"",
+            "아델린 \"이익..너!!!\"",
+            "아르망 \"하하하하하하\""
+        ],
+        [
+            "아델린 \"…도움이 되는 정보는 많이 얻었어?\"",
+            "아르망 \"그래. 이제 끝이 보이는 거 같아\"",
+            "아델린 \"아....그렇구나...\"", 
+            "아르망 \"왜? 무슨 일 있어?\"",
+            "아델린 \"아니야, 그냥… 네가 너무 바쁘게 돌아다녀서. 매번 다치진 않을까, 또 사라져버리진 않을까 걱정했거든.\"",
+            "아르망 \"걱정해줘서 고마워. 하지만 난 괜찮아. 이제 익숙하니까\"",
+            "아델린 \"그런데...... 악령을 처리하고 나가는게...... 꼭 좋은 일일까?\"",
+            "아르망 \"...무슨 뜻이야?\"",
+            "아델린 \"아니야 그냥 헛소리라고 생각하고 넘어가\"",
+            "아르망 \"........\""
+        ]
+    ]
 #호감도 바 관련 코드
 init:
     screen stat_overlay:
@@ -73,7 +126,7 @@ init:
             ymaximum 200
 
             vbox:
-                text "기사도{space=15}[p_bar[0]]" size 16 color "#FFFFFF"
+                text "호감도{space=15}[p_bar[0]]" size 16 color "#FFFFFF"
                 bar:
                     value AnimatedValue(p_bar[0], 100, delay=1.0)
                     range 100
@@ -81,12 +134,12 @@ init:
 
                 text " " size 3
 
-                text "호감도{space=15}[p_bar[1]]" size 16 color "#FFFFFF"
-                bar:
-                    value AnimatedValue(p_bar[1], 100, delay=1.0)
-                    range 100
-                    xalign 0.0
-                    style "fixed_bar"
+                # text "호감도{space=15}[p_bar[1]]" size 16 color "#FFFFFF"
+                # bar:
+                #     value AnimatedValue(p_bar[1], 100, delay=1.0)
+                #     range 100
+                #     xalign 0.0
+                #     style "fixed_bar"
 init -5 python:
     # 호감도 스타일
     style.fixed_bar = Style(style.default)
@@ -118,19 +171,17 @@ init:
 #특수복도 이미지
 init:
     # 복도 1 이미지
-    image bg hallway1_base = "images/bg/hallway1_base.jpg"
+    image bg hallway1_base = "images/bg/hallway1_base.png"
     image bg hallway1_diff1 = "images/bg/hallway1_diff1.png"
-    image bg hallway1_diff2 = "images/bg/hallway1_diff2.jpg"
+    image bg hallway1_diff2 = "images/bg/hallway1_diff2.png"
+    image bg hallway1_diff3 = "images/bg/hallway1_diff3.png"
 
     # 복도 2 이미지
-    image bg hallway2_base = "images/bg/hallway2_base.jpg"
-    image bg hallway2_diff1 = "images/bg/hallway2_diff1.jpg"
-    image bg hallway2_diff2 = "images/bg/hallway2_diff2.jpg"
+    image bg hallway2_base = "images/bg/hallway2_base.png"
+    image bg hallway2_diff1 = "images/bg/hallway2_diff1.png"
+    image bg hallway2_diff2 = "images/bg/hallway2_diff2.png"
+    image bg hallway2_diff3 = "images/bg/hallway2_diff3.png"
 
-    # 복도 3 이미지
-    image bg hallway3_base = "images/bg/hallway3_base.jpg"
-    image bg hallway3_diff1 = "images/bg/hallway3_diff1.jpg"
-    image bg hallway3_diff2 = "images/bg/hallway3_diff2.jpg"
 
 #특수복도 이미지 랜덤 생성 모듈    
 init python:
@@ -138,31 +189,27 @@ init python:
 
     hallway_data = {
         1: {
-            "correct": "hallway1_base.jpg",
-            "options": ["hallway1_base.jpg", "hallway1_diff1.png", "hallway1_diff2.jpg"]
+            "correct": "hallway1_base.png",
+            "options": ["hallway1_base.png", "hallway1_diff1.png", "hallway1_diff2.png", "hallway1_diff3.png"]
         },
         2: {
-            "correct": "hallway2_base.jpg",
-            "options": ["hallway2_base.jpg", "hallway2_diff1.jpg", "hallway2_diff2.jpg"]
-        },
-        3: {
-            "correct": "hallway3_base.jpg",
-            "options": ["hallway3_base.jpg", "hallway3_diff1.jpg", "hallway3_diff2.jpg"]
+            "correct": "hallway2_base.png",
+            "options": ["hallway2_base.png", "hallway2_diff1.png", "hallway2_diff2.png", "hallway2_diff3.png"]
         }
     }
 
     progress = 1
     clears = 0
-    current_bg = "hallway1_base.jpg"
+    current_bg = "hallway1_base.png"
 
 #캐릭터 이미지 변경
 init:
     # 아델린
     image adeline_surprise = "images/chr/adeline_surprise.png"
+    image adeline = "images/chr/adeline_idle.png"
+    image adeline 폭소 = "images/chr/adeline_폭소.png"
     image 마주 = "images/chr/마차 주인.png"
     image 마주생각 = "images/chr/마차 주인 생각.png"
-
-
 
 # 게임에서 사용할 캐릭터를 정의합니다.
 define h = Character("마부", callback=type_sound2, font="tway_sky.ttf", what_font="tway_fly.ttf")
@@ -173,7 +220,7 @@ define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what
 define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define G = Character('???')
 define s = Character("오르골 유령",)
-default p_bar = [0, 0]
+default p_bar = [50, 0]
 default diary_0 = False
 default diary_1 = False
 default diary_2 = False
@@ -198,6 +245,8 @@ default inner_room_first = True
 default garret_first = True
 default holy_water = False
 default orgel_try = True
+default room_event = False
+default orgel_adeline = True
 # $ p_bar[0] += 10 기사도 증가
 # $ p_bar[1] += 10 호감도 증가
 
@@ -216,7 +265,6 @@ label start:
     scene black 
     scene forest with fade
     
-    show screen stat_overlay
     h "도착이오"
     h "이 곳이 바로 로르망 백작의 저택이오"
     m "......"
@@ -363,8 +411,6 @@ label first_event:
     show adeline embrassed at Transform(xalign=0.5, yalign=0.2) 
     g "…아, 맞다. 나… 이미 죽었지…"
 
-    
-    
     g "후훗… 미안, 네가 그렇게까지 반응할 줄은 몰랐어. 오랜만에 만난 사람이라."
     
     g "무슨일로 왔니?"
@@ -411,11 +457,33 @@ label mainhall:
     # 샹들리에 이벤트
     if chandelier_count == 5:
         $ chandelier_count += 1
-        show 샹들리에 at Transform(xalign=0.5, yalign=0.2) 
+        show 샹들리에 at Transform(xalign=0.5, yalign=0.2)
+        "샹들리에가 떨어져있다."
+        hide 샹들리에
+        show adeline surprise at Transform(xalign=0.5, yalign=0.2)
+        g "아, 깜짝 놀랐네!"
 
         menu:
-            "샹들리에가 떨어져있다."
+            "아델린의 상태를 확인한다.":
+                m "어디 다친데는 없나?"
+                show adeline embrassed at Transform(xalign=0.5, yalign=0.2)
+                g "아니 다치고 자시고 난 이미 죽었다니까.."
+                m "{size=+10}그럼에도!! {/size}"
+                extend "{size=+10}확인하는 것이!! {/size}"
+                m "{size=+20}기사도다!!{/size}"
+                g "하하하.."
+                show screen stat_overlay with dissolve
+                $ p_bar[0] += 20
+                play audio "호감도 상승.mp3"
+                "아델린의 호감도가 20 상승했다."
+                hide adeline embrassed with dissolve
+            "샹들리에를 바라본다.":
+                hide adeline surprise
+                show 샹들리에 at Transform(xalign=0.5, yalign=0.2)
+                m "뭐야, 샹들리에가 떨어진거였나."             
+        show 샹들리에 at Transform(xalign=0.5, yalign=0.2)   
 
+        menu:
             "떨어진 샹들리에를 확인해본다":
                 $ safe_password = True
                 m "이건.."
@@ -429,6 +497,41 @@ label mainhall:
 
     if bgm_not_playing():
         play music "bgm_main.mp3"
+
+    # 아델린 호감도 이벤트
+    if orgel_try == False:
+        if garret_first == False:
+            if orgel_adeline:
+                $ orgel_adeline = False
+                show adeline 무표정 at Transform(xalign=0.5, yalign=0.2) with dissolve
+                g "2층에서 오르골 소리 같은게 들리던데.."
+                g "무슨 일 있었어?"
+                
+                menu:
+                    "오르골에 대해 얘기한다.":
+                        m "아, 다락방에 손님이 있더군."
+                        m "나에게 아름다운 오르골 소리를 들려줬다네"
+                        g "..."
+                        show adeline 웃음 at Transform(xalign=0.5, yalign=0.2) with dissolve
+                        g "잘됐네, 그거."
+                        show screen stat_overlay with dissolve
+                        $ p_bar[0] += 10
+                        play audio "호감도 상승.mp3"
+                        "아델린의 호감도가 10 상승했다."
+                        hide adeline embrassed with dissolve
+                        jump mainhall
+                    "귀신에 대해 얘기한다.":
+                        m "아, 소름끼치는 귀신이 있더군."
+                        m "자네도 위험할 수 있으니 조심하게."
+                        g "..."
+                        show adeline 비웃음 at Transform(xalign=0.5, yalign=0.2) with dissolve
+                        g "알겠어, 조심할게."
+                        show screen stat_overlay with dissolve
+                        $ p_bar[0] -= 10
+                        play audio "호감도 하락.mp3"
+                        "아델린의 호감도가 10 하락했다."
+                        hide adeline embrassed with dissolve
+                        jump mainhall
 
     menu:       
         "자, 그럼 이제 어디로 가볼까?"
@@ -458,16 +561,46 @@ label mainhall:
                     "아르망은 어떠한 힘에 의해 뒤로 밀려 넘어져 들어가지 못하였다."
                     m "크윽... 내가 이런 굴욕을 받다니..."
                     scene mainhall
-                    g "너 그 녀석을 마주쳤구나..?"  ## 대사 내용 수정 필요
+                    show adeline surprise at Transform(xalign=0.5, yalign=0.2) with hpunch
+                    g "괜찮아, 너??"
                     m "저 괴물의 정체는 뭐야?"
-                    g "나도 모르겠어, 위험한 녀석이니 가까이 다가가지 않는걸 추천할게."
-                    m "아니? 나 아르망 드 벨포르는 저 괴물은 반드시 처단하리라!"
-                    #show adeline 당황
-                    g "에휴 고집불통 아니랄까봐"
-                    #show adeline 고민
-                    g "아 맞다 그러고보니 쟤 원래 2층에서 돌아다녔는데 어느 순간부터 지하에서 안나오더라?"
-                    m "흠... 밝은 곳을 싫어하는건가?"
-                    m "{alpha=*0.5}분명 어딘가에 단서가 될만한게 있을거야{/alpha}"
+                    show adeline 의문 at Transform(xalign=0.5, yalign=0.2)
+                    g "나도 잘 모르겠어, 지하에는 갈 일이 없으니까"
+                    show adeline idle at Transform(xalign=0.5, yalign=0.2)
+                    g "위험하니까 지하에는 가지마."
+                    g "나처럼 되고 싶은게 아니라면 "
+                    extend "알겠지?"
+                    menu:
+                        "기사로서 그럴 수 없다.":
+                            m "위험하다고?"
+                            m "{size=+20}그렇기에 가야하는 것이다!! {/size}"
+                            m "기사로서, 사람들을 겁주는 괴물을 보고 어찌 못본 척 하겠는가!"
+                            show adeline 황당 at Transform(xalign=0.5, yalign=0.2)
+                            g "아니.. 사람이고 자시고 여긴 유령 밖에 없는데.."
+                            m "그럼에도 타협하지 않는 것이 기사도다!!"
+                            show adeline embrassed at Transform(xalign=0.5, yalign=0.2)
+                            g "하하.."
+                            g "살아 생전 받아본 적 없는 걱정을 죽어서 받을 줄은 몰랐는데.."
+                            show screen stat_overlay with dissolve
+                            $ p_bar[0] += 10
+                            play audio "호감도 상승.mp3"
+                            "아델린의 호감도가 10 상승했다."
+                        "뭐지? 날 무시하나?":
+                            m "{size=+20}이놈!! {/size}"
+                            extend "지금 발포프가의 명예로운 기사."
+                            m "{size=+20}아르망 드 벨포르를 무시하는거냐!!!!{/size}"
+                            show adeline 황당 at Transform(xalign=0.5, yalign=0.2)
+                            g "뭐??"
+                            g "무슨 소릴 하는거야?"
+                            show adeline 삐짐 at Transform(xalign=0.5, yalign=0.2)
+                            g "하아.."
+                            g "기껏 걱정해줬더니..."
+                            show screen stat_overlay with dissolve
+                            $ p_bar[0] -= 10
+                            play audio "호감도 하락.mp3"
+                            "아델린의 호감도가 10 하락했다."
+                    m "{alpha=*0.5}우선은 지하를 밝힐 불이 필요하겠군.{/alpha}"
+                    hide screen stat_overlay with dissolve
                     jump mainhall
         "방":
             play audio "Open door.mp3"
@@ -708,15 +841,39 @@ label ghost_chase_success:
         "어디로 갈까?"
         
         "나간다":
-            scene mainhall
-            play music "bgm_main.mp3"
-            show adeline_음흉 at Transform(xalign=0.5, yalign=0.2) with dissolve
-            play audio "아델린 웃음소리.mp3"
-            g "후훗"
-            g "어때? 숨바꼭질은 재밌었어?"
-            m "장난해? 웬 꼬마녀석 덕분에 힘들어 죽기 직전이야"
-            g "엄살은~"
-            hide adeline_음흉
+            if room_event == False:
+                $ room_event = True
+                scene mainhall
+                play music "bgm_main.mp3"
+                show adeline 호기심 at Transform(xalign=0.5, yalign=0.2) with dissolve
+                play audio "아델린 웃음소리.mp3"
+                g "후훗, 꼬마애랑 재밌어 보이던데"
+                g "어때? 숨바꼭질은 재밌었어?"
+                menu:
+                    "재밌었다.":
+                        m "상대가 꼬마라 할지 언정, 최선을 다하는 것."
+                        m "그것이 옳게된 기사의 도리지."
+                        g "풉"
+                        show adeline 폭소 at Transform(xalign=0.5, yalign=0.2)
+                        g "하하하하하하하"
+                        g "무슨 소릴 하는거야 진짜. 하하하"
+                        show screen stat_overlay with dissolve
+                        $ p_bar[0] += 10
+                        play audio "호감도 상승.mp3"
+                        "아델린의 호감도가 10 상승했다."
+                    "재미없었다":
+                        m "장난하나?"
+                        m "웬 꼬마녀석 덕분에 힘들어 죽기 직전이다."
+                        g "...."
+                        show adeline 정색 at Transform(xalign=0.5, yalign=0.2)
+                        g "기사라 할 땐 언제고"
+                        g "엄살은."
+                        show screen stat_overlay with dissolve
+                        $ p_bar[0] -= 10
+                        play audio "호감도 하락.mp3"
+                        "아델린의 호감도가 10 하락했다."
+
+            hide screen stat_overlay with dissolve
             jump mainhall
 
 label ghost_chase_fail:
@@ -1083,18 +1240,23 @@ label inner_room:
                 scene 초상화_공포 
                 m "으악!"
                 play audio "쓰러지는 소리.mp3"
+                scene black with fade
                 "아르망은 정신을 잃었다."
+                "............."
                 scene mainhall
-                show adeline 당혹 at Transform(xalign=0.5, yalign=0.2) with dissolve
+                show adeline surprise at Transform(xalign=0.5, yalign=0.2) with dissolve
                 g "정신이 좀 들어? 너 갑자기 기절했더라고."  ## 대사 수정 필요?
                 play audio "거친 숨소리.mp3"
                 m "헉..헉.. 방금 그건 뭐였지?"
                 g "뭘 봤길래 호들갑이야?"
                 m "안방에 걸려있는 초상화말이야!"
-                g "응? 우리집 안방에는 초상화가 없는데?"
+                show adeline 의문 at Transform(xalign=0.5, yalign=0.2)
+                g "응? 초상화?"
+                g "이 저택에 초상화 같은건 없는데?"
                 m "뭐..?"
-                g "잘못본거겠지.. 안좋은 꿈이라도 꾼거야?"
-                m "아니야 그럴리가 없어.."
+                show adeline idle at Transform(xalign=0.5, yalign=0.2)
+                g "잘못본거겠지.. 안좋은 꿈이라도 꾼거 아냐?"
+                m "아니야 그럴리가 없는데.."
                 jump mainhall
 
         "주변을 살펴본다.":
@@ -1371,48 +1533,82 @@ label garret_input_loop:
         jump two_stair
 
 label hallway:
-    scene black
-    with dissolve
-    scene hallway1_base
-    m "이 복도..."
-    jump hallway_stage
+    play audio "걷는소리 구두.mp3"
+    scene black with dissolve
+    pause 2
+    scene hallway1_base with dissolve
+    m "뭐지... 분명 난 2층에서 내려왔을텐데"
+
+    menu:
+        "내려간다":
+            play audio "걷는소리 구두.mp3"
+            scene black with dissolve
+            pause 2
+            scene hallway1_base with dissolve
+    menu:
+        "내려간다":
+            play audio "걷는소리 구두.mp3"
+            scene black with dissolve
+            pause 2
+            scene hallway1_base with dissolve
+            m "역시..계속 같은 곳을 맴돌고 있어.."
+    menu:
+        "내려간다":
+            play audio "걷는소리 구두.mp3"
+            scene black with dissolve
+            pause 2
+            scene hallway1_diff1 with dissolve
+            m "음? 저런 시계가 원래 있었나?"
+    menu:
+        "올라가서 확인해본다":
+            play audio "걷는소리 구두.mp3"
+            scene black with dissolve
+            pause 2
+            scene hallway1_base with dissolve
+            m "역시.."
+            m "원래 저런 시계는 없었는데.."
+            m "음? 벽에 무언가 쓰여있군."
+
+            n "과거에 매몰되어 앞만 보고 달리는 우군이여"
+            n "시대의 변화를 외면하고 도망가는 패배자여"
+            n "그대 행동, 마땅히 비난받아야 할 일이다만."
+            n "남겨진 자와의 만남엔 이보다 좋은 지름길은 없으리"
+            nvl clear
+            ".... 마지막 글씨는 얼룩 때문에 보이지 않는다."
+
+            m "....."
+            m "..이건 나를 두고 하는 말인가?"
+            m "어찌됐든 지금은 앞으로 나아가는 방법 밖에 없어"
+            play audio "item1.ogg"
+            " * 복도를 자세히 보세요. 뭔가 이상한 부분이 있다면 돌아가는 것이 좋습니다."
+            play audio "걷는소리 구두.mp3"
+            scene black with dissolve
+            pause 3
+            jump hallway_stage
 
 label hallway_stage:
     if progress == 1:
         jump hallway_show_answer_1
     elif progress == 2:
         jump hallway_show_answer_2
-    elif progress == 3:
-        jump hallway_show_answer_3
 
 label hallway_show_answer_1:
-    scene bg hallway1_base
-    with dissolve
-    m "이상하다. 계속 같은 곳을 돌고있는 기분이 들어."
-    pause 2
-    m "으윽.. 머리가.."
-    scene black with fade
-    pause 1
+    scene bg hallway1_base with dissolve
     jump hallway_loop
+
 label hallway_show_answer_2:
-    scene bg hallway2_base
-    with dissolve
-    m "두 번째 복도군... 눈에 익혀둬야겠어."
-    pause 2
-    m "크윽.. 또 머리가.."
-    scene black with fade
-    pause 1
-    m "또인가..? 젠장!"
-    jump hallway_loop
-label hallway_show_answer_3:
-    scene bg hallway3_base
-    with dissolve
-    m "이게 마지막 복도... 잘 기억해둬야 해."
-    pause 2
-    m "으윽.."
-    scene black with fade
-    pause 1
-    m "익숙해지기 힘든 감각이군.."
+
+    scene bg hallway2_base with dissolve
+    play music "여자 콧노래.mp3"
+    m "..!"
+    m "붉은 달이라니..."
+    m "그리고 이 노래는..."
+    m "......"
+    m "어찌됐든 지금은 이 복도를 기억해두는게 좋을 것 같아"
+    pause 3
+    play audio "걷는소리 구두.mp3"
+    scene black with dissolve
+    pause 3
     jump hallway_loop
 
 label hallway_entry:
@@ -1423,55 +1619,61 @@ label hallway_entry:
 
 label hallway_loop:
     $ current_data = hallway_data[progress]
-    $ current_bg = random.choice(current_data["options"])
+    if renpy.random.random() < 0.5:
+        $ current_bg = current_data["correct"]
+    else:
+        $ current_bg = renpy.random.choice(current_data["options"])
 
-    scene expression "bg/" + current_bg
-    with dissolve
-
-    m "전이랑은 조금 다른 느낌이야. 그런데, 나만 그렇게 느끼는 건가...?"
+    scene expression "bg/" + current_bg with dissolve
 
     menu:
         "앞으로 나아간다":
+            play audio "걷는소리 구두.mp3"
+            scene black with dissolve
             if current_bg == current_data["correct"]:
                 $ clears += 1
-                if clears >= 2:
+                if clears >= 3:
                     $ progress += 1
                     $ clears = 0
-                    if progress > 3:
+                    if progress > 2:
+                        pause 3
                         jump next_room
                     else:
-                        m "앞으로 나아갔더니, 또 다른 복도가 나타났다..."
+                        pause 3
                         jump hallway_entry
                 else:
-                    m "이 방향이 맞는 것 같다. 하지만 아직 무언가 부족해..."
+                    pause 3
                     jump hallway_loop
             else:
-                m "앞으로 나아갔지만... 돌아온 것 같다. 처음부터 다시 해보자."
-                $ progress = 1
+                m "이런.. 놓친 부분이 있었나."
+                "처음부터 다시 해보자."
                 $ clears = 0
                 jump hallway_entry
 
         "뒤로 돌아간다":
+            play audio "걷는소리 구두.mp3"
+            scene black with dissolve
             if current_bg == current_data["correct"]:
-                m "뒤로 돌아갔더니... 처음으로 돌아왔다. 다시 해보자."
-                $ progress = 1
+                m "또 처음으로 돌아왔군."
+                "다시 해보자."
                 $ clears = 0
                 jump hallway_entry
             else:
-                $ clears += 1
-                if clears >= 2:
+                if clears >= 3:
                     $ progress += 1
                     $ clears = 0
-                    if progress > 3:
+                    if progress > 2:
                         jump next_room
                     else:
-                        m "뒤로 돌아가자... 다른 복도가 나왔다."
+                        "뒤로 돌아가자..."
+                        "다른 복도가 나왔다."
                         jump hallway_entry
                 else:
-                    m "다른 복도가 나왔군. 하지만 아직 뭔가 부족한 느낌이야."
+                    pause 3
                     jump hallway_loop
 
 label next_room:
+    stop music
     scene bg dream with dissolve
        
     m "여긴... 대체...?"
@@ -1490,9 +1692,14 @@ label next_room:
     g "나와 함께 하자. 영원히.....!"
 
     if holy_water:
-        if p_bar[0] >= 50:
+        if p_bar[0] > 50:
+            jump happy_ending_
+        else:
+            jump bad_ending1
+    else:
+        if p_bar[0] > 50:
             jump happy_ending1
-        if p_bar[0] <50:
+        else:
             jump bad_ending1
 
 label happy_ending:
