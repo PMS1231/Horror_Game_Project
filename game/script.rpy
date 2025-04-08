@@ -1125,7 +1125,7 @@ label garret:
     scene 다락방 with dissolve
 
     "갑자기 안쪽에서 오르골 소리가 들려온다."
-
+    show 오르골 at Transform(xalign=0.5, yalign=0.2)
     m ".....날 환영하는 소린가?"
 
     show 등불 at Transform(xalign=0.5, yalign=0.2)
