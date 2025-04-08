@@ -923,6 +923,16 @@ label underground:
 
         hide 괴물죽음 with fade
         "검 끝에 묻은 피가 천천히 사라지고, 주위는 다시 고요해진다."
+        menu:
+            "더 깊은 곳으로 들어가볼까?":
+                if underground_first:
+                    $ underground_first = False
+                    "지하실 안쪽 끝, 낡은 옷장과 책상, 침대가 놓여있다. 누군가가 생활했던 흔적이 있다."
+                    m "일기의 내용대로 누군가 살았던 흔적이 있군."
+                    "성수의 희미한 빛이 벽장 너머에서 새어나온다."  
+                    show 성수 at Transform(xalign=0.5, yalign=0.2) 
+                    m "이게 일기에 적혀있던 성수인가..."
+                    "성수가 있다."
     
     scene 지하실
 
@@ -974,7 +984,7 @@ label library:
         m "음... 서재가 많이 크군"
 
     scene 서재
-
+    
     menu:
         "어디를 찾아볼까."
 
@@ -1019,6 +1029,7 @@ label library:
                 nvl clear
                 play audio "item1.ogg"
                 "당신은 집사의 일기를 획득 했다."
+
                 jump library
             else:
                 "여기엔 더 이상 볼 것이 없다."
@@ -1084,7 +1095,7 @@ label inner_room:
                 g "응? 우리 집엔 안방에는 초상화가 없는데?"
                 m "뭐..?"
                 g "잘못본거겠지 안좋은 꿈이라도 꾼거야?"
-                m "아니야 그럴리가 없어.. 다시 확인해보자."
+                m "아니야 그럴리가 없어.."
                 jump mainhall
 
         "주변을 살펴본다.":
@@ -1259,8 +1270,8 @@ label garret:
         s "이 오르골 소리가 참 곱지?"
         m "언제까지 들어야 하지?"
         s "더 들어봐"
-    # play "기믹_오르골_단어1.mp3"
 
+    # play "기믹_오르골_단어1.mp3"
         play audio "기믹_오르골_단어2.mp3"
 
         window hide
@@ -1271,6 +1282,7 @@ label garret:
         s "그 아이가 커서 이노래를 기억하길 바랬지"
 
         play audio "기믹_오르골_단어3.mp3"
+
     # play "기믹_오르골_단어2.mp3"
 
         window hide
@@ -1280,10 +1292,8 @@ label garret:
         m "이제 끝났나?"
 
         s "잘 들었지?"
+        
     # play "기믹_오르골_단어3.mp3"
-
-        s "내가 전하고 싶은 단어가 뭔지 맞춰 볼래?"
-
         $ correct_answer = "정화수"
 
         jump garret_input_loop
