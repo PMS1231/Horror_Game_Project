@@ -197,6 +197,7 @@ default photo_count = 0
 default inner_room_first = True
 default garret_first = True
 default holy_water = False
+default orgel_try = True
 # $ p_bar[0] += 10 기사도 증가
 # $ p_bar[1] += 10 호감도 증가
 
@@ -522,7 +523,10 @@ label two_stair:
                 "어디로 가지?"
 
                 "다락방":
+                    scene 다락방계단 with fade
+                    play audio "사다리.mp3"
                     "사다리를 밟고 조심스레 올라간다."
+                    scene black with fade
                     jump garret
 
                 "서재":
@@ -965,7 +969,6 @@ label underground_deep:
                 "주변을 둘러봐도 더 이상 챙길 건 없는듯 하다.":
                     jump underground
 
-
 label library:
     if library_first:
         $ library_first = False
@@ -1243,54 +1246,34 @@ label diary4:
 
 label garret:
 
-    scene 다락방 with dissolve
-
     stop music
     stop audio
 
     if garret_first:
-        $ garret_first = False
-        "갑자기 안쪽에서 오르골 소리가 들려온다."
-    
-        show 오르골 at Transform(xalign=0.5, yalign=0.2)
-        m ".....날 환영하는 소린가?"
-        show 꼬마 유령 at Transform(xalign=0.5, yalign=0.2) # 캐릭터 설정, 연출 방법 수정 필요
-        s "후후 이 노래 정말 좋지 않아?"
-        s "너도 함께 들을래?"
-        s "너도 마음에 들거야"        
+        if orgel_try:
+            play music "기믹_오르골 원본.mp3"
+            "갑자기 안쪽에서 오르골 소리가 들려온다."
+            m ".....날 환영하는 소리인가?"
+            scene 다락방 with dissolve
+            "다락방 안쪽, 달빛이 비스듬히 스며드는 어둠 속."
+            
+            show 오르골유령 at Transform(xalign=0.5, yalign=0.2) with dissolve 
+            "어둠 속에서 실루엣 하나가 천천히 떠오른다."
 
-        play audio "기믹_오르골_단어1.mp3"
+            "새하얀 레이스가 겹겹이 덧대어진 드레스는 낡아 찢긴 자락이 바람에 휘날리듯 흔들리고,"
 
-        window hide
+            "머리 위엔 정갈하게 손질된 고풍스러운 모자가 얹혀 있다."
 
-        $ renpy.pause(10.0, hard=True)
-        s "이 오르골 소리가 참 곱지?"
-        m "언제까지 들어야 하지?"
-        s "더 들어봐"
+            "그러나 그 안의 얼굴은 반쯤 흐릿하고,"
+            extend "눈동자 없는 눈이 달빛에 허옇게 반사된다."
 
-        play audio "기믹_오르골_단어2.mp3"
-
-        window hide
-
-        $ renpy.pause(10.0, hard=True)
-        s "첫째가 태어난 날 내가 만든 오르골이야"
-        m "하고 싶은 말은 뭐지?"
-        s "그 아이가 커서 이노래를 기억하길 바랬지"
-
-        play audio "기믹_오르골_단어3.mp3"   
-
-        window hide
-
-        $ renpy.pause(10.0, hard=True)
-
-        m "이제 끝났나?"
-
-        s "잘 들었지?"
-
-   
-        $ correct_answer = "정화수"
-
-        jump garret_input_loop
+            jump orgel_test
+        else:
+            play music "기믹_오르골 원본.mp3"
+            scene 다락방 with dissolve
+            show 오르골유령 at Transform(xalign=0.5, yalign=0.2) with dissolve
+            s "후후.. 또 왔구나"
+            jump orgel_test
 
     menu:
         "어디로 갈까?"
@@ -1298,22 +1281,94 @@ label garret:
         "나간다":
             jump two_stair
 
+label orgel_test:
+    $ orgel_try = False
+
+    s "후후 이 노래 정말 좋지 않아?"
+    s "너도 함께 듣지 않을래?"
+
+    menu: 
+        s "마음에 들거야"
+
+        "오르골을 함께 듣는다":
+            stop music
+            play audio "기믹_오르골_단어1.mp3"
+
+            window hide
+
+            $ renpy.pause(10.0, hard=True)
+            s "이 오르골 소리가 참 곱지?"
+            m "언제까지 들어야 하지?"
+            s "더 들어봐"
+
+            # play "기믹_오르골_단어1.mp3"
+            play audio "기믹_오르골_단어2.mp3"
+
+            window hide
+
+            $ renpy.pause(10.0, hard=True)
+            s "첫째가 태어난 날 내가 만든 오르골이야"
+            m "하고 싶은 말은 뭐지?"
+            s "그 아이가 커서 이노래를 기억하길 바랬지"
+
+            play audio "기믹_오르골_단어3.mp3"
+
+            # play "기믹_오르골_단어2.mp3"
+
+            window hide
+
+            $ renpy.pause(10.0, hard=True)
+
+            m "이제 끝났나?"
+
+            s "잘 들었지?"
+
+            # play "기믹_오르골_단어3.mp3"
+            $ correct_answer = "정화수"
+
+            jump garret_input_loop
+
+        "듣지 않는다":
+            stop music
+            "순간 오르골 노래 소리가 뚝하고 끊어졌다."
+            show 오르골유령_정색 at Transform(xalign=0.5, yalign=0.2)
+            play audio "우는소리.mp3"
+            "너도.."
+            "너도 날 버리고 가는거야..?"
+            play audio "여자비명2.mp3"
+            scene 오르골귀신 
+            "당신은 다락방에서 쫓겨났다."
+            jump two_stair
+
 label garret_input_loop:
     $ player_input = renpy.input("숨겨진 단어는 무엇일까?").strip().lower()
 
     if player_input == correct_answer:
+        $ garret_first = False
         m "정화수."
         m "정화수라는 단어가 생각나던데?"
         s "너 정말 열심히 들었구나?"
         $ light = True
         show 등불 at Transform(xalign=0.5, yalign=0.2)
         "자 이건 선물이야."
+        play audio "item1.ogg"
+        "당신은 등불을 획득 했다."
+        scene black with fade
         "그렇게 귀신은 사라졌다."
         jump garret
     else:
-        s "너.. 제대로 안들었구나?"
-        
-        jump garret_input_loop
+        show 오르골유령_정색 at Transform(xalign=0.5, yalign=0.2)
+        s "뭐..? [player_input]..?"
+        play audio "우는소리.mp3"
+        hide 오르골유령
+        hide 오르골유령_정색 with dissolve
+        scene black with fade
+        s "흐윽.."
+        s "흑.. 흑.."
+        play audio "여자비명2.mp3"
+        scene 오르골귀신 
+        "당신은 다락방에서 쫓겨났다."
+        jump two_stair
 
 label hallway:
     scene black
