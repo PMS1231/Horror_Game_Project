@@ -466,8 +466,8 @@ label mainhall:
                     g "에휴 고집불통 아니랄까봐"
                     #show adeline 고민
                     g "아 맞다 그러고보니 쟤 원래 2층에서 돌아다녔는데 어느 순간부터 지하에서 안나오더라?"
-                    g "음.. 밝은 곳을 싫어하는건가?"
-                    m "(흠.. 분명 어딘가에 단서가 될만한게 있을거야)"
+                    m "흠... 밝은 곳을 싫어하는건가?"
+                    m "{alpha=*0.5}분명 어딘가에 단서가 될만한게 있을거야{/alpha}"
                     jump mainhall
         "방":
             play audio "Open door.mp3"
@@ -512,12 +512,7 @@ label two_stair:
                     jump library
 
                 "안방":
-                    if inner_room_lock:
-                        play audio "자물쇠 잠긴소리.mp3"
-                        m "문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다. 열쇠를 찾아보자"
-                        jump two_stair
-                    else:
-                        jump inner_room
+                    jump inner_room
 
                 "내려간다":
                     play audio "걷는소리 구두.mp3"
@@ -535,13 +530,7 @@ label two_stair:
                     jump library
 
                 "안방":
-                    if inner_room_lock:
-                        play audio "자물쇠 잠긴소리.mp3"
-                        m "{alpha=*0.5}문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다.{/alpha}"
-                        m "{alpha=*0.5}다른 장소에서 열쇠를 찾아보자{/alpha}"
-                        jump two_stair
-                    else:
-                        jump inner_room
+                    jump inner_room
 
                 "내려간다":
                     play audio "걷는소리 구두.mp3"
@@ -555,13 +544,7 @@ label two_stair:
                 jump library
 
             "안방":
-                if inner_room_lock:
-                    play audio "자물쇠 잠긴소리.mp3"
-                    m "{alpha=*0.5}문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다.{/alpha}"
-                    m "{alpha=*0.5}다른 장소에서 열쇠를 찾아보자{/alpha}"
-                    jump two_stair
-                else:
-                    jump inner_room
+                jump inner_room
 
             "내려간다":
                 play audio "걷는소리 구두.mp3"
@@ -1298,7 +1281,7 @@ label garret:
         m "이제 끝났나?"
 
         s "잘 들었지?"
-        
+
     # play "기믹_오르골_단어3.mp3"
         $ correct_answer = "정화수"
 
@@ -1449,11 +1432,11 @@ label next_room:
     g "그런데, 네가 점차 보여준 항상 당당한 모습, 그리고 눈빛 속에 숨겨진 고독을 알게 된 후, 내 심장은 미친 듯이 뛰기 시작했어."
     g "나와 함께 하자. 영원히.....!"
 
-    menu:
-        "해피엔딩이다":
-            jump happy_ending
-        "배드엔딩이다":
-            jump bad_ending
+    if holy_water:
+        if p_bar[0] >= 50:
+            jump happy_ending1
+        if p_bar[0] <50:
+            jump bad_ending1
 
 label happy_ending:
 
@@ -1532,3 +1515,5 @@ label bad_ending:
     "아르망은 자신을 이해해주는 사람도 없이 과거에 집착하며 살아간다"
 
     "-END-"
+
+label bad_ending:
