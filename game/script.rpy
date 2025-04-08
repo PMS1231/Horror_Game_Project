@@ -931,11 +931,9 @@ label underground:
                     "성수의 희미한 빛이 벽장 너머에서 새어나온다."  
                     show 성수 at Transform(xalign=0.5, yalign=0.2) 
                     m "이게 일기에 적혀있던 성수인가..."
-                    
-        menu:
-            "성수가 있다."
-                    
-                    scene 지하실 with dissolve
+                    "성수가 있다."
+                  
+
     
     menu:        
         "주변을 뒤져볼까?":
@@ -962,10 +960,7 @@ label library:
         play audio "돌풍.mp3"
         "문을 열자 바람이 불며 먼지가 날린다"
         scene 서재 with dissolve
-        m "음... 서재가 많이 크군"
-
-    scene 서재
-        
+        m "음... 서재가 많이 크군"          
         "그 때 스르륵 무언가 끌린는 소리가 들려온다"
         m "무언가가 있군....피하면서 정보를 찾아야겠어"
     menu:
@@ -1012,6 +1007,7 @@ label library:
                 nvl clear
                 play audio "item1.ogg"
                 "당신은 집사의 일기를 획득 했다."
+
                 jump library
             else:
                 "여기엔 더 이상 볼 것이 없다."
@@ -1248,14 +1244,10 @@ label garret:
 
         window hide
 
-<<<<<<< Updated upstream
         $ renpy.pause(10.0, hard=True)
         s "이 오르골 소리가 참 곱지?"
         m "언제까지 들어야 하지?"
         s "더 들어봐"
-=======
-    # play "기믹_오르골_단어1.mp3"
->>>>>>> Stashed changes
 
         play audio "기믹_오르골_단어2.mp3"
 
@@ -1266,23 +1258,15 @@ label garret:
         m "하고 싶은 말은 뭐지?"
         s "그 아이가 커서 이노래를 기억하길 바랬지"
 
-<<<<<<< Updated upstream
         play audio "기믹_오르골_단어3.mp3"
-=======
-    # play "기믹_오르골_단어2.mp3"
->>>>>>> Stashed changes
-
+   
         window hide
 
         $ renpy.pause(10.0, hard=True)
 
         m "이제 끝났나?"
 
-<<<<<<< Updated upstream
         s "잘 들었지?"
-=======
-    # play "기믹_오르골_단어3.mp3"
->>>>>>> Stashed changes
 
         s "내가 전하고 싶은 단어가 뭔지 맞춰 볼래?"
 
