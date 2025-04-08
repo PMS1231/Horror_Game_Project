@@ -1116,6 +1116,7 @@ label input_loop:
         "당신은 안방의 금고에서 네번째 일기장을 찾았다."
         hide 단어퍼즐
         hide 단어퍼즐답
+        $ safe_info = False
         $ diary_3 = True
         jump diary4
     else:
@@ -1156,7 +1157,7 @@ label diary4:
     
     n "저항했지만, 이미 늦었어"
 
-    n "그는 조용히, 종잇장처럼 쓰러졋고 피를 흘렸지"
+    n "그는 조용히, 종잇장처럼 쓰러졌고 피를 흘렸지"
     
     n "피가 흐르던 자리에..."
 
