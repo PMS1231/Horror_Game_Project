@@ -404,7 +404,10 @@ label first_event:
 label mainhall:
     scene mainhall
     # 엔딩 조건 
-    if diary_0 and diary_1 and diary_2 and diary_3:
+    if diary_0:
+        if diary_1:
+            if diary_2:
+                if :diary_3:
         jump hallway
 
     # 샹들리에 이벤트
