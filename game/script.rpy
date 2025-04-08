@@ -165,10 +165,10 @@ init:
 
 
 # 게임에서 사용할 캐릭터를 정의합니다.
-define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define h = Character("마부", callback=type_sound2, font="tway_sky.ttf", what_font="tway_fly.ttf")
 define m = Character('아르망', color="#044604", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
 define g = Character("아델린", callback=type_sound2, font="tway_sky.ttf", what_font="tway_air.ttf")
+define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define G = Character('???')
@@ -284,7 +284,7 @@ label prologue:
                 
                 m "이깟 문조차 내 의지로 열지 못한다면, 이 검은 무얼위해 존재한단 말인가!"
                 
-                play audio "검으로 벽을 두드리는 소리.mp3"
+                play audio "자물쇠 부숨.mp3"
                 "다시 한번 검을 들어 자물쇠를 단숨에 내리친다." 
 
                 "문이 쾅 소리와 함께 열리며 먼지가 풀풀 날린다."
@@ -423,7 +423,7 @@ label mainhall:
                 "정체불명의 종이를 주웠다."
                 m "어딘가의 암호처럼 보이는데"
                 play audio "item1.ogg"
-                "당신은 수상한 종이를 획득 했다."
+                "당신은 비밀번호 힌트를 획득 했다."
                 hide 단어퍼즐
         hide 샹들리에
 
@@ -458,7 +458,6 @@ label mainhall:
                     "아르망은 어떠한 힘에 의해 뒤로 밀려 넘어져 들어가지 못하였다."
                     m "크윽... 내가 이런 굴욕을 받다니..."
                     scene mainhall
-                    "아르망은 1층 메인홀로 돌아왔다."
                     g "너 그 녀석을 마주쳤구나..?"  ## 대사 내용 수정 필요
                     m "저 괴물의 정체는 뭐야?"
                     g "나도 모르겠어, 위험한 녀석이니 가까이 다가가지 않는걸 추천할게."
@@ -699,20 +698,25 @@ label ghost_chase_success:
     play audio "item1.ogg"    
     "당신은 열쇠를 되찾았다."
     hide 열쇠
-    m "헉... 헉... 힘들어......"
+    m "헉... 헉... 이게 무슨......"
     hide 꼬마 유령 with dissolve
     $ dining_room_lock = False
-    m "이건.. 식당 열쇠인가?"
-    m "한번 확인해봐야겠군."
+    m "이건... 열쇠로군"
+    m "근처에 사용할만한 곳을 확인해봐야겠어"
 
     menu:
         "어디로 갈까?"
         
         "나간다":
             scene mainhall
+            play music "bgm_main.mp3"
+            show adeline_음흉 at Transform(xalign=0.5, yalign=0.2) with dissolve
+            play audio "아델린 웃음소리.mp3"
+            g "후훗"
             g "어때? 숨바꼭질은 재밌었어?"
-            m "장난해? 웬 꼬마 덕분에 힘들어 죽기 직전이야"
-            g "그럼 죽어."
+            m "장난해? 웬 꼬마녀석 덕분에 힘들어 죽기 직전이야"
+            g "엄살은~"
+            hide adeline_음흉
             jump mainhall
 
 label ghost_chase_fail:
@@ -727,7 +731,6 @@ label ghost_chase_retry:
     scene black with dissolve
     $ correct_guesses = 0
     $ wrong_guesses = 0
-    m ""
     m "크윽.. 잠시 정신을 잃었었나 봐..."
     m "하지만 열쇠는 반드시 찾아야 해..."
 
@@ -909,17 +912,18 @@ label underground:
         "칼끝이 박히며, 괴물의 몸이 뒤틀린다."
         "괴성, 그리고 한 줄기 연기와 함께 괴물의 육체가 무너지기 시작한다."
 
-        scene black
+        scene black  
         m "외....로.....워...."
 
         "괴물의 형체가 녹아 사라진다. 아르망은 거친 숨을 쉬며 바닥에 주저앉는다."
 
-        hide 괴물죽음 with fade
+        
         "검 끝에 묻은 피가 천천히 사라지고, 주위는 다시 고요해진다."
+        scene 지하실  
         menu:
             "더 깊은 곳으로 들어가볼까?":
                 if underground_first:
-                    $ underground_first = False
+                    $ underground_first = False                                     
                     "지하실 안쪽 끝, 낡은 옷장과 책상, 침대가 놓여있다. 누군가가 생활했던 흔적이 있다."
                     m "일기의 내용대로 누군가 살았던 흔적이 있군."
                     "성수의 희미한 빛이 벽장 너머에서 새어나온다."  
@@ -949,7 +953,7 @@ label underground_deep:
         
         if holy_water == False:
             menu:
-                "성수를 어떻게 할까까."
+                "성수를 어떻게 할까."
 
                 "성수를 가지고 간다":
                     $ holy_water = True
@@ -1034,7 +1038,7 @@ label library:
                 show 메모 at Transform(xalign=0.5, yalign=0.2) 
                 "서랍 안에 메모가 있다."
                 n "주인님의 건망증이 점점 심해지고 있습니다."
-                n "안방의 금고 비밀번호를 계속 까먹으셔서 따로 메모 해둬야겠습니다."
+                n "안방의 금고 비밀번호를 계속 까먹으셔서 따로 메모 해두겠습니다."
                 m "안방에 금고가 있었군."
                 m "다시 한번 찾아봐야겠어."
                 nvl clear
@@ -1078,15 +1082,18 @@ label inner_room:
                 play audio "스크림1.mp3"
                 scene 초상화_공포 
                 m "으악!"
+                play audio "쓰러지는 소리.mp3"
                 "아르망은 정신을 잃었다."
                 scene mainhall
+                show adeline 당혹 at Transform(xalign=0.5, yalign=0.2) with dissolve
                 g "정신이 좀 들어? 너 갑자기 기절했더라고."  ## 대사 수정 필요?
+                play audio "거친 숨소리.mp3"
                 m "헉..헉.. 방금 그건 뭐였지?"
                 g "뭘 봤길래 호들갑이야?"
                 m "안방에 걸려있는 초상화말이야!"
-                g "응? 우리 집엔 안방에는 초상화가 없는데?"
+                g "응? 우리집 안방에는 초상화가 없는데?"
                 m "뭐..?"
-                g "잘못본거겠지 안좋은 꿈이라도 꾼거야?"
+                g "잘못본거겠지.. 안좋은 꿈이라도 꾼거야?"
                 m "아니야 그럴리가 없어.."
                 jump mainhall
 
@@ -1115,11 +1122,12 @@ label input_loop:
 
     if player_input == correct_answer:
         show 단어퍼즐답 at Transform(xalign=0.5, yalign=0.2) with dissolve
-        "끼익... 금고가 열리는 소리가 들린다."
+        play audio "책 꺼내는 소리1.mp3"
+        "드르륵... 금고가 열리는 소리가 들린다."
         "당신은 안방의 금고에서 네번째 일기장을 찾았다."
         hide 단어퍼즐
         hide 단어퍼즐답
-        $ safe_info = False
+        $ safe_password = False
         $ diary_3 = True
         jump diary4
     else:
@@ -1271,9 +1279,6 @@ label garret:
         "어디로 갈까?"
 
         "나간다":
-            scene mainhall2
-            g "그 노래.. 오랜만이네."
-            m "대사 입력..."
             jump two_stair
 
 label orgel_test:
@@ -1468,6 +1473,7 @@ label hallway_loop:
 
 label next_room:
     scene bg dream with dissolve
+       
     m "여긴... 대체...?"
     g "어때, 이 꽃? 정말 예쁘지 않아?"
     g "어렸을 땐 부모님이 날 이 꽃밭에 데려다 주셨어. 햇살 가득한 날, 엄마가 내 머리에 꽃을 꽂아주며 웃으셨지."
@@ -1541,8 +1547,9 @@ label happy_ending:
 
     m "……안녕, 아델린."
     m "나도...... 너처럼 나아가야겠지."
-
+return    
 label bad_ending:
+    
     "성수를 든다"
 
     g "그렇구나.....너도...."
@@ -1565,3 +1572,7 @@ label bad_ending:
     "아르망은 자신을 이해해주는 사람도 없이 과거에 집착하며 살아간다"
 
     "-END-"
+return       
+# label bad_ending:
+   
+    
