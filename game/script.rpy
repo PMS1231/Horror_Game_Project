@@ -981,8 +981,9 @@ label inner_room:
         "주변을 살펴본다.":
             if safe_info:
                 if safe_password:
-                    scene black with fade #안방 이미지
+                    scene 안방 with fade #안방 이미지
                     "당신은 방 구석에서 잠긴 금고를 발견했다"
+                    show 금고 at Transform(xalign=0.5, yalign=0.2)
                     m "아까 얻은 종이에 뭔가 단서가 있을 것 같아..."
                     show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) with dissolve
                     m "단어를 찾아 입력해보자."
