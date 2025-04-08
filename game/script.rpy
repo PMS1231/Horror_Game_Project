@@ -1,7 +1,8 @@
 #이 파일에 게임 스크립트를 입력합니다.
 define sounds = ['audio/Man_Typing_long.mp3', 'audio/Man_Typing_short.mp3']
 define sounds2 = ['audio/Woman_Typing_long.mp3', 'audio/Woman_Typing_short.mp3']
-define sounds3 = ['audio/아이 웃는소리.mp3', 'audio/아이 웃는소리 숏.mp3']
+define sounds3 = ['', '']
+
 
 # 메인홀 브금 재생 관련 코드 
 init python:
@@ -163,13 +164,15 @@ init:
     image 마주 = "images/chr/마차 주인.png"
     image 마주생각 = "images/chr/마차 주인 생각.png"
 
+
+
 # 게임에서 사용할 캐릭터를 정의합니다.
 define h = Character("마부", callback=type_sound2)
 define m = Character('아르망', color="#044604", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
 define g = Character("아델린", callback=type_sound2, what_font="tway_air.ttf")
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
-define l = Character('꼬마 유령', color="#b2cd68", callback=type_sound3)
-define l2 = Character('꼬마 유령', color="#b2cd68")
+define l = Character('꼬마 유령', color="#d4840b", callback=type_sound3)
+define l2 = Character('꼬마 유령', color="#d4840b")
 define G = Character('???')
 
 default p_bar = [0, 0]
@@ -321,7 +324,7 @@ label first_event:
     
     m "이 소리는 뭐지...?"
     m "......"
-    m "역시, 단순한 소문은 아니였던 모양이로군"
+    m "역시, 단순한 헛소문은 아니였던 모양이로군"
 
     "2층 난간 위, 어둠 속 소녀의 콧노래만이 들릴 뿐이다."
 
@@ -445,7 +448,7 @@ label mainhall:
                     play audio "Monster5.ogg"
                     scene 지하실괴물
                     "괴물의 울음소리가 들리며 무언가가 아르망을 덮쳤다"
-                    hide 지하실 괴물
+                    scene black
                     "아르망은 어떠한 힘에 의해 뒤로 밀려 넘어져 들어가지 못하였다."
                     m "크윽... 내가 이런 굴욕을 받다니..."
                     jump mainhall
@@ -792,7 +795,7 @@ label dining_room:
             jump mainhall 
 
 label underground:
-
+    
     if bgm_not_playing2():
         play music "bgm_piano.mp3"
 
@@ -817,11 +820,13 @@ label underground:
 
         m "나의 발걸음 소리마저... 이곳의 침묵을 깨트리는군...."
 
-        "지하실 안쪽 끝, 낡은 책상과 침대가 놓여 있다. 누군가가 생활했던 흔적이 있다."
+        "무언가 발에 걸린다"
 
-        m "단순히 버려진 창고가 아니군... 누군가가 여기서 살았던 거 같군."
+        m "뭐지 이건..?"
     
-    menu:
+        m "단순히 버려진 창고가 아니군... 누군가가 여기서 살았던 거 같군."
+    scene 지하실
+    menu:        
         "주변을 뒤져볼까?":
             if inner_room_lock:
                 $ inner_room_lock = False
@@ -830,8 +835,9 @@ label underground:
                 m "안방 열쇠인 것 같군."
                 play audio "item1.ogg"
                 "당신은 안방열쇠를 획득 했다."
+                hide 열쇠
                 jump underground
-            else:
+            else:                
                 "아무것도 없다."
                 jump underground
         "나간다":
@@ -1092,9 +1098,30 @@ label garret:
 
     scene 다락방 with dissolve
 
+    stop music
+    stop audio
+
     "갑자기 안쪽에서 오르골 소리가 들려온다."
+    
+    play audio "비.mp3"
+
     show 오르골 at Transform(xalign=0.5, yalign=0.2)
     m ".....날 환영하는 소린가?"
+    
+    "후후 잘 들어봐"
+
+    "집중해서 잘 들어보자."
+
+    window hide
+
+    $ renpy.pause(15.0, hard=True)
+
+    menu:
+        "문을 연다":
+            jump mainhall
+        "기다린다":
+            m "아직은 아니다..."
+            jump mainhall
 
     show 등불 at Transform(xalign=0.5, yalign=0.2)
     "다락방이다. 등불을 얻었다."
@@ -1212,7 +1239,20 @@ label next_room:
     scene bg dream with dissolve
        
     m "여긴... 대체...?"
-    
+    g "어때, 이 꽃? 정말 예쁘지 않아?"
+    g "어렸을 땐 부모님이 날 이 꽃밭에 데려다 주셨어. 햇살 가득한 날, 엄마가 내 머리에 꽃을 꽂아주며 웃으셨지."
+    g "그때는 세상이 다 따뜻하고, 모든 게 가능할 것 같았어."
+    g "하지만 남동생이 태어난 이후로, 모든 것이 끝나버렸어."
+    g "부모님의 관심은 전부 남동생에게로 가버렸어."
+    g "그 후로 난 늘 외로웠고, 차가운 현실 속에 홀로 남겨졌어."
+
+    m "아델린..."
+
+    g "이 어둠 속, 이 쓸쓸한 곳에 너가 와준 건 마치 한 줄기 빛 같았어."
+    g "처음엔 네 시끄럽고 거칠게 들리는 말투, 허세 섞인 태도에 나도 모르게 마음을 닫으려 했어."
+    g "그런데, 네가 점차 보여준 항상 당당한 모습, 그리고 눈빛 속에 숨겨진 고독을 알게 된 후, 내 심장은 미친 듯이 뛰기 시작했어."
+    g "나와 함께 하자. 영원히.....!"
+
     menu:
         "해피엔딩이다":
             jump happy_ending
@@ -1220,7 +1260,79 @@ label next_room:
             jump bad_ending
 
 label happy_ending:
-    "해피엔딩"
+
+    play music "bgm_감동.mp3"
+
+    "성수를 든다"
+
+    g "어....어째서...?"
+    g "넌....넌 날 이해한 게 아니였어....?"
+
+    m "아델린, 넌 지금도 과거에 사로잡혀 있어."
+    m "세상을 외면한 채, 여전히 그때에 머물고 있잖아."
+    m "너는 혼자였던 적이 없어."
+
+    g "거짓말이야! 아빠도, 엄마도... "
+    g "항상 동생만 바라보고, 나에겐 차갑기만 했어!"
+
+    m "그래, 백작부부는 그랬겠지."
+    m "하지만... 다른 사람들은?"
+
+    g "...다른 사람들?"
+
+    m "그래, 집사. 유모. 주방장."
+    m "그들은 너에게 어떤 존재였지?"
+
+    g "집사... 유모.... 주방장...."
+
+    m "그들은 네 곁에 항상 있었어."
+    m "널 혼자 두지 않기 위해, 조용히, 묵묵히 곁을 지켰지."
+    m "하지만 넌 백작부부의 시선에만 갇혀,"
+    m "그들의 마음은 보지 못했던 거야."
+
+    g "......유모.....집사....."
+
+    m "자... 이 일기들을 봐."
+    m "너를 걱정하고, 너를 아끼던 사람들의 마음이 여기 담겨 있어."
+
+    "(아델린, 일기장을 끌어안고 흐느낀다)"
+
+    g "아르망......"
+    g "그 성수로...... 날....... 해방시켜줘...."
+    g "나도.....이제.....그들의 곁으로 가고 싶어......"
+
+    m "......그래."
+
+    "성수를 뿌린 뒤, 아르망은 조용히 칼을 들어 올린다."
+    "칼에 베인 아델린은 평온한 미소를 지으며 서서히 사라진다."
+
+    "그 후, 아르망은 일기와 일기장을 모아 정원나무 밑에 묻고,"
+    "자신의 칼을 꽂아 작은 무덤을 만들어 준 뒤 저택을 떠난다."
+
+    m "……안녕, 아델린."
+    m "나도...... 너처럼 나아가야겠지."
 
 label bad_ending:
-    "해피엔딩"
+    
+    "성수를 든다"
+
+    g "그렇구나.....너도...."
+    g "너도.....날 버렸구나!"
+
+    m "미안하다....아델린!"
+    m "살아있는 사람이 어찌 죽은 사람을 위해 죽을 수 있겠느냐!"
+    m "나 벨포르 가의 아르망! 이 이름에 맹세하노니,"
+    m "내가 이 저택에 깃든 어둠을 베어 부정하리!"
+
+    g "너도 다른 사람이랑 다를 바가 없는 이기적인 인간이였어!!!"
+    g "꺄아아아악"
+
+    m "이기적인 인간이라......헛소리군. 나는 기사로서의 의무를 다한 것이다"
+
+    "칼을 다시 허리에 차고 정문으로 아르망은 나간다"
+    "그 후 아르망은 자신이 대저택의 유령을 베어 해치웠으며"
+    "앞으로 그 대저택에서 실종 사건이 없을 것이라고 외치고 다닌다"
+    "마을 사람은 그를 보고 실성한 사람 취급했으며"
+    "아르망은 자신을 이해해주는 사람도 없이 과거에 집착하며 살아간다"
+
+    "-END-"
