@@ -398,13 +398,10 @@ label first_event:
     jump mainhall
 
 label mainhall:
-    # 엔딩 조건
-    scene mainhall 
-    if diary_0:
-        if diary_1:
-            if diary_2:
-                if diary_3:
-                    jump hallway
+    scene mainhall
+    # 엔딩 조건 
+    if diary_0 and diary_1 and diary_2 and diary_3:
+        jump hallway
 
     # 샹들리에 이벤트
     if chandelier_count == 5:
@@ -427,8 +424,7 @@ label mainhall:
     if bgm_not_playing():
         play music "bgm_main.mp3"
 
-    menu:
-        
+    menu:       
         "자, 그럼 이제 어디로 가볼까?"
 
         "지하실":
@@ -588,9 +584,6 @@ label room:
         play audio "아이 웃는소리 숏.mp3"
     
         l "히히히, 내꺼야~" 
-
-       
-
         m "이놈, 내놔라!"
         l "메롱, 잡을 수 있으면 잡아봐!" 
         m "뭐?! 당장 이리내!"
@@ -709,6 +702,10 @@ label ghost_chase_success:
         "어디로 갈까?"
         
         "나간다":
+            scene mainhall
+            g "어때? 숨바꼭질은 재밌었어?"
+            m "장난해? 웬 꼬마 덕분에 힘들어 죽기 직전이야"
+            g "그럼 죽어."
             jump mainhall
 
 label ghost_chase_fail:
@@ -824,7 +821,10 @@ label underground:
 
         m "뭐지 이건..?"
     
-        m "단순히 버려진 창고가 아니군... 누군가가 여기서 살았던 거 같군."
+        "낡고 피 묻은 일기장이다."
+
+        "등불에 비춰 읽어본다"
+        
     scene 지하실
     menu:        
         "주변을 뒤져볼까?":
@@ -1112,9 +1112,29 @@ label garret:
 
     "집중해서 잘 들어보자."
 
+    play "기믹_오르골_단어1.mp3"
+
     window hide
 
-    $ renpy.pause(15.0, hard=True)
+    $ renpy.pause(10.0, hard=True)
+
+    m "첫 번째 노래군"
+
+    play "기믹_오르골_단어2.mp3"
+
+    window hide
+
+    $ renpy.pause(10.0, hard=True)
+
+    m "두 번째 노래군"
+
+    play "기믹_오르골_단어3.mp3"
+
+    window hide
+
+    $ renpy.pause(10.0, hard=True)
+
+    m "이게 끝인가"
 
     menu:
         "문을 연다":
