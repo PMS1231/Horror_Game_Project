@@ -198,6 +198,7 @@ default inner_room_first = True
 default garret_first = True
 default holy_water = False
 default orgel_try = True
+default wrong_answer = 0
 # $ p_bar[0] += 10 기사도 증가
 # $ p_bar[1] += 10 호감도 증가
 
@@ -362,8 +363,6 @@ label first_event:
     show adeline embrassed at Transform(xalign=0.5, yalign=0.2) 
     g "…아, 맞다. 나… 이미 죽었지…"
 
-    
-    
     g "후훗… 미안, 네가 그렇게까지 반응할 줄은 몰랐어. 오랜만에 만난 사람이라."
     
     g "무슨일로 왔니?"
@@ -1134,7 +1133,7 @@ label inner_room:
                     m "아까 얻은 종이에 뭔가 단서가 있을 것 같아..."
                     show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) with dissolve
                     m "단어를 찾아 입력해보자."
-                    $ correct_answer = "adeline"       
+                    $ correct_answer = "아델린"       
                     jump input_loop
                 else:
                     "금고가 있지만 비밀번호를 모르겠다."
@@ -1147,11 +1146,12 @@ label inner_room:
 
 label input_loop:
     $ player_input = renpy.input("숨겨진 단어는 무엇일까?").strip().lower()
-
+    
     if player_input == correct_answer:
         show 단어퍼즐답 at Transform(xalign=0.5, yalign=0.2) with dissolve
-        play audio "책 꺼내는 소리1.mp3"
+        play audio "item1.ogg"
         "드르륵... 금고가 열리는 소리가 들린다."
+        play audio "책 꺼내는 소리1.mp3"
         "당신은 안방의 금고에서 네번째 일기장을 찾았다."
         hide 단어퍼즐
         hide 단어퍼즐답
@@ -1159,7 +1159,10 @@ label input_loop:
         $ diary_3 = True
         jump diary4
     else:
-        m "그건 아닌 것 같아... 다시 생각해보자."
+        if wrong_answer >= 3:
+            g "너 정말 내 이름을 모르는거야?"
+        $ wrong_answer += 1
+        m "이건 아닌 것 같아... 다시 생각해보자."
         jump input_loop
 
 label diary4:
