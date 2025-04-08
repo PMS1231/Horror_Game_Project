@@ -165,12 +165,12 @@ init:
 
 
 # 게임에서 사용할 캐릭터를 정의합니다.
-define h = Character("마부", callback=type_sound2)
+define h = Character("마부", callback=type_sound2, font="tway_sky.ttf", what_font="tway_fly.ttf")
 define m = Character('아르망', color="#044604", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
-define g = Character("아델린", callback=type_sound2, what_font="tway_air.ttf")
+define g = Character("아델린", callback=type_sound2, font="tway_sky.ttf", what_font="tway_air.ttf")
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
-define l = Character('꼬마 유령', color="#d4840b")
-define l2 = Character('꼬마 유령', color="#d4840b")
+define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what_font="tway_fly.ttf")
+define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define G = Character('???')
 define s = Character("오르골 유령",)
 default p_bar = [0, 0]
@@ -316,7 +316,7 @@ label first_event:
     "갑자기 저 멀리 2층 복도 끝에서 끼익 하고 문이 열리는 소리가 들렸다."
 
     play audio "걷는소리 구두.mp3"
-    "또각… 또각… 구두 소리 같은 발걸음이 메아리친다."
+    "또각… 또각… 구두굽 소리가 허공에 메아리친다."
 
     play music "여자 콧노래.mp3"
     
@@ -358,10 +358,10 @@ label first_event:
     m "…소녀…?"
 
     "깜짝 놀란 눈으로 그를 바라보다가, 잠시 정적이 흐른 뒤, 마치 스스로도 민망한 듯 눈을 깜빡인다."
-
+    show adeline embrassed at Transform(xalign=0.5, yalign=0.2) 
     g "…아, 맞다. 나… 이미 죽었지…"
 
-    show adeline embrassed at Transform(xalign=0.5, yalign=0.2) 
+    
     
     g "후훗… 미안, 네가 그렇게까지 반응할 줄은 몰랐어. 오랜만에 만난 사람이라."
     
@@ -380,19 +380,24 @@ label first_event:
     m "그런 정보를 왜 나에게 알려주지?"
 
     show adeline sad at Transform(xalign=0.5, yalign=0.2) 
+    
+    g "너가 그 악령을 처리해준다면..." 
+    g "나에게도 좋은 일이니까..."
+    g "그 악령은 나를 괴롭히거든..."
 
-    g "그 악령은 나를 괴롭히거든......"
-
-    g "그래서 너가 그 악령을 처리해주면 나는 좋은 일이니까."
-
-    m "그런가. 그럼 나는 악령을 처리하러 가겠다."
+    m "그런가..." 
+    m "그렇다면 나는 악령을 처리하러 가겠다."
     
     show adeline idle at Transform(xalign=0.5, yalign=0.2) 
 
-    g "아. 이 집에는 많은 유령이 있어. 멀쩡한 유령은 아마 나뿐일꺼야. 조심해."
+    g "후훗..." 
+    g "이 집에는 많은 유령들이 있어." 
+    g "아마 멀쩡한 유령은 나 혼자일꺼야, 괜찮겠어?"
 
     m "헛된 걱정이다!"
 
+    hide adeline idle with dissolve
+    g "{size=+40}조심해{/size}"
     jump mainhall
 
 label mainhall:
@@ -1274,6 +1279,7 @@ label garret_input_loop:
         jump garret
     else:
         s "너.. 제대로 안들었구나?"
+        
         jump garret_input_loop
 
 label hallway:
