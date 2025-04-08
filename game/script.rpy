@@ -324,7 +324,7 @@ label first_event:
     m "......"
     m "역시, 단순한 헛소문은 아니였던 모양이로군"
 
-    "2층 난간 위, 어둠 속 소녀의 콧노래만이 들릴 뿐이다."
+    "2층 난간 위, 어둠 속 소녀가 부르는 콧노래가 울려퍼진다."
 
     m "누구냐! 지금 당장 모습을 드러내라!"
     
@@ -339,7 +339,7 @@ label first_event:
 
     scene black
     play audio "칼 휘두름.mp3"
-    m "사라져라아아앗!! 벨포르의 이름으로!! 이 망령아아아!!"
+    m "사라져라아앗!! 벨포르의 이름으로!! 이 망령아!!"
 
     "그 순간—"
     
@@ -383,7 +383,7 @@ label first_event:
     
     g "너가 그 악령을 처리해준다면..." 
     g "나에게도 좋은 일이니까..."
-    g "그 악령은 나를 괴롭히거든..."
+    g "그 악령은... 나를 괴롭히거든..."
 
     m "그런가..." 
     m "그렇다면 나는 악령을 처리하러 가겠다."
@@ -418,6 +418,7 @@ label mainhall:
                 $ safe_password = True
                 m "이건.."
                 show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) 
+                "정체불명의 종이를 주웠다."
                 m "어딘가의 암호처럼 보이는데"
                 play audio "item1.ogg"
                 "당신은 비밀번호 힌트를 획득 했다."
@@ -447,7 +448,7 @@ label mainhall:
                     play audio "돌풍.mp3"
                     "칠흑 같은 어둠속엔 바람 소리만 들리며,"
                     extend "한 치 앞도 보이지 않는다."
-                    "어둠 속으로 들어가려 한 그 순간," 
+                    "어둠 속으로 들어가려한 그 순간," 
                     play audio "Monster5.ogg"
                     scene 지하실괴물
                     "괴물의 울음소리가 들리며 무언가가 아르망을 덮쳤다"
@@ -491,7 +492,7 @@ label two_stair:
         m "뭐지? 1층에서 난 소리 같은데."
         $ chandelier_count += 1
     elif chandelier_count == 5:
-        m "아까 들린 소리가 신경쓰인다."
+        m "방금 들린 소리가 신경쓰인다."
         m "1층으로 내려가보자."
         jump mainhall
     else:
@@ -525,7 +526,7 @@ label two_stair:
                 "어디로 가지?"
 
                 "다락방":
-                    "사다리를 조심스레 밟고 올라간다."
+                    "사다리를 밟고 조심스레 올라간다."
                     jump garret
 
                 "서재":
@@ -534,7 +535,8 @@ label two_stair:
                 "안방":
                     if inner_room_lock:
                         play audio "자물쇠 잠긴소리.mp3"
-                        m "문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다. 열쇠를 찾아보자"
+                        m "{alpha=*0.5}문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다.{/alpha}"
+                        m "{alpha=*0.5}다른 장소에서 열쇠를 찾아보자{/alpha}"
                         jump two_stair
                     else:
                         jump inner_room
@@ -553,7 +555,8 @@ label two_stair:
             "안방":
                 if inner_room_lock:
                     play audio "자물쇠 잠긴소리.mp3"
-                    m "문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다. 열쇠를 찾아보자"
+                    m "{alpha=*0.5}문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다.{/alpha}"
+                    m "{alpha=*0.5}다른 장소에서 열쇠를 찾아보자{/alpha}"
                     jump two_stair
                 else:
                     jump inner_room
@@ -607,12 +610,13 @@ label room:
             $ diary_0 = True
             m "다시 이 방에 돌아왔다..."
             show 일기 at Transform(xalign=0.5, yalign=0.2)
-            "구석에서 아까 못보던 일기장을 발견했다."
-            m "음? 일기장..? 누구의 일기장이지?"
+            "구석에서 아까는 보지 못했던 일기장을 발견했다."
+            m "…이건 뭐지? 일기장인가? 누구의 일기지…?"
             n "유모의 일기장"
-            n "오늘 도련님이 태어났다."
-            n "백작 부부는 날이 갈수록 도련님에게만 신경을 쏟는다."
+            n "오늘은 도련님이 태어나셨다."
+            n "백작님과 부인께선 갈수록 도련님에게만 신경을 쏟는다."
             n "아가씨는 자꾸 혼잣말을 하거나, 거울을 오래 바라본다."
+            n "아가씨가 걱정된다..."
             nvl clear
         else:
             m "이제 더 이상 찾을 건 없는 것 같다."
