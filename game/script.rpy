@@ -1117,26 +1117,29 @@ label garret:
     
         show 오르골 at Transform(xalign=0.5, yalign=0.2)
         m ".....날 환영하는 소린가?"
-    
-        "후후 잘 들어봐"
-
-        "집중해서 잘 들어보자."
+        show 꼬마 유령 at Transform(xalign=0.5, yalign=0.2) # 캐릭터 설정, 연출 방법 수정 필요
+        s "후후 이 노래 정말 좋지 않아?"
+        s "너도 함께 들을래?"
+        s "너도 마음에 들거야"
+        
 
         play audio "기믹_오르골_단어1.mp3"
 
         window hide
 
         $ renpy.pause(10.0, hard=True)
-
-        m "첫 번째 노래군"
+        s "이 오르골 소리가 참 곱지?"
+        m "언제까지 들어야 하지?"
+        s "더 들어봐"
 
         play audio "기믹_오르골_단어2.mp3"
 
         window hide
 
         $ renpy.pause(10.0, hard=True)
-
-        m "두 번째 노래군"
+        s "첫째가 태어난 날 내가 만든 오르골이야"
+        m "하고 싶은 말은 뭐지?"
+        s "그 아이가 커서 이노래를 기억하길 바랬지"
 
         play audio "기믹_오르골_단어3.mp3"
 
@@ -1144,11 +1147,11 @@ label garret:
 
         $ renpy.pause(10.0, hard=True)
 
-        m "이게 끝인가"
+        m "이제 끝났나?"
 
-        s "어때? 노래는?"
+        s "잘 들었지?"
 
-        m "음.. 노래를 듣다보니"
+        s "내가 전하고 싶은 단어가 뭔지 맞춰 볼래?"
 
         $ correct_answer = "정화수"
 
