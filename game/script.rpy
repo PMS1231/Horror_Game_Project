@@ -404,7 +404,10 @@ label first_event:
 label mainhall:
     scene mainhall
     # 엔딩 조건 
-    if diary_0 and diary_1 and diary_2 and diary_3:
+    if diary_0:
+        if diary_1:
+            if diary_2:
+                if :diary_3:
         jump hallway
 
     # 샹들리에 이벤트
@@ -1120,6 +1123,7 @@ label input_loop:
         "당신은 안방의 금고에서 네번째 일기장을 찾았다."
         hide 단어퍼즐
         hide 단어퍼즐답
+        $ safe_info = False
         $ diary_3 = True
         jump diary4
     else:
@@ -1160,7 +1164,7 @@ label diary4:
     
     n "저항했지만, 이미 늦었어"
 
-    n "그는 조용히, 종잇장처럼 쓰러졋고 피를 흘렸지"
+    n "그는 조용히, 종잇장처럼 쓰러졌고 피를 흘렸지"
     
     n "피가 흐르던 자리에..."
 
@@ -1420,7 +1424,6 @@ label hallway_loop:
 
 label next_room:
     scene bg dream with dissolve
-       
     m "여긴... 대체...?"
     g "어때, 이 꽃? 정말 예쁘지 않아?"
     g "어렸을 땐 부모님이 날 이 꽃밭에 데려다 주셨어. 햇살 가득한 날, 엄마가 내 머리에 꽃을 꽂아주며 웃으셨지."
@@ -1496,7 +1499,6 @@ label happy_ending:
     m "나도...... 너처럼 나아가야겠지."
 
 label bad_ending:
-    
     "성수를 든다"
 
     g "그렇구나.....너도...."
@@ -1519,5 +1521,3 @@ label bad_ending:
     "아르망은 자신을 이해해주는 사람도 없이 과거에 집착하며 살아간다"
 
     "-END-"
-
-label bad_ending:
