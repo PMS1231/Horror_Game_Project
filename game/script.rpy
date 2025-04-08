@@ -10,6 +10,7 @@ init python:
 
     def bgm_not_playing2():
         return renpy.music.get_playing(channel="music") != "bgm_piano.mp3"
+
 # 사운드 관련 코드
 init python:
     def type_sound(event, interact=True, **kwargs):
@@ -171,6 +172,7 @@ define l = Character('꼬마 유령', color="#b2cd68", callback=type_sound3)
 define l2 = Character('꼬마 유령', color="#b2cd68")
 define G = Character('???')
 
+# 변수를 설정 합니다.
 default p_bar = [0, 0]
 default diary_0 = False
 default diary_1 = False
@@ -194,6 +196,7 @@ default safe_password = False
 default photo_count = 0
 default inner_room_first = True
 
+## 게임 시작 레이블 ##
 label start:
     stop music 
     play audio "마차소리.mp3"
@@ -255,6 +258,8 @@ label start:
 
     "아르망은 문 앞에서 고민에 빠진다."
 
+## 게임 프롤로그 레이블 ##
+# 정문 이벤트
 label prologue:
 
     m "이를 어쩐다."
@@ -298,6 +303,8 @@ label prologue:
             extend "하아…"
             jump first_event
 
+## 게임 첫 이벤트 레이블 ##
+# 귀신과의 첫 만남
 label first_event:
     stop music 
     stop audio
@@ -391,6 +398,10 @@ label first_event:
 
     jump mainhall
 
+## 1층 메인홀 레이블 ##
+# 지하실, 식당, 방, 2층 이동 가능
+# 귀신과의 호감도 이벤트 구현 필요
+# 일기를 4개 모을 시 엔딩 루트로 진입, 샹들리에 이벤트 (단어퍼즐)
 label mainhall:
     # 엔딩 조건
     scene mainhall 
@@ -466,6 +477,10 @@ label mainhall:
             scene black with fade
             jump two_stair
 
+## 2층 메인홀 레이블 ##
+# 다락방, 서재, 안방, 1층 이동 가능
+# 다락방은 서재에서 해금 가능
+# 샹들리에 이벤트 (단어퍼즐)
 label two_stair:
     scene mainhall2 with fade
 
@@ -480,7 +495,6 @@ label two_stair:
         jump mainhall
     else:
         $ chandelier_count += 1
-
 
     if garret_info:
         if garret_to_first:
@@ -547,6 +561,7 @@ label two_stair:
                 scene black with fade
                 jump mainhall
 
+### 다락방 발견 레이블 ###
 label garret_first:
         $ garret_to_first = False
         "천장을 유심히 보니 뭔가 이상한 곳이 있다"
@@ -559,6 +574,9 @@ label garret_first:
         m "호오, 이런 곳에 정말 다락방이 있었군."
         jump two_stair
 
+### 방 레이블 ###
+# 숨바꼭질 이벤트
+#식당 열쇠 획득, 재방문시 일기장1 획득 가능
 label room:
     stop music
     scene room
@@ -583,8 +601,6 @@ label room:
     
         l "히히히, 내꺼야~" 
 
-       
-
         m "이놈, 내놔라!"
         l "메롱, 잡을 수 있으면 잡아봐!" 
         m "뭐?! 당장 이리내!"
@@ -608,6 +624,7 @@ label room:
         "나간다":
             jump mainhall
 
+### 숨바꼭질 레이블###
 label ghost_chase_game:
     $ correct_guesses = 0
     $ wrong_guesses = 0
@@ -621,6 +638,7 @@ label ghost_chase_game:
 
     jump ghost_chase_loop
 
+### 숨바꼭질 반복 레이블###
 label ghost_chase_loop:
     $ direction = random.choice(directions)
 
@@ -685,6 +703,7 @@ label ghost_chase_loop:
     else:
         jump ghost_chase_loop
 
+### 숨바꼭질 성공 레이블###
 label ghost_chase_success:
     scene room
     show 꼬마 유령 at Transform(xalign=0.5, yalign=0.2) with dissolve
@@ -705,6 +724,7 @@ label ghost_chase_success:
         "나간다":
             jump mainhall
 
+### 숨바꼭질 실패 레이블###
 label ghost_chase_fail:
     l2 "너.. 제대로 안하지?"
     l2 "..재미 없어졌어"
@@ -713,6 +733,7 @@ label ghost_chase_fail:
     "..!!!"
     jump ghost_chase_retry
 
+### 숨바꼭질 리트 레이블###
 label ghost_chase_retry:
     scene black with dissolve
     $ correct_guesses = 0
@@ -724,6 +745,8 @@ label ghost_chase_retry:
 
     jump ghost_chase_loop
 
+### 식당 레이블 ###
+# 지하실 열쇠, 일기장2 획득 가능
 label dining_room:
     if dining_room_first:
         $ dining_room_first = False
@@ -788,6 +811,8 @@ label dining_room:
         "나간다":
             jump mainhall 
 
+### 지하실 레이블 ###
+# 괴물 이벤트 (구현 필요), 안방 열쇠 획득 가능
 label underground:
 
     if bgm_not_playing2():
@@ -834,6 +859,8 @@ label underground:
         "나간다":
             jump mainhall    
 
+### 서재 레이블 ###
+# 다락방 정보, 일기장 3, 금고 정보 획득 가능
 label library:
     if library_first:
         $ library_first = False
@@ -917,6 +944,8 @@ label library:
         "나간다":
             jump two_stair
 
+### 안방 레이블 ###
+# 초상화 이벤트, 금고 이벤트, 일기장 4 획득 가능
 label inner_room:
 
     stop music
@@ -943,6 +972,7 @@ label inner_room:
                 m "음? 저 초상화 원래 눈을 뜨고 있었나?"
                 jump inner_room
             else:
+                $ photo_count = 0
                 play audio "스크림1.mp3"
                 scene 초상화_공포 
                 m "으악!"
@@ -967,6 +997,7 @@ label inner_room:
         "나간다" :
             jump two_stair
 
+### 단어 퍼즐 레이블 ###
 label input_loop:
     $ player_input = renpy.input("숨겨진 단어는 무엇일까?").strip().lower()
 
@@ -982,6 +1013,7 @@ label input_loop:
         m "그건 아닌 것 같아... 다시 생각해보자."
         jump input_loop
 
+### 일기장 4 레이블 ###
 label diary4:
 
     play music "bgm_반전.mp3"
@@ -1084,6 +1116,9 @@ label diary4:
 
     jump inner_room
 
+### 다락방 레이블 ###
+# 오르골 기믹 구현 필요
+# 등불 획득 가능
 label garret:
 
     "사다리를 조심스레 밟고 올라간다."
@@ -1105,6 +1140,7 @@ label garret:
         "나간다":
             jump two_stair
 
+### 무한 복도 레이블 ###
 label hallway:
     scene black
     with dissolve
@@ -1206,6 +1242,7 @@ label hallway_loop:
                     m "다른 복도가 나왔군. 하지만 아직 뭔가 부족한 느낌이야."
                     jump hallway_loop
 
+### 엔딩 루트 레이블 ###
 label next_room:
     scene bg dream with dissolve
        
@@ -1217,8 +1254,10 @@ label next_room:
         "배드엔딩이다":
             jump bad_ending
 
+### 해피 엔딩 ###
 label happy_ending:
     "해피엔딩"
 
+### 배드 엔딩 ###
 label bad_ending:
     "해피엔딩"
