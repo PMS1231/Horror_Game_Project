@@ -165,10 +165,10 @@ init:
 
 
 # 게임에서 사용할 캐릭터를 정의합니다.
+define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define h = Character("마부", callback=type_sound2, font="tway_sky.ttf", what_font="tway_fly.ttf")
 define m = Character('아르망', color="#044604", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
 define g = Character("아델린", callback=type_sound2, font="tway_sky.ttf", what_font="tway_air.ttf")
-define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define G = Character('???')
@@ -422,7 +422,7 @@ label mainhall:
                 "정체불명의 종이를 주웠다."
                 m "어딘가의 암호처럼 보이는데"
                 play audio "item1.ogg"
-                "당신은 비밀번호 힌트를 획득 했다."
+                "당신은 수상한 종이를 획득 했다."
                 hide 단어퍼즐
         hide 샹들리에
 
@@ -457,6 +457,7 @@ label mainhall:
                     "아르망은 어떠한 힘에 의해 뒤로 밀려 넘어져 들어가지 못하였다."
                     m "크윽... 내가 이런 굴욕을 받다니..."
                     scene mainhall
+                    "아르망은 1층 메인홀로 돌아왔다."
                     g "너 그 녀석을 마주쳤구나..?"  ## 대사 내용 수정 필요
                     m "저 괴물의 정체는 뭐야?"
                     g "나도 모르겠어, 위험한 녀석이니 가까이 다가가지 않는걸 추천할게."
@@ -739,6 +740,7 @@ label ghost_chase_retry:
     scene black with dissolve
     $ correct_guesses = 0
     $ wrong_guesses = 0
+    m ""
     m "크윽.. 잠시 정신을 잃었었나 봐..."
     m "하지만 열쇠는 반드시 찾아야 해..."
 
@@ -1306,6 +1308,9 @@ label garret:
         "어디로 갈까?"
 
         "나간다":
+            scene mainhall2
+            g "그 노래.. 오랜만이네."
+            m "대사 입력..."
             jump two_stair
 
 label garret_input_loop:
