@@ -395,13 +395,10 @@ label first_event:
     jump mainhall
 
 label mainhall:
-    # 엔딩 조건
-    scene mainhall 
-    if diary_0:
-        if diary_1:
-            if diary_2:
-                if diary_3:
-                    jump hallway
+    scene mainhall
+    # 엔딩 조건 
+    if diary_0 and diary_1 and diary_2 and diary_3:
+        jump hallway
 
     # 샹들리에 이벤트
     if chandelier_count == 5:
@@ -424,8 +421,7 @@ label mainhall:
     if bgm_not_playing():
         play music "bgm_main.mp3"
 
-    menu:
-        
+    menu:       
         "자, 그럼 이제 어디로 가볼까?"
 
         "지하실":
@@ -706,6 +702,10 @@ label ghost_chase_success:
         "어디로 갈까?"
         
         "나간다":
+            scene mainhall
+            g "어때? 숨바꼭질은 재밌었어?"
+            m "장난해? 웬 꼬마 덕분에 힘들어 죽기 직전이야"
+            g "그럼 죽어."
             jump mainhall
 
 label ghost_chase_fail:
