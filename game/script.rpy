@@ -283,7 +283,7 @@ label prologue:
                 
                 m "이깟 문조차 내 의지로 열지 못한다면, 이 검은 무얼위해 존재한단 말인가!"
                 
-                play audio "검으로 벽을 두드리는 소리.mp3"
+                play audio "자물쇠 부숨.mp3"
                 "다시 한번 검을 들어 자물쇠를 단숨에 내리친다." 
 
                 "문이 쾅 소리와 함께 열리며 먼지가 풀풀 날린다."
@@ -903,17 +903,18 @@ label underground:
         "칼끝이 박히며, 괴물의 몸이 뒤틀린다."
         "괴성, 그리고 한 줄기 연기와 함께 괴물의 육체가 무너지기 시작한다."
 
-        scene black
+        scene black  
         m "외....로.....워...."
 
         "괴물의 형체가 녹아 사라진다. 아르망은 거친 숨을 쉬며 바닥에 주저앉는다."
 
-        hide 괴물죽음 with fade
+        
         "검 끝에 묻은 피가 천천히 사라지고, 주위는 다시 고요해진다."
+        scene 지하실  
         menu:
             "더 깊은 곳으로 들어가볼까?":
                 if underground_first:
-                    $ underground_first = False
+                    $ underground_first = False                                     
                     "지하실 안쪽 끝, 낡은 옷장과 책상, 침대가 놓여있다. 누군가가 생활했던 흔적이 있다."
                     m "일기의 내용대로 누군가 살았던 흔적이 있군."
                     "성수의 희미한 빛이 벽장 너머에서 새어나온다."  
@@ -943,7 +944,7 @@ label underground_deep:
         
         if holy_water == False:
             menu:
-                "성수를 어떻게 할까까."
+                "성수를 어떻게 할까."
 
                 "성수를 가지고 간다":
                     $ holy_water = True
@@ -1247,8 +1248,7 @@ label garret:
         show 꼬마 유령 at Transform(xalign=0.5, yalign=0.2) # 캐릭터 설정, 연출 방법 수정 필요
         s "후후 이 노래 정말 좋지 않아?"
         s "너도 함께 들을래?"
-        s "너도 마음에 들거야"
-        
+        s "너도 마음에 들거야"        
 
         play audio "기믹_오르골_단어1.mp3"
 
@@ -1259,7 +1259,6 @@ label garret:
         m "언제까지 들어야 하지?"
         s "더 들어봐"
 
-    # play "기믹_오르골_단어1.mp3"
         play audio "기믹_오르골_단어2.mp3"
 
         window hide
@@ -1269,9 +1268,7 @@ label garret:
         m "하고 싶은 말은 뭐지?"
         s "그 아이가 커서 이노래를 기억하길 바랬지"
 
-        play audio "기믹_오르골_단어3.mp3"
-
-    # play "기믹_오르골_단어2.mp3"
+        play audio "기믹_오르골_단어3.mp3"   
 
         window hide
 
@@ -1281,7 +1278,7 @@ label garret:
 
         s "잘 들었지?"
 
-    # play "기믹_오르골_단어3.mp3"
+   
         $ correct_answer = "정화수"
 
         jump garret_input_loop
@@ -1486,7 +1483,7 @@ label happy_ending:
 
     m "……안녕, 아델린."
     m "나도...... 너처럼 나아가야겠지."
-
+return    
 label bad_ending:
     
     "성수를 든다"
@@ -1511,5 +1508,7 @@ label bad_ending:
     "아르망은 자신을 이해해주는 사람도 없이 과거에 집착하며 살아간다"
 
     "-END-"
-
-label bad_ending:
+return       
+# label bad_ending:
+   
+    
