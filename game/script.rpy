@@ -1212,10 +1212,14 @@ label garret:
 
         window hide
 
+<<<<<<< Updated upstream
         $ renpy.pause(10.0, hard=True)
         s "이 오르골 소리가 참 곱지?"
         m "언제까지 들어야 하지?"
         s "더 들어봐"
+=======
+    # play "기믹_오르골_단어1.mp3"
+>>>>>>> Stashed changes
 
         play audio "기믹_오르골_단어2.mp3"
 
@@ -1226,7 +1230,11 @@ label garret:
         m "하고 싶은 말은 뭐지?"
         s "그 아이가 커서 이노래를 기억하길 바랬지"
 
+<<<<<<< Updated upstream
         play audio "기믹_오르골_단어3.mp3"
+=======
+    # play "기믹_오르골_단어2.mp3"
+>>>>>>> Stashed changes
 
         window hide
 
@@ -1234,7 +1242,11 @@ label garret:
 
         m "이제 끝났나?"
 
+<<<<<<< Updated upstream
         s "잘 들었지?"
+=======
+    # play "기믹_오르골_단어3.mp3"
+>>>>>>> Stashed changes
 
         s "내가 전하고 싶은 단어가 뭔지 맞춰 볼래?"
 
