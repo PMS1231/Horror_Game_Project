@@ -196,6 +196,7 @@ default safe_password = False
 default photo_count = 0
 default inner_room_first = True
 default garret_first = True
+default holy_water = False
 # $ p_bar[0] += 10 기사도 증가
 # $ p_bar[1] += 10 호감도 증가
 
@@ -897,15 +898,18 @@ label underground:
         "아르망은 옆으로 구르며 칼을 뽑았다."
 
         scene 괴물싸움 with hpunch
+        play audio "Monster 2.mp3"
         m "키에에에에엑!"
 
         m "악령이든 짐승이든…"
         m "너 따위에게 무너질 내가 아니야!!"
-        
+        play audio "칼 휘두름.mp3"
+        play aduio "검으로 벽을 두드리는 소리.mp3"
+        play audio "칼 휘두름.mp3"
         scene black
         "괴물의 발톱에 어깨가 긁혀 피가 흐르지만, 그는 몸을 낮추며 괴물의 밑을 파고든다."
         "마지막 일격—칼을 힘껏 들어 괴물의 심장을 찔러 꽂는다!"
-
+        play audio "칼찔리는 소리.mp3"
         m "사라져라!!!"
         
         scene 괴물죽음 with fade
@@ -916,39 +920,48 @@ label underground:
         m "외....로.....워...."
 
         "괴물의 형체가 녹아 사라진다. 아르망은 거친 숨을 쉬며 바닥에 주저앉는다."
-        "검 끝에 묻은 피가 천천히 사라지고, 주위는 다시 고요해진다."
 
-        menu:
-            "더 깊은 곳으로 들어가볼까?":
-                if underground_first:
-                    $ underground_first = False
-                    "지하실 안쪽 끝, 낡은 옷장과 책상, 침대가 놓여있다. 누군가가 생활했던 흔적이 있다."
-                    m "일기의 내용대로 누군가 살았던 흔적이 있군."
-                    "성수의 희미한 빛이 벽장 너머에서 새어나온다."  
-                    show 성수 at Transform(xalign=0.5, yalign=0.2) 
-                    m "이게 일기에 적혀있던 성수인가..."
-                    
-        menu:
-            "성수가 있다."
-                    
-                    scene 지하실 with dissolve
+        hide 괴물죽음 with fade
+        "검 끝에 묻은 피가 천천히 사라지고, 주위는 다시 고요해진다."
     
-    menu:        
-        "주변을 뒤져볼까?":
-            if inner_room_lock:
-                $ inner_room_lock = False
-                m "이건.."
-                show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
-                m "안방 열쇠인 것 같군."
-                play audio "item1.ogg"
-                "당신은 안방열쇠를 획득 했다."
-                hide 열쇠
-                jump underground
-            else:                
-                "아무것도 없다."
-                jump underground
-        "나간다":
-            jump mainhall    
+    scene 지하실
+
+    menu:
+        "더 깊은 곳으로 들어가볼까?":
+            if underground_first:
+                $ underground_first = False
+                scene 지하실깊 with dissolve
+                "지하실 안쪽 끝, 낡은 옷장과 책상, 침대가 놓여있다. 누군가가 생활했던 흔적이 있다."
+                m "일기의 내용대로 누군가 살았던 흔적이 있군."
+                "성수의 희미한 빛이 벽장 너머에서 새어나온다."  
+                show 성수 at Transform(xalign=0.5, yalign=0.2) 
+                m "이게 일기에 적혀있던 성수인가..."
+            jump underground_deep
+            
+        "돌아간다":
+            jump mainhall
+
+label underground_deep:
+        scene 지하실깊
+        
+        if holy_water == False:
+            menu:
+                "성수를 어떻게 할까까."
+
+                "성수를 가지고 간다":
+                    $ holy_water = True
+                    play audio "item1.ogg"
+                    "당신은 성수를 획득 했다."
+                    "돌아가자."
+                    jump underground
+
+                "그냥 돌아간다":
+                    jump underground
+        else:
+            menu:
+                "주변을 둘러봐도 더 이상 챙길 건 없는듯 하다.":
+                    jump underground
+
 
 label library:
     if library_first:
@@ -961,9 +974,7 @@ label library:
         m "음... 서재가 많이 크군"
 
     scene 서재
-        
-        "그 때 스르륵 무언가 끌린는 소리가 들려온다"
-        m "무언가가 있군....피하면서 정보를 찾아야겠어"
+
     menu:
         "어디를 찾아볼까."
 
@@ -1244,14 +1255,11 @@ label garret:
 
         window hide
 
-<<<<<<< Updated upstream
         $ renpy.pause(10.0, hard=True)
         s "이 오르골 소리가 참 곱지?"
         m "언제까지 들어야 하지?"
         s "더 들어봐"
-=======
     # play "기믹_오르골_단어1.mp3"
->>>>>>> Stashed changes
 
         play audio "기믹_오르골_단어2.mp3"
 
@@ -1262,11 +1270,8 @@ label garret:
         m "하고 싶은 말은 뭐지?"
         s "그 아이가 커서 이노래를 기억하길 바랬지"
 
-<<<<<<< Updated upstream
         play audio "기믹_오르골_단어3.mp3"
-=======
     # play "기믹_오르골_단어2.mp3"
->>>>>>> Stashed changes
 
         window hide
 
@@ -1274,11 +1279,8 @@ label garret:
 
         m "이제 끝났나?"
 
-<<<<<<< Updated upstream
         s "잘 들었지?"
-=======
     # play "기믹_오르골_단어3.mp3"
->>>>>>> Stashed changes
 
         s "내가 전하고 싶은 단어가 뭔지 맞춰 볼래?"
 
