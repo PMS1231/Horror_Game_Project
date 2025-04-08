@@ -1,7 +1,8 @@
 #이 파일에 게임 스크립트를 입력합니다.
 define sounds = ['audio/Man_Typing_long.mp3', 'audio/Man_Typing_short.mp3']
 define sounds2 = ['audio/Woman_Typing_long.mp3', 'audio/Woman_Typing_short.mp3']
-define sounds3 = ['audio/아이 웃는소리.mp3', 'audio/아이 웃는소리 숏.mp3']
+define sounds3 = ['', '']
+
 
 # 메인홀 브금 재생 관련 코드 
 init python:
@@ -113,6 +114,7 @@ init:
     image 저택 = "images/bg/저택.png"
     image 자물쇠 = "images/bg/자물쇠.png"
     image 샹들리에 = "images/obj/샹들리에.png"
+
 # 안방 이미지
 
 #특수복도 이미지
@@ -162,10 +164,12 @@ init:
     image 마주 = "images/chr/마차 주인.png"
     image 마주생각 = "images/chr/마차 주인 생각.png"
 
+
+
 # 게임에서 사용할 캐릭터를 정의합니다.
+define h = Character("마부", callback=type_sound2)
 define m = Character('아르망', color="#044604", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
 define g = Character("아델린", callback=type_sound2, what_font="tway_air.ttf")
-define h = Character("마부", callback=type_sound2)
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#d4840b", callback=type_sound3)
 define l2 = Character('꼬마 유령', color="#d4840b")
@@ -194,6 +198,9 @@ default safe_password = False
 default photo_count = 0
 default inner_room_first = True
 
+# $ p_bar[0] += 10 기사도 증가
+# $ p_bar[1] += 10 호감도 증가
+
 label start:
     stop music 
     play audio "마차소리.mp3"
@@ -216,7 +223,6 @@ label start:
     m "이 곳인가..."
     m "{alpha=*0.5}사람들이 계속 사라진다는 대저택...{/alpha}"
     m "{alpha=*0.5}이곳엔 대체 어떤 진실이 숨겨져 있는가...{/alpha}"
-    $ p_bar[0] += 10
    
     m "{alpha=*0.5}두려움으로부터 진실을 외면하는 것은, 기사로서 가장 비겁한 일{/alpha}"
     m "벨포르 가의 이름으로 맹세하노니"
@@ -446,7 +452,7 @@ label mainhall:
                     play audio "Monster5.ogg"
                     scene 지하실괴물
                     "괴물의 울음소리가 들리며 무언가가 아르망을 덮쳤다"
-                    hide 지하실 괴물
+                    scene black
                     "아르망은 어떠한 힘에 의해 뒤로 밀려 넘어져 들어가지 못하였다."
                     m "크윽... 내가 이런 굴욕을 받다니..."
                     jump mainhall
@@ -789,7 +795,7 @@ label dining_room:
             jump mainhall 
 
 label underground:
-
+    
     if bgm_not_playing2():
         play music "bgm_piano.mp3"
 
@@ -817,8 +823,8 @@ label underground:
         "지하실 안쪽 끝, 낡은 책상과 침대가 놓여 있다. 누군가가 생활했던 흔적이 있다."
 
         m "단순히 버려진 창고가 아니군... 누군가가 여기서 살았던 거 같군."
-    
-    menu:
+    scene 지하실
+    menu:        
         "주변을 뒤져볼까?":
             if inner_room_lock:
                 $ inner_room_lock = False
@@ -827,8 +833,9 @@ label underground:
                 m "안방 열쇠인 것 같군."
                 play audio "item1.ogg"
                 "당신은 안방열쇠를 획득 했다."
+                hide 열쇠
                 jump underground
-            else:
+            else:                
                 "아무것도 없다."
                 jump underground
         "나간다":
@@ -951,8 +958,9 @@ label inner_room:
         "주변을 살펴본다.":
             if safe_info:
                 if safe_password:
-                    scene black with fade #안방 이미지
+                    scene 안방 with fade #안방 이미지
                     "당신은 방 구석에서 잠긴 금고를 발견했다"
+                    show 금고 at Transform(xalign=0.5, yalign=0.2)
                     m "아까 얻은 종이에 뭔가 단서가 있을 것 같아..."
                     show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) with dissolve
                     m "단어를 찾아 입력해보자."
@@ -989,8 +997,6 @@ label diary4:
     n "금고 -일기장"
 
     n "18xx년 4월 6일"
-
-    n "오늘, 저택에 낯선 이가 찾아왔다."
 
     n "오늘, 저택에 낯선 이가 찾아왔다."
 
@@ -1090,9 +1096,30 @@ label garret:
 
     scene 다락방 with dissolve
 
-    "갑자기 안쪽에서 오르골 소리가 들려온다."
+    stop music
+    stop audio
 
+    "갑자기 안쪽에서 오르골 소리가 들려온다."
+    
+    play audio "비.mp3"
+
+    show 오르골 at Transform(xalign=0.5, yalign=0.2)
     m ".....날 환영하는 소린가?"
+    
+    "후후 잘 들어봐"
+
+    "집중해서 잘 들어보자."
+
+    window hide
+
+    $ renpy.pause(15.0, hard=True)
+
+    menu:
+        "문을 연다":
+            jump mainhall
+        "기다린다":
+            m "아직은 아니다..."
+            jump mainhall
 
     show 등불 at Transform(xalign=0.5, yalign=0.2)
     "다락방이다. 등불을 얻었다."
