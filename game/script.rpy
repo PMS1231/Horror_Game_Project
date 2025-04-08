@@ -3,7 +3,6 @@ define sounds = ['audio/Man_Typing_long.mp3', 'audio/Man_Typing_short.mp3']
 define sounds2 = ['audio/Woman_Typing_long.mp3', 'audio/Woman_Typing_short.mp3']
 define sounds3 = ['', '']
 
-
 # 메인홀 브금 재생 관련 코드 
 init python:
     def bgm_not_playing():
@@ -56,7 +55,6 @@ init python:
 init python:
     renpy.music.register_channel("laugh1", "sfx", loop=False)
     renpy.music.register_channel("laugh2", "sfx", loop=False)     
-
 #좌/우 사운드 기믹
 init python:
     import random
@@ -171,10 +169,10 @@ define h = Character("마부", callback=type_sound2)
 define m = Character('아르망', color="#044604", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
 define g = Character("아델린", callback=type_sound2, what_font="tway_air.ttf")
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
-define l = Character('꼬마 유령', color="#d4840b", callback=type_sound3)
+define l = Character('꼬마 유령', color="#d4840b")
 define l2 = Character('꼬마 유령', color="#d4840b")
 define G = Character('???')
-
+define s = Character("오르골 유령",)
 default p_bar = [0, 0]
 default diary_0 = False
 default diary_1 = False
@@ -197,7 +195,7 @@ default underground_first = True
 default safe_password = False
 default photo_count = 0
 default inner_room_first = True
-
+default garret_first = True
 # $ p_bar[0] += 10 기사도 증가
 # $ p_bar[1] += 10 호감도 증가
 
@@ -483,7 +481,6 @@ label two_stair:
     else:
         $ chandelier_count += 1
 
-
     if garret_info:
         if garret_to_first:
             menu:
@@ -512,6 +509,7 @@ label two_stair:
                 "어디로 가지?"
 
                 "다락방":
+                    "사다리를 조심스레 밟고 올라간다."
                     jump garret
 
                 "서재":
@@ -1094,65 +1092,75 @@ label diary4:
 
 label garret:
 
-    "사다리를 조심스레 밟고 올라간다."
-
     scene 다락방 with dissolve
 
     stop music
     stop audio
 
-    "갑자기 안쪽에서 오르골 소리가 들려온다."
+    if garret_first:
+        $ garret_first = False
+        "갑자기 안쪽에서 오르골 소리가 들려온다."
     
-    play audio "비.mp3"
-
-    show 오르골 at Transform(xalign=0.5, yalign=0.2)
-    m ".....날 환영하는 소린가?"
+        show 오르골 at Transform(xalign=0.5, yalign=0.2)
+        m ".....날 환영하는 소린가?"
     
-    "후후 잘 들어봐"
+        "후후 잘 들어봐"
 
-    "집중해서 잘 들어보자."
+        "집중해서 잘 들어보자."
 
-    play "기믹_오르골_단어1.mp3"
+        play audio "기믹_오르골_단어1.mp3"
 
-    window hide
+        window hide
 
-    $ renpy.pause(10.0, hard=True)
+        $ renpy.pause(10.0, hard=True)
 
-    m "첫 번째 노래군"
+        m "첫 번째 노래군"
 
-    play "기믹_오르골_단어2.mp3"
+        play audio "기믹_오르골_단어2.mp3"
 
-    window hide
+        window hide
 
-    $ renpy.pause(10.0, hard=True)
+        $ renpy.pause(10.0, hard=True)
 
-    m "두 번째 노래군"
+        m "두 번째 노래군"
 
-    play "기믹_오르골_단어3.mp3"
+        play audio "기믹_오르골_단어3.mp3"
 
-    window hide
+        window hide
 
-    $ renpy.pause(10.0, hard=True)
+        $ renpy.pause(10.0, hard=True)
 
-    m "이게 끝인가"
+        m "이게 끝인가"
 
-    menu:
-        "문을 연다":
-            jump mainhall
-        "기다린다":
-            m "아직은 아니다..."
-            jump mainhall
+        s "어때? 노래는?"
 
-    show 등불 at Transform(xalign=0.5, yalign=0.2)
-    "다락방이다. 등불을 얻었다."
+        m "음.. 노래를 듣다보니"
 
-    $ light = True
+        $ correct_answer = "정화수"
+
+        jump garret_input_loop
 
     menu:
         "어디로 갈까?"
 
         "나간다":
             jump two_stair
+
+label garret_input_loop:
+    $ player_input = renpy.input("숨겨진 단어는 무엇일까?").strip().lower()
+
+    if player_input == correct_answer:
+        m "정화수."
+        m "정화수라는 단어가 생각나던데?"
+        s "너 정말 열심히 들었구나?"
+        $ light = True
+        show 등불 at Transform(xalign=0.5, yalign=0.2)
+        "자 이건 선물이야."
+        "그렇게 귀신은 사라졌다."
+        jump garret
+    else:
+        s "너.. 제대로 안들었구나?"
+        jump garret_input_loop
 
 label hallway:
     scene black
