@@ -792,7 +792,7 @@ label dining_room:
             jump mainhall 
 
 label underground:
-
+    
     if bgm_not_playing2():
         play music "bgm_piano.mp3"
 
@@ -820,8 +820,8 @@ label underground:
         "지하실 안쪽 끝, 낡은 책상과 침대가 놓여 있다. 누군가가 생활했던 흔적이 있다."
 
         m "단순히 버려진 창고가 아니군... 누군가가 여기서 살았던 거 같군."
-    
-    menu:
+    scene 지하실
+    menu:        
         "주변을 뒤져볼까?":
             if inner_room_lock:
                 $ inner_room_lock = False
@@ -830,8 +830,9 @@ label underground:
                 m "안방 열쇠인 것 같군."
                 play audio "item1.ogg"
                 "당신은 안방열쇠를 획득 했다."
+                hide 열쇠
                 jump underground
-            else:
+            else:                
                 "아무것도 없다."
                 jump underground
         "나간다":
