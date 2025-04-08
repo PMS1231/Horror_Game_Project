@@ -1097,7 +1097,8 @@ label input_loop:
 
     if player_input == correct_answer:
         show 단어퍼즐답 at Transform(xalign=0.5, yalign=0.2) with dissolve
-        "끼익... 금고가 열리는 소리가 들린다."
+        play audio "책 꺼내는 소리1.mp3"
+        "딸깍... 금고가 열리는 소리가 들린다."
         "당신은 안방의 금고에서 네번째 일기장을 찾았다."
         hide 단어퍼즐
         hide 단어퍼즐답
@@ -1141,7 +1142,7 @@ label diary4:
     
     n "저항했지만, 이미 늦었어"
 
-    n "그는 조용히, 종잇장처럼 쓰러졋고 피를 흘렸지"
+    n "그는 조용히, 종잇장처럼 쓰러졌고 피를 흘렸지"
     
     n "피가 흐르던 자리에..."
 
