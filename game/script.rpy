@@ -167,7 +167,7 @@ init:
 # 게임에서 사용할 캐릭터를 정의합니다.
 define h = Character("마부", callback=type_sound2, font="tway_sky.ttf", what_font="tway_fly.ttf")
 define m = Character('아르망', color="#044604", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
-define g = Character("아델린", callback=type_sound2, font="tway_sky.ttf", what_font="tway_air.ttf")
+define g = Character("아델린", color="#d4c10e", callback=type_sound2, font="tway_sky.ttf", what_font="tway_air.ttf")
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")
@@ -352,7 +352,7 @@ label first_event:
 
     "처절하고 놀란, 분명 여자아이의 비명소리가 터져나온다."
 
-    "아르망의 검이 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
+    "아르망의 검은 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
     scene mainhall
     show adeline surprise at Transform(xalign=0.5, yalign=0.2) with dissolve
 
@@ -365,19 +365,32 @@ label first_event:
     show adeline embrassed at Transform(xalign=0.5, yalign=0.2) 
     g "…아, 맞다. 나… 이미 죽었지…"
 
-    g "후훗… 미안, 네가 그렇게까지 반응할 줄은 몰랐어. 오랜만에 만난 사람이라."
-    
+    g "후훗… 미안, 네가 그렇게까지 반응할 줄은 몰랐어" 
+    g "오랜만에 만난 사람이라, 장난을 좀 쳐본거였는데..."
+    play audio"아델린 웃음소리.mp3"
+    show adeline idle at Transform(xalign=0.5, yalign=0.2) 
     g "무슨일로 왔니?"
 
-    m "나는 벨포르 가문의 아르망 드 벨포르! 이 저택에서 귀신이 사람을 잡아간다는 이야기를 듣고 해결하러 왔다!"
+    #대답을 선택하면 호감도 수치가 게임에 영향을 준다는걸 프롤로그에서 설명하고 싶어서 분기를 추가했습니다.
+    menu:
+        #이름을 제시해서 각인효과
+        "내 이름은 아르망 드 벨포르": 
+            m "내 이름은 아르망 드 벨포르!"
+            m "벨포르 가문의 기사다!"
+            m "이 저택의 불길한 소문을 듣고 해결하러 왔다"
+        #호감도 업
 
-    m "너가 그 귀신인가?"
+        "어째서 그런걸 묻는거지..?":
+            m "어째서 그런걸 묻는거지..?"
+            m "네 정체부터 먼저 밝혀라!"
+            m "네가 혹시 그 귀신인가?"
+        #호감도 다운
+    
+    
+    play audio"아델린 웃음소리.mp3"
+    g "나의 이름은 아델린 드 로르망. 이 저택의 주인 로르망 백작의 첫째 딸이야."
 
-    show adeline idle at Transform(xalign=0.5, yalign=0.2) 
-
-    g "아니. 나의 이름은 아델린 드 로르망. 이 저택의 주인 로르망 백작의 첫째 딸이야."
-
-    g "그리고 너가 찾는 귀신은 아마도 저택 지하실 깊은 곳에 있는 악령일꺼야."
+    g "너가 찾는 귀신은 아마도 저택 지하실 깊은 곳에 있는 악령일꺼야."
 
     m "그런 정보를 왜 나에게 알려주지?"
 
@@ -385,21 +398,22 @@ label first_event:
     
     g "너가 그 악령을 처리해준다면..." 
     g "나에게도 좋은 일이니까..."
+    play audio "우는소리 숏.mp3"
     g "그 악령은... 나를 괴롭히거든..."
 
     m "그런가..." 
     m "그렇다면 나는 악령을 처리하러 가겠다."
     
     show adeline idle at Transform(xalign=0.5, yalign=0.2) 
-
+    
     g "후훗..." 
     g "이 집에는 많은 유령들이 있어." 
     g "아마 멀쩡한 유령은 나 혼자일꺼야, 괜찮겠어?"
 
     m "헛된 걱정이다!"
-
+    play audio "아델린 웃음소리.mp3"
     hide adeline idle with dissolve
-    g "{size=+40}조심해{/size}"
+    g "{size=+40}{alpha=*0.5}조심해{/alpha}{/size}"
     jump mainhall
 
 label mainhall:
@@ -577,7 +591,7 @@ label room:
         "책상 위에 상자가 놓여있다."
         m "어디보자, 열쇠는..."
         m "이건가...?"
-        play audio "뛰는소리 구두.mp3"
+        play audio "뛰는소리 숏.mp3"
 
         show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
         "바닥에 떨어진 열쇠를 주우려는 순간"
@@ -585,6 +599,7 @@ label room:
         show 꼬마 유령 at Transform(xalign=1.2, yalign=0.2)
         hide 열쇠 
         show 꼬마 유령 at Transform(xalign=-1.2, yalign=0.2) with move
+        play audio "천소리.mp3"
         "어둠 속 무엇인가, 내 손을 낚아챘다."
 
         play audio "아이 웃는소리 숏.mp3"
@@ -604,7 +619,7 @@ label room:
             n "유모의 일기장"
             n "오늘은 도련님이 태어나셨다."
             n "백작님과 부인께선 갈수록 도련님에게만 신경을 쏟는다."
-            n "아가씨는 자꾸 혼잣말을 하거나, 거울을 오래 바라본다."
+            n "아가씨는 자꾸 혼잣말을 하거나, 거울을 오래 바라보신다."
             n "아가씨가 걱정된다..."
             nvl clear
         else:
@@ -699,6 +714,7 @@ label ghost_chase_success:
     play audio "item1.ogg"    
     "당신은 열쇠를 되찾았다."
     hide 열쇠
+    play audio "거친 숨소리.mp3"
     m "헉... 헉... 이게 무슨......"
     hide 꼬마 유령 with dissolve
     $ dining_room_lock = False
@@ -715,9 +731,20 @@ label ghost_chase_success:
             play audio "아델린 웃음소리.mp3"
             g "후훗"
             g "어때? 숨바꼭질은 재밌었어?"
-            m "장난해? 웬 꼬마녀석 덕분에 힘들어 죽기 직전이야"
-            g "엄살은~"
-            hide adeline_음흉
+            menu:
+                "농담할 시간 없다":
+                    m "......"
+                    m "농담할 시간 없다"
+                    m "하지만 수확은 있었어"
+
+                "재미?":
+                    m"재미라..."
+                    m "...웬 꼬마녀석 덕분에 많이 힘들군..."
+            play audio "아델린 웃음소리.mp3"
+            g "꼬마는 오랜만에 참 재미있었대"
+            play audio "천소리.mp3"
+            g "그럼 다음에 봐~"
+            hide adeline_음흉 
             jump mainhall
 
 label ghost_chase_fail:
@@ -788,11 +815,13 @@ label dining_room:
 
                 n "주방장의 일기장"
 
-                n "오늘 아가씨는 혼자 밥을 먹는다."
+                n "오늘도 아가씨는 혼자서 밥을 드신다."
 
-                n "백작님은 회의로 바쁘시고 백작부인은 아들만 돌보신다."
+                n "백작님은 회의로 바쁘시고 부인은 아들을 돌보시는데 열중이다."
 
-                n "아가씨가 웃는걸 본적이 언제였던가...."
+                n "아가씨가 웃는걸 본적이 언제였던가..."
+
+                n "너무 안타깝다"
 
                 nvl clear
                     
@@ -826,7 +855,7 @@ label underground:
 
         "차가운 기운이 바닥에서부터 올라오는 듯, 그의 몸을 감싼다."
 
-        m "나의 발걸음 소리마저... 이곳의 침묵을 깨트리는군...."
+        m "나의 발걸음 소리마저... 이곳의 침묵을 깨뜨리는군...."
 
         "무언가 발에 걸린다"
 
@@ -846,24 +875,24 @@ label underground:
         play audio "책넘김.mp3"
         n "18xx년 4월 3일"
         n "나에게 임무가 내려왔다."
-        n "저택이 유령에 저주받았다는 이야기였다."
+        n "저택이 어떤 유령에의해 저주받았다는 이야기였다."
         n "나는 퇴마를 위해 성수를 준비했다."
         nvl clear
 
         play audio "책넘김.mp3"
         n "18xx년 4월 6일"
-        n "나는 오늘 유령을 퇴치하러 왔다."
+        n "나는 오늘 그 유령을 퇴치하러 왔다."
         n "그러나 실패했다."
-        n "나는 유령의 기습을 받고, 배에 구멍이 뚫린 채로 이 지하실로 도망쳐왔다."
+        n "나는 유령의 기습을 받고, 배에 구멍이 뚫린 채로 이 지하실로 도망쳤다."
         n "다행히 중요한 부위는 비껴나가 치료가 가능할 것 같다."
         n "나는 여기서 치료를 하고 다시 유령을 퇴치하기로 했다."
         nvl clear
 
         play audio "책넘김.mp3"
         n "18xx년 4월 10일"
-        n "상처가 회복되지 않는다."
-        n "아마 유령의 저주 탓일 것이다."
-        n "지하실에는 누군가의 생활 흔적이 있다…"
+        n "성수를 사용해봤지만 상처가 아물지 않는다."
+        n "아마 유령의 저주때문 일것이다."
+        n "지하실에는 누군가가 생활한 흔적이 있다…"
         n "혹시 그녀의 공간이었던 걸까."
         nvl clear
 
@@ -925,7 +954,8 @@ label underground:
             "더 깊은 곳으로 들어가볼까?":
                 if underground_first:
                     $ underground_first = False                                     
-                    "지하실 안쪽 끝, 낡은 옷장과 책상, 침대가 놓여있다. 누군가가 생활했던 흔적이 있다."
+                    "지하실의 안쪽 끝, 낡은 옷장과 책상, 침대가 놓여있다." 
+                    "분명.. 이곳은 누군가가 생활했던 공간으로 보인다."
                     m "일기의 내용대로 누군가 살았던 흔적이 있군."
                     "성수의 희미한 빛이 벽장 너머에서 새어나온다."  
                     show 성수 at Transform(xalign=0.5, yalign=0.2) 
@@ -1017,11 +1047,13 @@ label library:
 
                 n "집사의 일기장"
 
-                n "백작님은 도련님에게만 관심을 갖지고 계신다."
+                n "백작님은 여전히 도련님에게만 관심을 가지고 계신다."
 
-                n "업무가 많아 요즘 아가씨를 뵙지 못하였다."
+                n "업무가 많아 요즘은 아가씨를 뵙지 못하였다."
 
                 n "아가씨를 마지막으로 본게 언제 였더라...."
+
+                n "건강은 좀 나아지셨으려나..."
 
                 nvl clear
                 play audio "item1.ogg"
@@ -1096,7 +1128,7 @@ label inner_room:
                 m "원래 눈을 뜨고 있었나?"
                 scene 안방 with dissolve
                 play audio "아이 웃는소리.mp3"
-                m "..!"
+                m "...!"
                 m "역시 이상해 방금 그 초상화!"
                 jump inner_room
             elif photo_count == 2:
@@ -1121,6 +1153,9 @@ label inner_room:
                 m "뭐..?"
                 g "잘못본거겠지.. 안좋은 꿈이라도 꾼거야?"
                 m "아니야 그럴리가 없어.."
+                hide adeline 당혹 at Transform(xalign=0.5, yalign=0.2) with dissolve
+                scene black
+                m "젠장..."
                 jump mainhall
             else:
                 "분명 초상화가 있던 자리에는 아무것도 없다.."
@@ -1217,7 +1252,7 @@ label diary4:
 
     n "나는 매일 문 앞을 지켰고, 매일 누구도 오지 않았다."
 
-    n "가끔 그 신부의 얼굴이 떠오른다."
+    n "가끔은 그 신부의 얼굴이 떠오른다."
 
     n "그때 그냥… 잠시만 참았더라면…"
 
@@ -1298,7 +1333,7 @@ label garret:
             "머리 위엔 정갈하게 손질된 고풍스러운 모자가 얹혀 있다."
 
             "그러나 그 안의 얼굴은 반쯤 흐릿하고,"
-            extend "눈동자 없는 눈이 달빛에 허옇게 반사된다."
+            extend " 눈동자 없는 눈이 달빛에 허옇게 반사된다."
 
             jump orgel_test
         else:
@@ -1340,9 +1375,9 @@ label orgel_test:
             window hide
 
             $ renpy.pause(10.0, hard=True)
-            s "첫째가 태어난 날 내가 만든 오르골이야"
-            m "하고 싶은 말은 뭐지?"
-            s "그 아이가 커서 이노래를 기억하길 바랬지"
+            s "첫째아이가 태어난 날 내가 만든 오르골이야"
+            m "하고 싶은 말이 뭐지?"
+            s "그 아이가 커서 이 노래를 기억하길 바랬지"
 
             play audio "기믹_오르골_단어3.mp3"
 
@@ -1378,8 +1413,8 @@ label garret_input_loop:
 
     if player_input == correct_answer:
         $ garret_first = False
-        m "정화수."
-        m "정화수라는 단어가 생각나던데?"
+        m "정화수"
+        m "단어를 이어붙이니 그렇게 들리는군"
         s "너 정말 열심히 들었구나?"
         $ light = True
         show 등불 at Transform(xalign=0.5, yalign=0.2)
@@ -1387,6 +1422,8 @@ label garret_input_loop:
         play audio "item1.ogg"
         "당신은 등불을 획득 했다."
         scene black with fade
+        "네가 아이의 한을 꼭 풀어주길 바래..."
+
         "그렇게 귀신은 사라졌다."
         jump garret
     else:
@@ -1506,20 +1543,25 @@ label hallway_loop:
 
 label next_room:
     scene bg dream with dissolve
-       
+    
     m "여긴... 대체...?"
     g "어때, 이 꽃? 정말 예쁘지 않아?"
-    g "어렸을 땐 부모님이 날 이 꽃밭에 데려다 주셨어. 햇살 가득한 날, 엄마가 내 머리에 꽃을 꽂아주며 웃으셨지."
-    g "그때는 세상이 다 따뜻하고, 모든 게 가능할 것 같았어."
-    g "하지만 남동생이 태어난 이후로, 모든 것이 끝나버렸어."
-    g "부모님의 관심은 전부 남동생에게로 가버렸어."
-    g "그 후로 난 늘 외로웠고, 차가운 현실 속에 홀로 남겨졌어."
+    g "어렸을 땐 부모님이 날 이 꽃밭에 데려다 주셨어. "
+    extend "햇살 가득한 날, 엄마가 내 머리에 꽃을 꽂아주며 웃으셨지."
+    g "그때는 세상이 다 따뜻하고, "
+    extend"모든 게 가능할 것 같았어."
+    g "하지만 남동생이 태어난 이후로, "
+    g "{size=+10}모든 것이 끝나버렸어.{/size}"
+    g "부모님의 관심은 전부 남동생에게로 가버렸고"
+    g "그 후로 난..." 
+    g "늘 외롭고, 차가운 현실 속에 홀로 남겨졌어."
 
     m "아델린..."
 
     g "이 어둠 속, 이 쓸쓸한 곳에 너가 와준 건 마치 한 줄기 빛 같았어."
     g "처음엔 네 시끄럽고 거칠게 들리는 말투, 허세 섞인 태도에 나도 모르게 마음을 닫으려 했어."
-    g "그런데, 네가 점차 보여준 항상 당당한 모습, 그리고 눈빛 속에 숨겨진 고독을 알게 된 후, 내 심장은 미친 듯이 뛰기 시작했어."
+    g "그런데, 네가 점차 보여준 항상 당당한 모습, 그리고 눈빛 속에 숨겨진 고독을 알게 된 후, "
+    extend "내 심장은 미친 듯이 뛰기 시작했어."
     g "나와 함께 하자. 영원히.....!"
 
     if holy_water:
@@ -1574,7 +1616,7 @@ label happy_ending:
 
     "성수를 뿌린 뒤, 아르망은 조용히 칼을 들어 올린다."
     "칼에 베인 아델린은 평온한 미소를 지으며 서서히 사라진다."
-
+    scene ending1
     "그 후, 아르망은 일기와 일기장을 모아 정원나무 밑에 묻고,"
     "자신의 칼을 꽂아 작은 무덤을 만들어 준 뒤 저택을 떠난다."
 
