@@ -198,7 +198,6 @@ default inner_room_first = True
 default garret_first = True
 default holy_water = False
 default orgel_try = True
-default wrong_answer = 0
 # $ p_bar[0] += 10 기사도 증가
 # $ p_bar[1] += 10 호감도 증가
 
@@ -219,28 +218,26 @@ label start:
     
     show screen stat_overlay
     h "도착이오"
-    h "이 곳이 바로 ??? 저택이오"
+    h "이 곳이 바로 로르망 백작의 저택이오"
     m "......"
     m "이 곳인가..."
     m "{alpha=*0.5}사람들이 계속 사라진다는 대저택...{/alpha}"
     m "{alpha=*0.5}이곳엔 대체 어떤 진실이 숨겨져 있는가...{/alpha}"
    
     m "{alpha=*0.5}두려움으로부터 진실을 외면하는 것은, 기사로서 가장 비겁한 일{/alpha}"
-
     m "벨포르 가의 이름으로 맹세하노니"
     scene 저택 with vpunch
-    play audio "쿵.mp3"
+
     m "{size=+10}내가 이 저택에 깃든 모든 어둠을 밝혀내리라!{/size}"
     
     show 마주생각 at Transform(xalign=0.5, yalign=0.2) 
     h "음...?"
-    play audio"궁금.mp3"
     h "벨포르 가문이라고 했소?"
     h "벨포르라… 오랜만에 듣는 이름이로군"
     h "허허, 그 가문도 한때는 꽤 이름을 날렸지"
     h "하지만 요즘은 그 이름을 아는 이조차 많지 않겠소만"
     
-    m "저 저택 근처에서는 귀신이 나타나서 사람을 잡아간다고 들었소"
+    m "저택 근처에서는 귀신이 나타나서 사람을 잡아간다고 들었소"
     m "그대는 혹시 이 이야기에 대해 알고있는가?"
     hide 마주생각
     show 마주 at Transform(xalign=0.5, yalign=0.2) 
@@ -286,9 +283,10 @@ label prologue:
             else:
                 
                 m "이깟 문조차 내 의지로 열지 못한다면, 이 검은 무얼위해 존재한단 말인가!"
-                play audio "검으로 벽을 두드리는 소리.mp3"
-                "다시 한번 검을 들어 자물쇠를 단숨에 내리친다." 
+                
                 play audio "자물쇠 부숨.mp3"
+                "다시 한번 검을 들어 자물쇠를 단숨에 내리친다." 
+
                 "문이 쾅 소리와 함께 열리며 먼지가 풀풀 날린다."
                 
                 play audio "철문여는소리.mp3"
@@ -365,6 +363,8 @@ label first_event:
     show adeline embrassed at Transform(xalign=0.5, yalign=0.2) 
     g "…아, 맞다. 나… 이미 죽었지…"
 
+    
+    
     g "후훗… 미안, 네가 그렇게까지 반응할 줄은 몰랐어. 오랜만에 만난 사람이라."
     
     g "무슨일로 왔니?"
@@ -375,7 +375,7 @@ label first_event:
 
     show adeline idle at Transform(xalign=0.5, yalign=0.2) 
 
-    g "아니. 나의 이름은 아델린 드 로르망. 이 저택의 주인 로르망 백작의 첫째 딸이야."
+    g "아니. 나의 이름은 아델린 드 로르망. 로르망 백작가의 장녀지!."
 
     g "그리고 너가 찾는 귀신은 아마도 저택 지하실 깊은 곳에 있는 악령일꺼야."
 
@@ -562,7 +562,6 @@ label garret_first:
                 play audio "문두들기는소리.mp3"
                 scene mainhall2 with vpunch
                 "천장을 쌔게 쳐보니 계단이 내려온다"
-                play audio "사다리.mp3"
                 scene 다락방계단 with dissolve
         m "호오, 이런 곳에 정말 다락방이 있었군."
         jump two_stair
@@ -669,14 +668,14 @@ label ghost_chase_loop:
         m "[p_line]"
     else:
         $ ghost_lines = [
-            "유령: 엇~ 틀렸어~ ㅋㅋ",
-            "유령: 반대쪽이야~ 바보~",
-            "유령: 캬하하! 아직 멀었는걸~"
+            "엇~ 틀렸어~ ㅋㅋ",
+            "반대쪽이야~ 바보~",
+            "캬하하! 아직 멀었는걸~"
             ]
         $ player_lines = [
-            "주인공: 이런... 놓쳤다...",
-            "주인공: 다시 집중해야겠어...",
-            "주인공: 어디로 간 거지...?"
+            "이런... 놓쳤다...",
+            "다시 집중해야겠어...",
+            "어디로 간 거지...?"
             ]
         $ wrong_guesses += 1
         $ g_line = random.choice(ghost_lines)
@@ -754,7 +753,7 @@ label dining_room:
 
         "어둡고 넓은 식당 내부, 오래된 식탁과 의자들이 줄지어 놓여있다."
 
-        m "(천천히 안으로 걸으며) 기묘하군... 의자가 모두 붙어 있는데, 저 하나만 왜 저렇게 떨어져 있지?"
+        m "(테이블을 바라보며) 기묘하군... 의자가 모두 붙어 있는데, 저 하나만 왜 저렇게 떨어져 있지?"
     
     scene 식당
 
@@ -875,7 +874,7 @@ label underground:
         nvl clear
         window hide
         pause(1.5)
-        m "……감정이 실체가 된 유령? 이건..."
+        m "‘감정’이, ‘고독’이 실체가 되어 움직이고 있다...? 이건..."
         scene black with fade
         show adeline idle at Transform(xalign=0.5, yalign=0.2) with dissolve 
         "아델린을 말하는 건가…"
@@ -941,7 +940,7 @@ label underground:
                 scene 지하실깊 with dissolve
                 "지하실 안쪽 끝, 낡은 옷장과 책상, 침대가 놓여있다. 누군가가 생활했던 흔적이 있다."
                 m "일기의 내용대로 누군가 살았던 흔적이 있군."
-                "성수의 희미한 빛이 벽장 너머에서 새어나온다."  
+                "희미한 빛이 벽장 너머에서 반사되어 새어나온다."  
                 show 성수 at Transform(xalign=0.5, yalign=0.2) 
                 m "이게 일기에 적혀있던 성수인가..."
             jump underground_deep
@@ -1064,55 +1063,30 @@ label inner_room:
         "안방의 문을 열어 들어갔다."
         scene 안방 with dissolve
         m "음... 여기가 안방인가."
-        m "흠? 여기 초상화가 있군?."
-        menu:
-            "초상화를 자세히 들여다본다.":
-                $ photo_count += 1
-                scene 초상화 with dissolve
-                m "이상하게도 생긴 초상화군 그래"
-                scene 안방 with dissolve
-                play audio "아이 웃는소리 숏.mp3"
-                m "음? 방금 무슨 소리가 들린 것 같은데"
-                jump inner_room
-            "무시한다.":
-                jump inner_room
-
-    scene 안방 with dissolve
+    
+    scene 안방
 
     menu:
         "초상화를 살펴본다.":
             if photo_count == 0:
                 $ photo_count += 1
                 scene 초상화 with dissolve
-                m "이상하게도 생긴 초상화군 그래"
-                scene 안방 with dissolve
-                play audio "아이 웃는소리 숏.mp3"
-                m "음? 방금 무슨 소리가 들린 것 같은데"
+                m "흠, 이상하게 생긴 초상화군"
                 jump inner_room
             elif photo_count == 1:
                 $ photo_count += 1
                 scene 초상화_눈 with dissolve
-                m "뭐지 이 초상화.."
-                m "원래 눈을 뜨고 있었나?"
-                scene 안방 with dissolve
-                play audio "아이 웃는소리.mp3"
-                m "..!"
-                m "역시 이상해 방금 그 초상화!"
+                m "음? 저 초상화 원래 눈을 뜨고 있었나?"
                 jump inner_room
-            elif photo_count == 2:
-                $ photo_count += 1
-                scene 초상화 with dissolve
-                m "아무리 봐도 이상하단 말이지..."
+            else:
                 play audio "스크림1.mp3"
                 scene 초상화_공포 
                 m "으악!"
                 play audio "쓰러지는 소리.mp3"
                 "아르망은 정신을 잃었다."
-                scene black
-                "........."
-                scene mainhall with dissolve
+                scene mainhall
                 show adeline 당혹 at Transform(xalign=0.5, yalign=0.2) with dissolve
-                g "정신이 좀 들어? 너 갑자기 기절했더라고."
+                g "정신이 좀 들어? 너 갑자기 기절했더라고."  ## 대사 수정 필요?
                 play audio "거친 숨소리.mp3"
                 m "헉..헉.. 방금 그건 뭐였지?"
                 g "뭘 봤길래 호들갑이야?"
@@ -1122,9 +1096,6 @@ label inner_room:
                 g "잘못본거겠지.. 안좋은 꿈이라도 꾼거야?"
                 m "아니야 그럴리가 없어.."
                 jump mainhall
-            else:
-                "분명 초상화가 있던 자리에는 아무것도 없다.."
-                jump inner_room
 
         "주변을 살펴본다.":
             if safe_info:
@@ -1135,7 +1106,7 @@ label inner_room:
                     m "아까 얻은 종이에 뭔가 단서가 있을 것 같아..."
                     show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) with dissolve
                     m "단어를 찾아 입력해보자."
-                    $ correct_answer = "아델린"       
+                    $ correct_answer = "adeline"       
                     jump input_loop
                 else:
                     "금고가 있지만 비밀번호를 모르겠다."
@@ -1148,12 +1119,11 @@ label inner_room:
 
 label input_loop:
     $ player_input = renpy.input("숨겨진 단어는 무엇일까?").strip().lower()
-    
+
     if player_input == correct_answer:
         show 단어퍼즐답 at Transform(xalign=0.5, yalign=0.2) with dissolve
-        play audio "item1.ogg"
-        "드르륵... 금고가 열리는 소리가 들린다."
         play audio "책 꺼내는 소리1.mp3"
+        "드르륵... 금고가 열리는 소리가 들린다."
         "당신은 안방의 금고에서 네번째 일기장을 찾았다."
         hide 단어퍼즐
         hide 단어퍼즐답
@@ -1161,10 +1131,7 @@ label input_loop:
         $ diary_3 = True
         jump diary4
     else:
-        if wrong_answer >= 3:
-            g "너 정말 내 이름을 모르는거야?"
-        $ wrong_answer += 1
-        m "이건 아닌 것 같아... 다시 생각해보자."
+        m "그건 아닌 것 같아... 다시 생각해보자."
         jump input_loop
 
 label diary4:
@@ -1293,7 +1260,7 @@ label garret:
             show 오르골유령 at Transform(xalign=0.5, yalign=0.2) with dissolve 
             "어둠 속에서 실루엣 하나가 천천히 떠오른다."
 
-            "새하얀 레이스가 겹겹이 덧대어진 드레스는 낡아 찢긴 자락이 바람에 휘날리듯 흔들리고,"
+            "검은색 레이스가 겹겹이 덧대어진 드레스는 낡아 찢긴 자락이 바람에 휘날리듯 흔들리고,"
 
             "머리 위엔 정갈하게 손질된 고풍스러운 모자가 얹혀 있다."
 
