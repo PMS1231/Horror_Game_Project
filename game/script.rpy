@@ -196,6 +196,7 @@ default safe_password = False
 default photo_count = 0
 default inner_room_first = True
 default garret_first = True
+default holy_water = False
 # $ p_bar[0] += 10 기사도 증가
 # $ p_bar[1] += 10 호감도 증가
 
@@ -324,7 +325,7 @@ label first_event:
     m "......"
     m "역시, 단순한 헛소문은 아니였던 모양이로군"
 
-    "2층 난간 위, 어둠 속 소녀의 콧노래만이 들릴 뿐이다."
+    "2층 난간 위, 어둠 속 소녀가 부르는 콧노래가 울려퍼진다."
 
     m "누구냐! 지금 당장 모습을 드러내라!"
     
@@ -339,7 +340,7 @@ label first_event:
 
     scene black
     play audio "칼 휘두름.mp3"
-    m "사라져라아아앗!! 벨포르의 이름으로!! 이 망령아아아!!"
+    m "사라져라아앗!! 벨포르의 이름으로!! 이 망령아!!"
 
     "그 순간—"
     
@@ -383,7 +384,7 @@ label first_event:
     
     g "너가 그 악령을 처리해준다면..." 
     g "나에게도 좋은 일이니까..."
-    g "그 악령은 나를 괴롭히거든..."
+    g "그 악령은... 나를 괴롭히거든..."
 
     m "그런가..." 
     m "그렇다면 나는 악령을 처리하러 가겠다."
@@ -418,6 +419,7 @@ label mainhall:
                 $ safe_password = True
                 m "이건.."
                 show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) 
+                "정체불명의 종이를 주웠다."
                 m "어딘가의 암호처럼 보이는데"
                 play audio "item1.ogg"
                 "당신은 비밀번호 힌트를 획득 했다."
@@ -447,7 +449,7 @@ label mainhall:
                     play audio "돌풍.mp3"
                     "칠흑 같은 어둠속엔 바람 소리만 들리며,"
                     extend "한 치 앞도 보이지 않는다."
-                    "어둠 속으로 들어가려 한 그 순간," 
+                    "어둠 속으로 들어가려한 그 순간," 
                     play audio "Monster5.ogg"
                     scene 지하실괴물
                     "괴물의 울음소리가 들리며 무언가가 아르망을 덮쳤다"
@@ -463,8 +465,8 @@ label mainhall:
                     g "에휴 고집불통 아니랄까봐"
                     #show adeline 고민
                     g "아 맞다 그러고보니 쟤 원래 2층에서 돌아다녔는데 어느 순간부터 지하에서 안나오더라?"
-                    g "음.. 밝은 곳을 싫어하는건가?"
-                    m "(흠.. 분명 어딘가에 단서가 될만한게 있을거야)"
+                    m "흠... 밝은 곳을 싫어하는건가?"
+                    m "{alpha=*0.5}분명 어딘가에 단서가 될만한게 있을거야{/alpha}"
                     jump mainhall
         "방":
             play audio "Open door.mp3"
@@ -491,7 +493,7 @@ label two_stair:
         m "뭐지? 1층에서 난 소리 같은데."
         $ chandelier_count += 1
     elif chandelier_count == 5:
-        m "아까 들린 소리가 신경쓰인다."
+        m "방금 들린 소리가 신경쓰인다."
         m "1층으로 내려가보자."
         jump mainhall
     else:
@@ -509,12 +511,7 @@ label two_stair:
                     jump library
 
                 "안방":
-                    if inner_room_lock:
-                        play audio "자물쇠 잠긴소리.mp3"
-                        m "문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다. 열쇠를 찾아보자"
-                        jump two_stair
-                    else:
-                        jump inner_room
+                    jump inner_room
 
                 "내려간다":
                     play audio "걷는소리 구두.mp3"
@@ -525,19 +522,14 @@ label two_stair:
                 "어디로 가지?"
 
                 "다락방":
-                    "사다리를 조심스레 밟고 올라간다."
+                    "사다리를 밟고 조심스레 올라간다."
                     jump garret
 
                 "서재":
                     jump library
 
                 "안방":
-                    if inner_room_lock:
-                        play audio "자물쇠 잠긴소리.mp3"
-                        m "문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다. 열쇠를 찾아보자"
-                        jump two_stair
-                    else:
-                        jump inner_room
+                    jump inner_room
 
                 "내려간다":
                     play audio "걷는소리 구두.mp3"
@@ -551,12 +543,7 @@ label two_stair:
                 jump library
 
             "안방":
-                if inner_room_lock:
-                    play audio "자물쇠 잠긴소리.mp3"
-                    m "문이 굳게 잠겨있다. 부술 순 있겠지만 먼지가 많이 날 것 같다. 열쇠를 찾아보자"
-                    jump two_stair
-                else:
-                    jump inner_room
+                jump inner_room
 
             "내려간다":
                 play audio "걷는소리 구두.mp3"
@@ -607,12 +594,13 @@ label room:
             $ diary_0 = True
             m "다시 이 방에 돌아왔다..."
             show 일기 at Transform(xalign=0.5, yalign=0.2)
-            "구석에서 아까 못보던 일기장을 발견했다."
-            m "음? 일기장..? 누구의 일기장이지?"
+            "구석에서 아까는 보지 못했던 일기장을 발견했다."
+            m "…이건 뭐지? 일기장인가? 누구의 일기지…?"
             n "유모의 일기장"
-            n "오늘 도련님이 태어났다."
-            n "백작 부부는 날이 갈수록 도련님에게만 신경을 쏟는다."
+            n "오늘은 도련님이 태어나셨다."
+            n "백작님과 부인께선 갈수록 도련님에게만 신경을 쏟는다."
             n "아가씨는 자꾸 혼잣말을 하거나, 거울을 오래 바라본다."
+            n "아가씨가 걱정된다..."
             nvl clear
         else:
             m "이제 더 이상 찾을 건 없는 것 같다."
@@ -897,15 +885,18 @@ label underground:
         "아르망은 옆으로 구르며 칼을 뽑았다."
 
         scene 괴물싸움 with hpunch
+        play audio "Monster 2.mp3"
         m "키에에에에엑!"
 
         m "악령이든 짐승이든…"
         m "너 따위에게 무너질 내가 아니야!!"
-        
+        play audio "칼 휘두름.mp3"
+        play aduio "검으로 벽을 두드리는 소리.mp3"
+        play audio "칼 휘두름.mp3"
         scene black
         "괴물의 발톱에 어깨가 긁혀 피가 흐르지만, 그는 몸을 낮추며 괴물의 밑을 파고든다."
         "마지막 일격—칼을 힘껏 들어 괴물의 심장을 찔러 꽂는다!"
-
+        play audio "칼찔리는 소리.mp3"
         m "사라져라!!!"
         
         scene 괴물죽음 with fade
@@ -916,8 +907,9 @@ label underground:
         m "외....로.....워...."
 
         "괴물의 형체가 녹아 사라진다. 아르망은 거친 숨을 쉬며 바닥에 주저앉는다."
-        "검 끝에 묻은 피가 천천히 사라지고, 주위는 다시 고요해진다."
 
+        hide 괴물죽음 with fade
+        "검 끝에 묻은 피가 천천히 사라지고, 주위는 다시 고요해진다."
         menu:
             "더 깊은 곳으로 들어가볼까?":
                 if underground_first:
@@ -928,25 +920,45 @@ label underground:
                     show 성수 at Transform(xalign=0.5, yalign=0.2) 
                     m "이게 일기에 적혀있던 성수인가..."
                     "성수가 있다."
-                  
-
     
-    menu:        
-        "주변을 뒤져볼까?":
-            if inner_room_lock:
-                $ inner_room_lock = False
-                m "이건.."
-                show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
-                m "안방 열쇠인 것 같군."
-                play audio "item1.ogg"
-                "당신은 안방열쇠를 획득 했다."
-                hide 열쇠
-                jump underground
-            else:                
-                "아무것도 없다."
-                jump underground
-        "나간다":
-            jump mainhall    
+    scene 지하실
+
+    menu:
+        "더 깊은 곳으로 들어가볼까?":
+            if underground_first:
+                $ underground_first = False
+                scene 지하실깊 with dissolve
+                "지하실 안쪽 끝, 낡은 옷장과 책상, 침대가 놓여있다. 누군가가 생활했던 흔적이 있다."
+                m "일기의 내용대로 누군가 살았던 흔적이 있군."
+                "성수의 희미한 빛이 벽장 너머에서 새어나온다."  
+                show 성수 at Transform(xalign=0.5, yalign=0.2) 
+                m "이게 일기에 적혀있던 성수인가..."
+            jump underground_deep
+            
+        "돌아간다":
+            jump mainhall
+
+label underground_deep:
+        scene 지하실깊
+        
+        if holy_water == False:
+            menu:
+                "성수를 어떻게 할까까."
+
+                "성수를 가지고 간다":
+                    $ holy_water = True
+                    play audio "item1.ogg"
+                    "당신은 성수를 획득 했다."
+                    "돌아가자."
+                    jump underground
+
+                "그냥 돌아간다":
+                    jump underground
+        else:
+            menu:
+                "주변을 둘러봐도 더 이상 챙길 건 없는듯 하다.":
+                    jump underground
+
 
 label library:
     if library_first:
@@ -956,9 +968,10 @@ label library:
         play audio "돌풍.mp3"
         "문을 열자 바람이 불며 먼지가 날린다"
         scene 서재 with dissolve
-        m "음... 서재가 많이 크군"          
-        "그 때 스르륵 무언가 끌린는 소리가 들려온다"
-        m "무언가가 있군....피하면서 정보를 찾아야겠어"
+        m "음... 서재가 많이 크군"
+
+    scene 서재
+    
     menu:
         "어디를 찾아볼까."
 
@@ -1246,6 +1259,7 @@ label garret:
         m "언제까지 들어야 하지?"
         s "더 들어봐"
 
+    # play "기믹_오르골_단어1.mp3"
         play audio "기믹_오르골_단어2.mp3"
 
         window hide
@@ -1256,7 +1270,9 @@ label garret:
         s "그 아이가 커서 이노래를 기억하길 바랬지"
 
         play audio "기믹_오르골_단어3.mp3"
-   
+
+    # play "기믹_오르골_단어2.mp3"
+
         window hide
 
         $ renpy.pause(10.0, hard=True)
@@ -1265,8 +1281,7 @@ label garret:
 
         s "잘 들었지?"
 
-        s "내가 전하고 싶은 단어가 뭔지 맞춰 볼래?"
-
+    # play "기믹_오르골_단어3.mp3"
         $ correct_answer = "정화수"
 
         jump garret_input_loop
@@ -1413,11 +1428,11 @@ label next_room:
     g "그런데, 네가 점차 보여준 항상 당당한 모습, 그리고 눈빛 속에 숨겨진 고독을 알게 된 후, 내 심장은 미친 듯이 뛰기 시작했어."
     g "나와 함께 하자. 영원히.....!"
 
-    menu:
-        "해피엔딩이다":
-            jump happy_ending
-        "배드엔딩이다":
-            jump bad_ending
+    if holy_water:
+        if p_bar[0] >= 50:
+            jump happy_ending1
+        if p_bar[0] <50:
+            jump bad_ending1
 
 label happy_ending:
 
@@ -1496,3 +1511,5 @@ label bad_ending:
     "아르망은 자신을 이해해주는 사람도 없이 과거에 집착하며 살아간다"
 
     "-END-"
+
+label bad_ending:
