@@ -1,7 +1,8 @@
 #이 파일에 게임 스크립트를 입력합니다.
 define sounds = ['audio/Man_Typing_long.mp3', 'audio/Man_Typing_short.mp3']
 define sounds2 = ['audio/Woman_Typing_long.mp3', 'audio/Woman_Typing_short.mp3']
-define sounds3 = ['audio/아이 웃는소리.mp3', 'audio/아이 웃는소리 숏.mp3']
+define sounds3 = ['', '']
+
 
 # 메인홀 브금 재생 관련 코드 
 init python:
@@ -162,6 +163,8 @@ init:
     image adeline_surprise = "images/chr/adeline_surprise.png"
     image 마주 = "images/chr/마차 주인.png"
     image 마주생각 = "images/chr/마차 주인 생각.png"
+
+
 
 # 게임에서 사용할 캐릭터를 정의합니다.
 define m = Character('아르망', color="#044604", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
@@ -1125,9 +1128,29 @@ label garret:
 
     scene 다락방 with dissolve
 
+    stop music
+    stop audio
+
     "갑자기 안쪽에서 오르골 소리가 들려온다."
+    
+    play audio "비.mp3"
 
     m ".....날 환영하는 소린가?"
+    
+    "후후 잘 들어봐"
+
+    "집중해서 잘 들어보자."
+
+    window hide
+
+    $ renpy.pause(15.0, hard=True)
+
+    menu:
+        "문을 연다":
+            jump mainhall
+        "기다린다":
+            m "아직은 아니다..."
+            jump mainhall
 
     show 등불 at Transform(xalign=0.5, yalign=0.2)
     "다락방이다. 등불을 얻었다."
