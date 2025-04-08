@@ -1035,7 +1035,7 @@ label library:
                 show 메모 at Transform(xalign=0.5, yalign=0.2) 
                 "서랍 안에 메모가 있다."
                 n "주인님의 건망증이 점점 심해지고 있습니다."
-                n "안방의 금고 비밀번호를 계속 까먹으셔서 따로 메모 해둬야겠습니다."
+                n "안방의 금고 비밀번호를 계속 까먹으셔서 따로 메모 해두겠습니다."
                 m "안방에 금고가 있었군."
                 m "다시 한번 찾아봐야겠어."
                 nvl clear
@@ -1120,10 +1120,11 @@ label input_loop:
     if player_input == correct_answer:
         show 단어퍼즐답 at Transform(xalign=0.5, yalign=0.2) with dissolve
         play audio "책 꺼내는 소리1.mp3"
-        "딸깍... 금고가 열리는 소리가 들린다."
+        "드르륵... 금고가 열리는 소리가 들린다."
         "당신은 안방의 금고에서 네번째 일기장을 찾았다."
         hide 단어퍼즐
         hide 단어퍼즐답
+        $ safe_password = False
         $ diary_3 = True
         jump diary4
     else:
