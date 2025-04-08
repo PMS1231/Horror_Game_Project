@@ -457,7 +457,7 @@ label mainhall:
                     play audio "Monster5.ogg"
                     scene 지하실괴물
                     "괴물의 울음소리가 들리며 무언가가 아르망을 덮쳤다"
-                    hide 지하실 괴물
+                    scene black
                     "아르망은 어떠한 힘에 의해 뒤로 밀려 넘어져 들어가지 못하였다."
                     m "크윽... 내가 이런 굴욕을 받다니..."
                     jump mainhall
