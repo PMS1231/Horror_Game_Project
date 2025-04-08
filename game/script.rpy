@@ -1116,6 +1116,7 @@ label input_loop:
         "당신은 안방의 금고에서 네번째 일기장을 찾았다."
         hide 단어퍼즐
         hide 단어퍼즐답
+        $ safe_password = False
         $ diary_3 = True
         jump diary4
     else:
