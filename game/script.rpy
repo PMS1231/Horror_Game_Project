@@ -694,20 +694,25 @@ label ghost_chase_success:
     play audio "item1.ogg"    
     "당신은 열쇠를 되찾았다."
     hide 열쇠
-    m "헉... 헉... 힘들어......"
+    m "헉... 헉... 이게 무슨......"
     hide 꼬마 유령 with dissolve
     $ dining_room_lock = False
-    m "이건.. 식당 열쇠인가?"
-    m "한번 확인해봐야겠군."
+    m "이건... 열쇠로군"
+    m "근처에 사용할만한 곳을 확인해봐야겠어"
 
     menu:
         "어디로 갈까?"
         
         "나간다":
             scene mainhall
+            play music "bgm_main.mp3"
+            show adeline_음흉 at Transform(xalign=0.5, yalign=0.2) with dissolve
+            play audio "아델린 웃음소리.mp3"
+            g "후훗"
             g "어때? 숨바꼭질은 재밌었어?"
-            m "장난해? 웬 꼬마 덕분에 힘들어 죽기 직전이야"
-            g "그럼 죽어."
+            m "장난해? 웬 꼬마녀석 덕분에 힘들어 죽기 직전이야"
+            g "엄살은~"
+            hide adeline_음흉
             jump mainhall
 
 label ghost_chase_fail:
@@ -1074,15 +1079,18 @@ label inner_room:
                 play audio "스크림1.mp3"
                 scene 초상화_공포 
                 m "으악!"
+                play audio "쓰러지는 소리.mp3"
                 "아르망은 정신을 잃었다."
                 scene mainhall
+                show adeline 당혹 at Transform(xalign=0.5, yalign=0.2) with dissolve
                 g "정신이 좀 들어? 너 갑자기 기절했더라고."  ## 대사 수정 필요?
+                play audio "거친 숨소리.mp3"
                 m "헉..헉.. 방금 그건 뭐였지?"
                 g "뭘 봤길래 호들갑이야?"
                 m "안방에 걸려있는 초상화말이야!"
-                g "응? 우리 집엔 안방에는 초상화가 없는데?"
+                g "응? 우리집 안방에는 초상화가 없는데?"
                 m "뭐..?"
-                g "잘못본거겠지 안좋은 꿈이라도 꾼거야?"
+                g "잘못본거겠지.. 안좋은 꿈이라도 꾼거야?"
                 m "아니야 그럴리가 없어.."
                 jump mainhall
 
