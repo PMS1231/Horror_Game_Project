@@ -1063,30 +1063,55 @@ label inner_room:
         "안방의 문을 열어 들어갔다."
         scene 안방 with dissolve
         m "음... 여기가 안방인가."
-    
-    scene 안방
+        m "흠? 여기 초상화가 있군?."
+        menu:
+            "초상화를 자세히 들여다본다.":
+                $ photo_count += 1
+                scene 초상화 with dissolve
+                m "이상하게도 생긴 초상화군 그래"
+                scene 안방 with dissolve
+                play audio "아이 웃는소리 숏.mp3"
+                m "음? 방금 무슨 소리가 들린 것 같은데"
+                jump inner_room
+            "무시한다.":
+                jump inner_room
+
+    scene 안방 with dissolve
 
     menu:
         "초상화를 살펴본다.":
             if photo_count == 0:
                 $ photo_count += 1
                 scene 초상화 with dissolve
-                m "흠, 이상하게 생긴 초상화군"
+                m "이상하게도 생긴 초상화군 그래"
+                scene 안방 with dissolve
+                play audio "아이 웃는소리 숏.mp3"
+                m "음? 방금 무슨 소리가 들린 것 같은데"
                 jump inner_room
             elif photo_count == 1:
                 $ photo_count += 1
                 scene 초상화_눈 with dissolve
-                m "음? 저 초상화 원래 눈을 뜨고 있었나?"
+                m "뭐지 이 초상화.."
+                m "원래 눈을 뜨고 있었나?"
+                scene 안방 with dissolve
+                play audio "아이 웃는소리.mp3"
+                m "..!"
+                m "역시 이상해 방금 그 초상화!"
                 jump inner_room
-            else:
+            elif photo_count == 2:
+                $ photo_count += 1
+                scene 초상화 with dissolve
+                m "아무리 봐도 이상하단 말이지..."
                 play audio "스크림1.mp3"
                 scene 초상화_공포 
                 m "으악!"
                 play audio "쓰러지는 소리.mp3"
                 "아르망은 정신을 잃었다."
-                scene mainhall
+                scene black
+                "........."
+                scene mainhall with dissolve
                 show adeline 당혹 at Transform(xalign=0.5, yalign=0.2) with dissolve
-                g "정신이 좀 들어? 너 갑자기 기절했더라고."  ## 대사 수정 필요?
+                g "정신이 좀 들어? 너 갑자기 기절했더라고."
                 play audio "거친 숨소리.mp3"
                 m "헉..헉.. 방금 그건 뭐였지?"
                 g "뭘 봤길래 호들갑이야?"
@@ -1096,6 +1121,9 @@ label inner_room:
                 g "잘못본거겠지.. 안좋은 꿈이라도 꾼거야?"
                 m "아니야 그럴리가 없어.."
                 jump mainhall
+            else:
+                "분명 초상화가 있던 자리에는 아무것도 없다.."
+                jump inner_room
 
         "주변을 살펴본다.":
             if safe_info:
