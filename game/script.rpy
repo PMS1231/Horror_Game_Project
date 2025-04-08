@@ -1416,7 +1416,6 @@ label hallway_loop:
 
 label next_room:
     scene bg dream with dissolve
-       
     m "여긴... 대체...?"
     g "어때, 이 꽃? 정말 예쁘지 않아?"
     g "어렸을 땐 부모님이 날 이 꽃밭에 데려다 주셨어. 햇살 가득한 날, 엄마가 내 머리에 꽃을 꽂아주며 웃으셨지."
@@ -1492,7 +1491,6 @@ label happy_ending:
     m "나도...... 너처럼 나아가야겠지."
 
 label bad_ending:
-    
     "성수를 든다"
 
     g "그렇구나.....너도...."
@@ -1515,5 +1513,3 @@ label bad_ending:
     "아르망은 자신을 이해해주는 사람도 없이 과거에 집착하며 살아간다"
 
     "-END-"
-
-label bad_ending:
