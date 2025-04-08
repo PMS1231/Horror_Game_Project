@@ -1112,7 +1112,7 @@ label input_loop:
     if player_input == correct_answer:
         show 단어퍼즐답 at Transform(xalign=0.5, yalign=0.2) with dissolve
         play audio "책 꺼내는 소리1.mp3"
-        "딸깍... 금고가 열리는 소리가 들린다."
+        "드르륵... 금고가 열리는 소리가 들린다."
         "당신은 안방의 금고에서 네번째 일기장을 찾았다."
         hide 단어퍼즐
         hide 단어퍼즐답
