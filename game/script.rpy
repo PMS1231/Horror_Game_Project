@@ -283,10 +283,9 @@ label prologue:
             else:
                 
                 m "이깟 문조차 내 의지로 열지 못한다면, 이 검은 무얼위해 존재한단 말인가!"
-                
-                play audio "자물쇠 부숨.mp3"
+                play audio "검으로 벽을 두드리는 소리.mp3"
                 "다시 한번 검을 들어 자물쇠를 단숨에 내리친다." 
-
+                play audio "자물쇠 부숨.mp3"
                 "문이 쾅 소리와 함께 열리며 먼지가 풀풀 날린다."
                 
                 play audio "철문여는소리.mp3"
@@ -562,6 +561,7 @@ label garret_first:
                 play audio "문두들기는소리.mp3"
                 scene mainhall2 with vpunch
                 "천장을 쌔게 쳐보니 계단이 내려온다"
+                play audio "사다리.mp3"
                 scene 다락방계단 with dissolve
         m "호오, 이런 곳에 정말 다락방이 있었군."
         jump two_stair
