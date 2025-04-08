@@ -433,7 +433,7 @@ label mainhall:
         "지하실":
             if underground_lock:
                 play audio "자물쇠 잠긴소리.mp3"
-                m "굴욕적이지만 여긴 지금 나로선 갈수가 없다...."
+                m "문이 단단히 잠겨있어... 여긴 지금 갈수가 없다...."
                 jump mainhall
             else:
                 if light:
