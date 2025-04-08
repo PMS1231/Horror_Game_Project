@@ -171,8 +171,8 @@ define h = Character("마부", callback=type_sound2)
 define m = Character('아르망', color="#044604", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
 define g = Character("아델린", callback=type_sound2, what_font="tway_air.ttf")
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
-define l = Character('꼬마 유령', color="#b2cd68", callback=type_sound3)
-define l2 = Character('꼬마 유령', color="#b2cd68")
+define l = Character('꼬마 유령', color="#d4840b", callback=type_sound3)
+define l2 = Character('꼬마 유령', color="#d4840b")
 define G = Character('???')
 
 default p_bar = [0, 0]
@@ -324,7 +324,7 @@ label first_event:
     
     m "이 소리는 뭐지...?"
     m "......"
-    m "역시, 단순한 소문은 아니였던 모양이로군"
+    m "역시, 단순한 헛소문은 아니였던 모양이로군"
 
     "2층 난간 위, 어둠 속 소녀의 콧노래만이 들릴 뿐이다."
 
@@ -795,7 +795,7 @@ label dining_room:
             jump mainhall 
 
 label underground:
-
+    
     if bgm_not_playing2():
         play music "bgm_piano.mp3"
 
@@ -823,10 +823,10 @@ label underground:
         "무언가 발에 걸린다"
 
         m "뭐지 이건..?"
-
-        
     
-    menu:
+        m "단순히 버려진 창고가 아니군... 누군가가 여기서 살았던 거 같군."
+    scene 지하실
+    menu:        
         "주변을 뒤져볼까?":
             if inner_room_lock:
                 $ inner_room_lock = False
@@ -835,8 +835,9 @@ label underground:
                 m "안방 열쇠인 것 같군."
                 play audio "item1.ogg"
                 "당신은 안방열쇠를 획득 했다."
+                hide 열쇠
                 jump underground
-            else:
+            else:                
                 "아무것도 없다."
                 jump underground
         "나간다":
