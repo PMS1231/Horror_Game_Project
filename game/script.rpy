@@ -877,7 +877,7 @@ label underground:
         m "‘감정’이, ‘고독’이 실체가 되어 움직이고 있다...? 이건..."
         scene black with fade
         show adeline idle at Transform(xalign=0.5, yalign=0.2) with dissolve 
-        "아델린을 말하는 건가…"
+        "아델린을 말하는 건가…?"
         hide adeline idle with dissolve
 
         "그 순간, 지하의 어둠 속에서 희미한 숨소리가 들려온다."
