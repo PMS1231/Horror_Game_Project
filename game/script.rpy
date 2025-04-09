@@ -164,9 +164,6 @@ define g = Character("아델린", color="#bdaa00", callback=type_sound2, font="t
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")
-define s = Character("오르골 유령",)
-define M = Character("괴물")
-
 define G = Character('???', font="tway_sky.ttf", what_font="tway_fly.ttf")
 define s = Character("오르골 유령", color="#58328d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define M = Character("괴물", color="#040404", font="tway_sky.ttf", what_font="tway_fly.ttf")
@@ -201,6 +198,7 @@ default room_event = False
 default orgel_adeline = True
 default underground_event = True
 default inner_room_event = True
+default last_room_count = True
 # $ p_bar[0] += 10 기사도 증가
 # $ p_bar[1] += 10 호감도 증가
 
@@ -429,6 +427,9 @@ label mainhall:
     # 엔딩 조건 
     if diary_0 and diary_1 and diary_2 and diary_3:
         jump hallway
+
+    if diary_1 and diary_2 and diary_3:
+        $ last_room_count = False
 
     # 샹들리에 이벤트
     if chandelier_count == 5:
@@ -949,6 +950,8 @@ label dining_room:
                 "당신은 주방장의 일기를 획득 했다."
                 m "일기라..."
                 m "아까 전 방도 확인해 볼 필요가 있겠군"
+                play audio "item1.ogg"
+                "일기에 관한 정보를 획득 했다."
                 jump dining_room
 
         "나간다":
@@ -1299,8 +1302,9 @@ label inner_room:
                     m "아까 얻은 종이에 뭔가 단서가 있을 것 같아..."
                     hide 금고
                     show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) with dissolve
-                    m "단어를 찾아 입력해보자."
-                    $ correct_answer = "아델린"       
+                    m "뒷면에 무언가 적혀있다."
+                    "나의 가장 사랑하는 딸."
+                    $ correct_answer = "아델린"
                     jump input_loop
                 else:
                     "안쪽 구석에 무언가가 있군"
@@ -1596,7 +1600,11 @@ label hallway:
     scene black with dissolve
     pause 2
     scene hallway1_base with dissolve
-    m "뭐지... 분명 난 2층에서 내려왔을텐데"
+
+    if last_room_count:
+        m "뭐지... 분명 난 2층에서 내려왔을텐데"
+    else:
+        m "뭐지.. 문을 열고 나오니 왜 2층이...."
 
     menu:
         "내려간다":
