@@ -1226,11 +1226,13 @@ label inner_room:
                     "당신은 방 구석에서 잠긴 금고를 발견했다"
                     show 금고 at Transform(xalign=0.5, yalign=0.2)
                     m "아까 얻은 종이에 뭔가 단서가 있을 것 같아..."
+                    hide 금고
                     show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) with dissolve
                     m "단어를 찾아 입력해보자."
                     $ correct_answer = "아델린"       
                     jump input_loop
                 else:
+                    show 금고 at Transform(xalign=0.5, yalign=0.2)
                     "금고가 있지만 비밀번호를 모르겠다."
                     jump inner_room
             else:
