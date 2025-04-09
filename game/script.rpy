@@ -1128,7 +1128,7 @@ label library:
         play audio "돌풍.mp3"
         "문을 열자 바람이 불며 먼지가 날린다"
         scene 서재 with dissolve
-        m "음... 서재가 많이 크군"
+        m "콜록....서재에 먼지가 많군"
 
     scene 서재
     
