@@ -1914,7 +1914,9 @@ label happy_end:
 
     "아르망의 머릿속에 낡아빠진 갑옷처럼 무거웠던 기억들이 떠오른다."
     
-    "그를 손가락질하던 사람들, 그를 조롱하며 등 돌렸던 동료들, 과거의 영광에 사로잡혀 홀로 고독했던 수많은 밤들."
+    "그를 손가락질하던 사람들,   "
+    extend"그를 조롱하며 등 돌렸던 동료들, "
+    extend"  과거의 영광에 사로잡혀 홀로 고독했던 수많은 밤."
     
     hide 마주 with dissolve
     
@@ -1936,13 +1938,14 @@ label happy_end:
 
     m "아델린, 이젠 네 곁에서 쉬고 싶어."
 
-    scene happy_end with dissolve
-
+    
+    hide adeline idle
+    show 아델린 마지막 at Transform(xalign=0.5, yalign=0.2) with dissolve
     "아델린의 눈가에 조용히 눈물이 맺히며, 부드럽고 따스한 미소가 피어난다."
-
+    g "응, 아르망..."
+    scene happy_end with dissolve
     "아르망과 아델린은 서로의 손을 다정히 맞잡은 채, 천천히 어둠 속 저택으로 들어선다."
-
-    "뒤로 남겨진 바깥 세상은 조금씩 희미해지며, 두 사람은 어둠 속에서 처음으로 평화를 느낀다."
+    "뒤로 남겨진 바깥 세상은 조금씩 희미해지며, 두 사람은 처음으로 평화를 느낀다."
     scene black with fade
     centered "{size=+40}{font=tway_sky.ttf} HAPPY END \n {/font}{/size}"
     extend "{size=+40}{font=tway_sky.ttf} 동화 속 이야기 {/font}{/size}"
@@ -1953,17 +1956,18 @@ label happy_end:
     return
 
 label bad_end:
-    
+    scene bg dream
+    show  adeline 광기 at Transform(xalign=0.5, yalign=0.2)
     "아르망은 성수를 들며 냉정한 눈빛으로 아델린을 응시한다."
-    hide adeline 광기
+    hide adeline 광기 
 
     play music "bgm_매력적인 그녀.mp3"
     
-    show adeline 정색 at Transform(xalign=0.5, yalign=0.2)
+    show adeline 분노 at Transform(xalign=0.5, yalign=0.2) with vpunch
 
     g "그랬구나... 결국 너도..."
+    show adeline 분노 at Transform(xalign=0.5, yalign=0.2) with vpunch
     play audio "쿵.mp3"
-    #분노한 묘사
     g "결국 날 버리는 거구나!!!"
     
     m "나는 벨포르 가의 아르망,"
@@ -1974,14 +1978,17 @@ label bad_end:
     hide adeline_음흉 
 
     show adeline 광기 at Transform(xalign=0.5, yalign=0.2)
-
+    play audio "광기어린 웃음.mp3"
     g "하하하하하"
 
-    g "정말 자기가 기사라고 생각하는거야?"
+    g "정말로 자기가 기사라고 생각하는거야?"
 
     g "이 멍청한 녀석 같으니!!"
-
-    g "너도 나와 같다고 느꼈는데..!! 그렇다고 생각했는데!!!!!"
+    hide adeline 광기
+    show adeline 분노 at Transform(xalign=0.5, yalign=0.2) with vpunch
+    g "너도 나와 같다고 느꼈는데..!! "
+    show adeline 분노 at Transform(xalign=0.5, yalign=0.2) with vpunch
+    extend"그렇다고 생각했는데!!!!!"
     hide adeline 광기 with dissolve
     play audio "여자비명2.mp3"
     "성수를 뿌리자 아델린은 광기 어린 웃음과 비명을 지르며 사라졌다."  
