@@ -1225,7 +1225,7 @@ label inner_room:
                     m "아까 얻은 종이에 뭔가 단서가 있을 것 같아..."
                     show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) with dissolve
                     m "단어를 찾아 입력해보자."
-                    $ correct_answer = "adeline"       
+                    $ correct_answer = "아델린"       
                     jump input_loop
                 else:
                     "금고가 있지만 비밀번호를 모르겠다."
