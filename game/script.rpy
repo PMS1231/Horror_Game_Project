@@ -466,10 +466,10 @@ label mainhall:
                 $ safe_password = True
                 m "이건.."
                 show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) 
-                "정체불명의 종이를 주웠다."
-                m "어딘가의 암호처럼 보이는데"
+                "수상한 종이를 주웠다."
+                m "흠.. 무언가의 암호처럼 보이는데"
                 play audio "item1.ogg"
-                "당신은 비밀번호 힌트를 획득 했다."
+                "당신은 수상한 종이를 획득 했다."
                 hide 단어퍼즐
         hide 샹들리에
 
@@ -691,7 +691,8 @@ label garret_first:
 label room:
     stop music
     scene room
-    play audio "old door2.mp3"
+    if bgm_not_playing():
+        play music "bgm_main.mp3"
 
     if room_first_visit:
         $ room_first_visit = False
@@ -1062,7 +1063,7 @@ label underground:
         play audio "칼 휘두름.mp3"
         scene black
         "괴물의 발톱에 어깨가 긁혀 피가 흐르지만, 그는 몸을 낮추며 괴물의 밑을 파고든다."
-        "마지막 일격—칼을 힘껏 들어 괴물의 심장을 찔러 꽂는다!"
+        "아래에서부터 힘껏 찔러올린다. 검끝은 정확히 괴물의 심장을 꿰뚫었다.!"
         play audio "칼찔리는 소리.mp3"
         m "사라져라!!!"
         
@@ -1127,7 +1128,7 @@ label library:
         play audio "돌풍.mp3"
         "문을 열자 바람이 불며 먼지가 날린다"
         scene 서재 with dissolve
-        m "음... 서재가 많이 크군"
+        m "콜록....서재에 먼지가 많군"
 
     scene 서재
     
@@ -1143,8 +1144,8 @@ label library:
                 m "이건.."
                 show 메모 at Transform(xalign=0.5, yalign=0.2) 
                 "책을 넘기는 도중 메모를 발견했다."
-                n "다락방 구석의 작은 창문이 다시 열리지 않습니다."
-                n "지난번 비로 나무틀이 휘어진 듯하니, 다음 수리 일정에 포함해야 할 듯합니다."
+                n "다락방 구석의 작은 창문이 열리지 않습니다."
+                n "지난번 비로 창틀이 휘어진 듯하니, 다음 수리 일정에 포함해야 할 듯합니다."
                 nvl clear
 
                 m "호오, 이 집에 다락방이 있었군."
@@ -1175,6 +1176,7 @@ label library:
                 n "아가씨를 마지막으로 본게 언제 였더라...."
                 
                 n "건강은 좀 나아지셨으려나..."
+
                 m "우리 집사도 내 건강을 챙기고는 했지... "
                 nvl clear
                                 
@@ -1198,7 +1200,7 @@ label library:
 
                 m "안방에 금고가 있었군."
 
-                m "다시 한번 찾아봐야겠어."
+                m "한번 찾아봐야겠어."
                 nvl clear
 
                 play audio "item1.ogg"
@@ -1212,10 +1214,10 @@ label library:
             jump two_stair
 
 label inner_room:
-
+        
     stop music
-
-    if inner_room_first:
+    
+    if inner_room_first:        
         $ inner_room_first = False
         play audio "old door3.mp3"
         "안방의 문을 열어 들어갔다."
@@ -1237,7 +1239,7 @@ label inner_room:
                 jump inner_room
 
     scene 안방 with dissolve
-
+   
     menu:
         "초상화를 살펴본다.":
             if photo_count == 0:
@@ -1863,7 +1865,7 @@ label true_end:
     g "맞아... 그들은 언제나... 나를 걱정했줬줬지..."
 
     g "......"
-    g "에르망"
+    g "아르망"
 
     g "지하에서 가져온 성수..."
 
@@ -1898,8 +1900,8 @@ label true_end:
     extend"나도 이제는 앞으로 나아갈 때가 왔어."
     "{size=+10}{alpha=*0.5}고마웠어...{/alpha}{/size}"
 
-    centered "{size=+40}{font=tway_sky.ttf}TRUE END \n{/font}{/size}"
-    extend "{size=+40}{font=tway_sky.ttf}안녕, 아델린 {/font}{/size}"
+    centered "{size=+40}{font=tway_sky.ttf}{color=#FFFFFF}TRUE END \n{/color}{/font}{/size}"
+    extend "{size=+40}{font=tway_sky.ttf}{color=#FFFFFF}안녕, 아델린 {/color}{/font}{/size}"
     
     scene black with fade
     pause 5
@@ -1926,9 +1928,9 @@ label happy_end:
     
     m "..여기라면.."
     
-    m "이곳이라면 내가 억지로 기사가 될 필요도"
+    m "이곳이라면 내가 억지로 기사가 될 필요도, \n"
     
-    m "세상에 내 가치를 증명하려 애쓰지 않아도 되겠지."
+    extend "세상에 내 가치를 증명하려 애쓰지 않아도 되겠지."
 
     m "이제야 알겠군, 난 줄곧 과거의 망령을 쫓고 있었던 거야."
 
@@ -1947,8 +1949,8 @@ label happy_end:
     "아르망과 아델린은 서로의 손을 다정히 맞잡은 채, 천천히 어둠 속 저택으로 들어선다."
     "뒤로 남겨진 바깥 세상은 조금씩 희미해지며, 두 사람은 처음으로 평화를 느낀다."
     scene black with fade
-    centered "{size=+40}{font=tway_sky.ttf} HAPPY END \n {/font}{/size}"
-    extend "{size=+40}{font=tway_sky.ttf} 동화 속 이야기 {/font}{/size}"
+    centered "{size=+40}{font=tway_sky.ttf}{color=#FFFFFF} HAPPY END \n{/color}{/font}{/size}"
+    extend "{size=+40}{font=tway_sky.ttf}{color=#FFFFFF} 동화 속 이야기 {/color}{/font}{/size}"
 
     scene black with fade
     pause 5
