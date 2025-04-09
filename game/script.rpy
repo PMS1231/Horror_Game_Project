@@ -345,7 +345,7 @@ label first_event:
     "그 순간—"
     
     play audio "여자비명.mp3"
-    g "꺄아아아악!!!!!"
+    "꺄아아아악!!!!!"
 
     "처절하고 놀란, 분명 여자아이의 비명소리가 터져나온다."
 
@@ -403,7 +403,7 @@ label first_event:
 
     m "그런가..." 
 
-    m "그렇다면 나는 악령을 처리하러 가겠다."
+    m "그렇다면 내가 그 악령을 처리해주마."
     
     show adeline idle at Transform(xalign=0.5, yalign=0.2) 
 
@@ -533,7 +533,7 @@ label mainhall:
                         "어둠 속으로 들어가려한 그 순간," 
                         play audio "Monster5.ogg"
                         scene 지하실괴물
-                        "괴물의 울음소리가 들리며 무언가가 아르망을 덮쳤다"
+                        "기괴한 울음소리가 들리며 무언가가 아르망을 덮쳤다"
                         scene black
                         "아르망은 어떠한 힘에 의해 뒤로 밀려 넘어져 들어가지 못하였다."
                         m "크윽... 내가 이런 굴욕을 받다니..."
@@ -581,7 +581,7 @@ label mainhall:
                         jump mainhall
                     else:
                         play audio "Monster5.ogg"
-                        m "흠 다른 방법을 찾아봐야겠군."
+                        m "흠 저 괴물을 처리할 다른 방법을 찾아봐야겠군."
                         jump mainhall
 
         "방":
@@ -928,7 +928,6 @@ label dining_room:
                 "식기서랍 안에 무언가 있다."
                 show 일기 at Transform(xalign=0.5, yalign=0.2) 
                 "이건 일기인가?"
-
                 n "주방장의 일기장"
                 play audio "책넘김.mp3"
                 n "오늘도 아가씨는 혼자서 밥을 드신다."
