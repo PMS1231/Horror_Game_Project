@@ -206,12 +206,12 @@ label start:
     stop music 
     play audio "마차소리.mp3"
     scene black 
-    centered "{size=+40}{font=tway_sky.ttf}1 9 X X{/font}{/size}"
+    centered "{size=+40}{font=tway_sky.ttf}{color=#FFFFFF}1 9 X X{/color}{/font}{/size}"
     stop audio 
     play audio "마차소리 도착.mp3"
     scene black 
     play music "bgm_garden.mp3"
-    centered "{size=+40}{font=tway_sky.ttf}영국, 어느 지방{/font}{/size}"
+    centered "{size=+40}{font=tway_sky.ttf}{color=#FFFFFF}영국, 어느 지방{/color}{/font}{/size}"
     stop audio
     play audio "비.mp3"
     scene black 
@@ -1929,7 +1929,6 @@ label happy_end:
     m "..여기라면.."
     
     m "이곳이라면 내가 억지로 기사가 될 필요도, \n"
-    
     extend "세상에 내 가치를 증명하려 애쓰지 않아도 되겠지."
 
     m "이제야 알겠군, 난 줄곧 과거의 망령을 쫓고 있었던 거야."
@@ -2022,8 +2021,8 @@ label bad_end:
 
     "아르망은 홀로 웃으며 계속해서 허공에 대고 외친다."
 
-    centered "{size=+40}{font=tway_sky.ttf} BAD END \n {/font}{/size}"
-    extend "{size=+40}{font=tway_sky.ttf} 돈키호테 {/font}{/size}"
+    centered "{size=+40}{font=tway_sky.ttf}{color=#722F37} BAD END \n {/color}{/font}{/size}"
+    extend "{size=+40}{font=tway_sky.ttf}{color=#722F37} 돈키호테 {/color}{/font}{/size}"
     
     scene black with fade
     pause 5
@@ -2074,5 +2073,5 @@ label dead_end:
 
     "아르망은 저택 안에 영원히 갇혀, 결코 밖으로 나오지 못한다."
     
-    centered "{size=+40}{font=tway_sky.ttf} DEAD END \n{/font}{/size}"
-    extend "{size=+40}{font=tway_sky.ttf} 광대 {/font}{/size}"
+    centered "{size=+40}{font=tway_sky.ttf}{color=#722F37} DEAD END \n{/color}{/font}{/size}"
+    extend "{size=+40}{font=tway_sky.ttf}{color=#722F37} 광대 {/color}{/font}{/size}"
