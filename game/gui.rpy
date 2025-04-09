@@ -25,7 +25,7 @@ define config.check_conflicting_properties = True
 ## 인터페이스에서 글자의 색상입니다.
 
 ## 강조 색상은 레이블(label)과 강조된 글자로 인터페이스 전체에서 사용됩니다.
-define gui.accent_color = '#000000'
+define gui.accent_color = '#345079'
 
 ## 텍스트 버튼(text button)이 선택(selected)됐거나 커서를 올리지(hovered) 않았을
 ## 때 사용됩니다.
