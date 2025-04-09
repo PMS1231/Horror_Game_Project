@@ -1331,6 +1331,7 @@ screen nvl(dialogue, items=None):
 
         has vbox:
             spacing gui.nvl_spacing
+            yalign 0.2
 
         ## vpgrid나 vbox 내에 대사를 출력합니다.
         if gui.nvl_height:
