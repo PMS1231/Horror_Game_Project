@@ -555,7 +555,7 @@ label mainhall:
                                 "아델린의 호감도가 10 상승했다."
                             "뭐지? 날 무시하나?":
                                 m "{size=+20}이놈!! {/size}"
-                                extend "지금 발포프가의 명예로운 기사."
+                                extend "지금 벨포르가의 명예로운 기사."
                                 m "{size=+20}아르망 드 벨포르를 무시하는거냐!!!!{/size}"
                                 show adeline 황당 at Transform(xalign=0.5, yalign=0.2)
                                 g "뭐??"
