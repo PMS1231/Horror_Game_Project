@@ -62,58 +62,6 @@ init python:
     right_sounds = ["audio/laughmech_right1.mp3","audio/laughmech_right2.mp3","audio/laughmech_right1.mp3"]
     import random
 
-    adeline_conversations = [
-        [
-            "아르망 \"어이 유령\"",
-            "아델린 \"나? 나말인가?\"",
-            "아르망 \"너말고 유령이 어디 또있지?\"",
-            "아델린 \"호오...무슨일이야 기사?\"",
-            "아르망 \"이곳의 소문은 사실인가?\"",
-            "아델린 \"소문? 무슨 소문?\"",
-            "아르망 \"이 근처에 귀신이 나타나 사람을 잡아간다는 소문 말이다\"",
-            "아델린 \"내가 여기에 산지 오래됐지만 그런 이야기는 금시초문인걸\"",
-            "아르망 \"너가 하고 숨긴 건 아니고?\"",
-            "아델린 \"하하하하하 웃기는 소리 잘하네\"",
-            "아르망 \"흠..정말인가 보군\""
-        ],
-        [
-            "아델린 \"어이 기사\"",
-            "아르망 \"........\"",
-            "아델린 \"왜 대답을 안해\"",
-            "아르망 \"........\"",
-            "아델린 \"야 기사 대답좀 해봐\"",
-            "아르망 \"나는 기사가 아니라 아르망이다\"",
-            "아르망 \"아르망이라고 불러라 유령\"",
-            "아델린 \"그럼 너도 유령이라 부르지 말고 아델린이라고 불러\"",
-            "아르망 \"생각해보지\"",
-            "아델린 \"이익........두고보자\""
-        ],
-        [
-            "아델린 \"....아르망\"",
-            "아르망 \"왜 부르지?\"",
-            "아델린 \"그냥...심심해서 불러봤어\"",
-            "아르망 \"뭐야 그게, 유령도 심심은 한가보지?\"",
-            "아델린 \"유령..? 나한테 유령이라고 부른거야 지금?\"",
-            "아델린 \"이름으로 부르기로 한거 아니였어?\"",
-            "아르망 \"물론 기억하지 아델린\"",
-            "아델린 \"잘하네!\"",
-            "아르망 \"칭찬해줘서 영광이군. 유령님 마음에 드셧나?\"",
-            "아델린 \"이익..너!!!\"",
-            "아르망 \"하하하하하하\""
-        ],
-        [
-            "아델린 \"…도움이 되는 정보는 많이 얻었어?\"",
-            "아르망 \"그래. 이제 끝이 보이는 거 같아\"",
-            "아델린 \"아....그렇구나...\"", 
-            "아르망 \"왜? 무슨 일 있어?\"",
-            "아델린 \"아니야, 그냥… 네가 너무 바쁘게 돌아다녀서. 매번 다치진 않을까, 또 사라져버리진 않을까 걱정했거든.\"",
-            "아르망 \"걱정해줘서 고마워. 하지만 난 괜찮아. 이제 익숙하니까\"",
-            "아델린 \"그런데...... 악령을 처리하고 나가는게...... 꼭 좋은 일일까?\"",
-            "아르망 \"...무슨 뜻이야?\"",
-            "아델린 \"아니야 그냥 헛소리라고 생각하고 넘어가\"",
-            "아르망 \"........\""
-        ]
-    ]
 #호감도 바 관련 코드
 init:
     screen stat_overlay:
@@ -248,6 +196,7 @@ default holy_water = False
 default orgel_try = True
 default room_event = False
 default orgel_adeline = True
+default underground_event = True
 # $ p_bar[0] += 10 기사도 증가
 # $ p_bar[1] += 10 호감도 증가
 
@@ -276,11 +225,12 @@ label start:
     m "{alpha=*0.5}두려움으로부터 진실을 외면하는 것은, 기사로서 가장 비겁한 일{/alpha}"
     m "벨포르 가의 이름으로 맹세하노니"
     scene 저택 with vpunch
-
+    play audio "쿵.mp3"
     m "{size=+10}내가 이 저택에 깃든 모든 어둠을 밝혀내리라!{/size}"
     
     show 마주생각 at Transform(xalign=0.5, yalign=0.2) 
     h "음...?"
+    play audio "궁금.mp3"
     h "벨포르 가문이라고 했소?"
     h "벨포르라… 오랜만에 듣는 이름이로군"
     h "허허, 그 가문도 한때는 꽤 이름을 날렸지"
@@ -547,62 +497,69 @@ label mainhall:
                     stop music
                     jump underground
                 else:
-                    stop music
-                    play audio "old door2.mp3"
-                    "끼이익 하고 문이 열린다."
-                    scene black with dissolve
-                    play audio "돌풍.mp3"
-                    "칠흑 같은 어둠속엔 바람 소리만 들리며,"
-                    extend "한 치 앞도 보이지 않는다."
-                    "어둠 속으로 들어가려한 그 순간," 
-                    play audio "Monster5.ogg"
-                    scene 지하실괴물
-                    "괴물의 울음소리가 들리며 무언가가 아르망을 덮쳤다"
-                    scene black
-                    "아르망은 어떠한 힘에 의해 뒤로 밀려 넘어져 들어가지 못하였다."
-                    m "크윽... 내가 이런 굴욕을 받다니..."
-                    scene mainhall
-                    show adeline surprise at Transform(xalign=0.5, yalign=0.2) with hpunch
-                    g "괜찮아, 너??"
-                    m "저 괴물의 정체는 뭐야?"
-                    show adeline 의문 at Transform(xalign=0.5, yalign=0.2)
-                    g "나도 잘 모르겠어, 지하에는 갈 일이 없으니까"
-                    show adeline idle at Transform(xalign=0.5, yalign=0.2)
-                    g "위험하니까 지하에는 가지마."
-                    g "나처럼 되고 싶은게 아니라면 "
-                    extend "알겠지?"
-                    menu:
-                        "기사로서 그럴 수 없다.":
-                            m "위험하다고?"
-                            m "{size=+20}그렇기에 가야하는 것이다!! {/size}"
-                            m "기사로서, 사람들을 겁주는 괴물을 보고 어찌 못본 척 하겠는가!"
-                            show adeline 황당 at Transform(xalign=0.5, yalign=0.2)
-                            g "아니.. 사람이고 자시고 여긴 유령 밖에 없는데.."
-                            m "그럼에도 타협하지 않는 것이 기사도다!!"
-                            show adeline embrassed at Transform(xalign=0.5, yalign=0.2)
-                            g "하하.."
-                            g "살아 생전 받아본 적 없는 걱정을 죽어서 받을 줄은 몰랐는데.."
-                            show screen stat_overlay with dissolve
-                            $ p_bar[0] += 10
-                            play audio "호감도 상승.mp3"
-                            "아델린의 호감도가 10 상승했다."
-                        "뭐지? 날 무시하나?":
-                            m "{size=+20}이놈!! {/size}"
-                            extend "지금 발포프가의 명예로운 기사."
-                            m "{size=+20}아르망 드 벨포르를 무시하는거냐!!!!{/size}"
-                            show adeline 황당 at Transform(xalign=0.5, yalign=0.2)
-                            g "뭐??"
-                            g "무슨 소릴 하는거야?"
-                            show adeline 삐짐 at Transform(xalign=0.5, yalign=0.2)
-                            g "하아.."
-                            g "기껏 걱정해줬더니..."
-                            show screen stat_overlay with dissolve
-                            $ p_bar[0] -= 10
-                            play audio "호감도 하락.mp3"
-                            "아델린의 호감도가 10 하락했다."
-                    m "{alpha=*0.5}우선은 지하를 밝힐 불이 필요하겠군.{/alpha}"
-                    hide screen stat_overlay with dissolve
-                    jump mainhall
+                    if underground_event:
+                        $ underground_event = False
+                        stop music
+                        play audio "old door2.mp3"
+                        "끼이익 하고 문이 열린다."
+                        scene black with dissolve
+                        play audio "돌풍.mp3"
+                        "칠흑 같은 어둠속엔 바람 소리만 들리며,"
+                        extend "한 치 앞도 보이지 않는다."
+                        "어둠 속으로 들어가려한 그 순간," 
+                        play audio "Monster5.ogg"
+                        scene 지하실괴물
+                        "괴물의 울음소리가 들리며 무언가가 아르망을 덮쳤다"
+                        scene black
+                        "아르망은 어떠한 힘에 의해 뒤로 밀려 넘어져 들어가지 못하였다."
+                        m "크윽... 내가 이런 굴욕을 받다니..."
+                        scene mainhall
+                        show adeline surprise at Transform(xalign=0.5, yalign=0.2) with hpunch
+                        g "괜찮아, 너??"
+                        m "저 괴물의 정체는 뭐야?"
+                        show adeline 의문 at Transform(xalign=0.5, yalign=0.2)
+                        g "나도 잘 모르겠어, 지하에는 갈 일이 없으니까"
+                        show adeline idle at Transform(xalign=0.5, yalign=0.2)
+                        g "위험하니까 지하에는 가지마."
+                        g "나처럼 되고 싶은게 아니라면 "
+                        extend "알겠지?"
+                        menu:
+                            "기사로서 그럴 수 없다.":
+                                m "위험하다고?"
+                                m "{size=+20}그렇기에 가야하는 것이다!! {/size}"
+                                m "기사로서, 사람들을 겁주는 괴물을 보고 어찌 못본 척 하겠는가!"
+                                show adeline 황당 at Transform(xalign=0.5, yalign=0.2)
+                                g "아니.. 사람이고 자시고 여긴 유령 밖에 없는데.."
+                                m "그럼에도 타협하지 않는 것이 기사도다!!"
+                                show adeline embrassed at Transform(xalign=0.5, yalign=0.2)
+                                g "하하.."
+                                g "살아 생전 받아본 적 없는 걱정을 죽어서 받을 줄은 몰랐는데.."
+                                show screen stat_overlay with dissolve
+                                $ p_bar[0] += 10
+                                play audio "호감도 상승.mp3"
+                                "아델린의 호감도가 10 상승했다."
+                            "뭐지? 날 무시하나?":
+                                m "{size=+20}이놈!! {/size}"
+                                extend "지금 발포프가의 명예로운 기사."
+                                m "{size=+20}아르망 드 벨포르를 무시하는거냐!!!!{/size}"
+                                show adeline 황당 at Transform(xalign=0.5, yalign=0.2)
+                                g "뭐??"
+                                g "무슨 소릴 하는거야?"
+                                show adeline 삐짐 at Transform(xalign=0.5, yalign=0.2)
+                                g "하아.."
+                                g "기껏 걱정해줬더니..."
+                                show screen stat_overlay with dissolve
+                                $ p_bar[0] -= 10
+                                play audio "호감도 하락.mp3"
+                                "아델린의 호감도가 10 하락했다."
+                        m "{alpha=*0.5}우선은 지하를 밝힐 불이 필요하겠군.{/alpha}"
+                        hide screen stat_overlay with dissolve
+                        jump mainhall
+                    else:
+                        play audio "Monster5.ogg"
+                        m "흠 다른 방법을 찾아봐야겠군."
+                        jump mainhall
+                        
         "방":
             play audio "Open door.mp3"
             jump room
@@ -1171,6 +1128,8 @@ label library:
                 "책장 위를 살펴보니 그곳엔 책이 1권 있었다."
                 show 일기 at Transform(xalign=0.5, yalign=0.2) 
                 m "이건 일기장인가?"
+                
+                play audio "책넘김.mp3"
 
                 n "집사의 일기장"
 
@@ -1269,7 +1228,7 @@ label inner_room:
                     m "아까 얻은 종이에 뭔가 단서가 있을 것 같아..."
                     show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) with dissolve
                     m "단어를 찾아 입력해보자."
-                    $ correct_answer = "adeline"       
+                    $ correct_answer = "아델린"       
                     jump input_loop
                 else:
                     "금고가 있지만 비밀번호를 모르겠다."
