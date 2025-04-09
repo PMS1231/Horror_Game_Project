@@ -1899,8 +1899,8 @@ label true_end:
     extend"나도 이제는 앞으로 나아갈 때가 왔어."
     "{size=+10}{alpha=*0.5}고마웠어...{/alpha}{/size}"
 
-    centered "{size=+40}{font=tway_sky.ttf}TRUE END \n{/font}{/size}"
-    extend "{size=+40}{font=tway_sky.ttf}안녕, 아델린 {/font}{/size}"
+    centered "{size=+40}{font=tway_sky.ttf}{color=#FFFFFF}TRUE END \n{/color}{/font}{/size}"
+    extend "{size=+40}{font=tway_sky.ttf}{color=#FFFFFF}안녕, 아델린 {/color}{/font}{/size}"
     
     scene black with fade
     pause 5
@@ -1925,9 +1925,9 @@ label happy_end:
     
     m "..여기라면.."
     
-    m "이곳이라면 내가 억지로 기사가 될 필요도"
+    m "이곳이라면 내가 억지로 기사가 될 필요도, \n"
     
-    m "세상에 내 가치를 증명하려 애쓰지 않아도 되겠지."
+    extend "세상에 내 가치를 증명하려 애쓰지 않아도 되겠지."
 
     m "이제야 알겠군, 난 줄곧 과거의 망령을 쫓고 있었던 거야."
 
@@ -1945,8 +1945,8 @@ label happy_end:
 
     "뒤로 남겨진 바깥 세상은 조금씩 희미해지며, 두 사람은 어둠 속에서 처음으로 평화를 느낀다."
     scene black with fade
-    centered "{size=+40}{font=tway_sky.ttf} HAPPY END \n {/font}{/size}"
-    extend "{size=+40}{font=tway_sky.ttf} 동화 속 이야기 {/font}{/size}"
+    centered "{size=+40}{font=tway_sky.ttf}{color=#FFFFFF} HAPPY END \n{/color}{/font}{/size}"
+    extend "{size=+40}{font=tway_sky.ttf}{color=#FFFFFF} 동화 속 이야기 {/color}{/font}{/size}"
 
     scene black with fade
     pause 5
