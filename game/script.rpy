@@ -691,7 +691,8 @@ label garret_first:
 label room:
     stop music
     scene room
-    play audio "old door2.mp3"
+    if bgm_not_playing():
+        play music "bgm_main.mp3"
 
     if room_first_visit:
         $ room_first_visit = False
@@ -1062,7 +1063,7 @@ label underground:
         play audio "칼 휘두름.mp3"
         scene black
         "괴물의 발톱에 어깨가 긁혀 피가 흐르지만, 그는 몸을 낮추며 괴물의 밑을 파고든다."
-        "마지막 일격—칼을 힘껏 들어 괴물의 심장을 찔러 꽂는다!"
+        "아래에서부터 힘껏 찔러올린다. 검끝은 정확히 괴물의 심장을 꿰뚫었다.!"
         play audio "칼찔리는 소리.mp3"
         m "사라져라!!!"
         
@@ -1127,7 +1128,7 @@ label library:
         play audio "돌풍.mp3"
         "문을 열자 바람이 불며 먼지가 날린다"
         scene 서재 with dissolve
-        m "음... 서재가 많이 크군"
+        m "콜록....서재에 먼지가 많군"
 
     scene 서재
     
@@ -1212,10 +1213,10 @@ label library:
             jump two_stair
 
 label inner_room:
-
+        
     stop music
-
-    if inner_room_first:
+    
+    if inner_room_first:        
         $ inner_room_first = False
         play audio "old door3.mp3"
         "안방의 문을 열어 들어갔다."
@@ -1237,7 +1238,7 @@ label inner_room:
                 jump inner_room
 
     scene 안방 with dissolve
-
+   
     menu:
         "초상화를 살펴본다.":
             if photo_count == 0:
