@@ -709,6 +709,7 @@ label room:
             show 일기 at Transform(xalign=0.5, yalign=0.2)
             "구석에서 아까는 보지 못했던 일기장을 발견했다."
             m "…이건 뭐지? 일기장인가? 누구의 일기지…?"
+            play audio "책넘김.mp3"
             n "유모의 일기장"
             n "오늘은 도련님이 태어나셨다."
             n "백작님과 부인께선 갈수록 도련님에게만 신경을 쏟는다."
@@ -921,7 +922,7 @@ label dining_room:
                 "이건 일기인가?"
 
                 n "주방장의 일기장"
-
+                play audio "책넘김.mp3"
                 n "오늘도 아가씨는 혼자서 밥을 드신다."
  
                 n "백작님은 회의로 바쁘시고 부인은 아들을 돌보시는데 열중이다."
@@ -1296,7 +1297,7 @@ label diary4:
     play music "bgm_반전.mp3"
 
     n "금고 -일기장"
-
+    play audio "책넘김.mp3"
     n "18xx년 4월 6일"
 
     n "오늘, 저택에 낯선 이가 찾아왔다."
@@ -1332,7 +1333,8 @@ label diary4:
     n "어느 순간 그는 사라졌어"
 
     n "아마 그는 죽었을 꺼야"
-
+    nvl clear
+    play audio "책넘김.mp3"
     n "18xx년 9월 18일"
 
     n "신부가 사라진 그날 이후, 사람들은 더 이상 이 집에 오지 않게 되었다."
@@ -1346,7 +1348,8 @@ label diary4:
     n "그때 그냥… 잠시만 참았더라면…"
 
     n ""
-
+    nvl clear
+    play audio "책넘김.mp3"
     n "19xx년 1월 6일"
 
     n "웃는 연습을 했다."
@@ -1364,7 +1367,8 @@ label diary4:
     n "아니면 울고 있는 걸까?"
 
     n ""
-
+    nvl clear
+    play audio "책넘김.mp3"
     n "19xx년 4월 6일"
 
     n "오늘, 누군가 왔다."
