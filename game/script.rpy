@@ -165,8 +165,8 @@ define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define G = Character('???')
-define s = Character("오르골 유령",)
-define M = Character("괴물")
+define s = Character("오르골 유령", font="tway_sky.ttf", what_font="tway_fly.ttf")
+define M = Character("괴물", font="tway_sky.ttf", what_font="tway_fly.ttf")
 
 default p_bar = [50, 0]
 default diary_0 = False
