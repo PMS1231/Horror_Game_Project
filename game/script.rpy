@@ -112,10 +112,6 @@ init:
     image 저택 = "images/bg/저택.png"
     image 자물쇠 = "images/bg/자물쇠.png"
     image 샹들리에 = "images/obj/샹들리에.png"
-    image true_ending = "images/event/true_end.png"
-    image bad_ending = "images/event/bad_end.png"
-    image dead_ending = "images/event/dead_end.png"
-    image happy_ending = "images/event/happy_end.png"
 
 # 안방 이미지
 
@@ -600,6 +596,8 @@ label mainhall:
             jump two_stair
 
 label two_stair:
+    if bgm_not_playing():
+        play music "bgm_main.mp3"
     scene mainhall2 with fade
 
     if chandelier_count == 4:
@@ -715,6 +713,7 @@ label room:
             show 일기 at Transform(xalign=0.5, yalign=0.2)
             "구석에서 아까는 보지 못했던 일기장을 발견했다."
             m "…이건 뭐지? 일기장인가? 누구의 일기지…?"
+            play audio "책넘김.mp3"
             n "유모의 일기장"
             n "오늘은 도련님이 태어나셨다."
             n "백작님과 부인께선 갈수록 도련님에게만 신경을 쏟는다."
@@ -926,7 +925,7 @@ label dining_room:
                 "이건 일기인가?"
 
                 n "주방장의 일기장"
-
+                play audio "책넘김.mp3"
                 n "오늘도 아가씨는 혼자서 밥을 드신다."
  
                 n "백작님은 회의로 바쁘시고 부인은 아들을 돌보시는데 열중이다."
@@ -1331,7 +1330,7 @@ label diary4:
     play music "bgm_반전.mp3"
 
     n "금고 -일기장"
-
+    play audio "책넘김.mp3"
     n "18xx년 4월 6일"
 
     n "오늘, 저택에 낯선 이가 찾아왔다."
@@ -1367,7 +1366,8 @@ label diary4:
     n "어느 순간 그는 사라졌어"
 
     n "아마 그는 죽었을 꺼야"
-
+    nvl clear
+    play audio "책넘김.mp3"
     n "18xx년 9월 18일"
 
     n "신부가 사라진 그날 이후, 사람들은 더 이상 이 집에 오지 않게 되었다."
@@ -1381,7 +1381,8 @@ label diary4:
     n "그때 그냥… 잠시만 참았더라면…"
 
     n ""
-
+    nvl clear
+    play audio "책넘김.mp3"
     n "19xx년 1월 6일"
 
     n "웃는 연습을 했다."
@@ -1399,7 +1400,8 @@ label diary4:
     n "아니면 울고 있는 걸까?"
 
     n ""
-
+    nvl clear
+    play audio "책넘김.mp3"
     n "19xx년 4월 6일"
 
     n "오늘, 누군가 왔다."
@@ -1437,10 +1439,11 @@ label diary4:
     jump inner_room
 
 label garret:
-
+    
     stop music
     stop audio
-
+    if bgm_not_playing():
+        play music "bgm_main.mp3"
     if garret_first:
         if orgel_try:
             play music "기믹_오르골 원본.mp3"
@@ -1466,8 +1469,8 @@ label garret:
             show 오르골유령 at Transform(xalign=0.5, yalign=0.2) with dissolve
             s "후후.. 또 왔구나"
             jump orgel_test
-
-    menu:
+    
+    menu:        
         "어디로 갈까?"
 
         "나간다":
@@ -1604,6 +1607,7 @@ label hallway:
             n "시대의 변화를 외면하고 도망가는 패배자여"
             n "그대 행동, 마땅히 비난받아야 할 일이다만."
             n "남겨진 자와의 만남엔 이보다 좋은 지름길은 없으리"
+            nvl clear
             ".... 마지막 글씨는 얼룩 때문에 보이지 않는다."
 
             m "....."
@@ -1704,13 +1708,6 @@ label hallway_loop:
 
 label next_room:
     stop music
-    "기나긴 계단을 내려오니 문이 하나 보였다."
-    m "음? 이 낙서는..."
-    n "이야기의 종지부를 찍을 때가 왔다."
-    m "......"
-
-    "문을 열고 안으로 들어갔다."
-
     scene bg dream with dissolve
        
     m "여긴... 대체...?"
@@ -1735,260 +1732,106 @@ label next_room:
 
     if holy_water:
         if p_bar[0] > 50:
-            jump true_end
+            jump happy_ending_1
         else:
-            jump bad_end
+            jump bad_ending_1
     else:
         if p_bar[0] > 50:
-            jump happy_end
+            jump happy_ending_1
         else:
-            jump dead_end
+            jump bad_ending_1
 
-label true_end:
+# label happy_ending:
 
-    play audio "Equip2.ogg"
+#     play music "bgm_감동.mp3"
 
-    "아르망은 천천히 투구를 벗으며, "
-    extend "부드럽고 슬픈 표정으로 아델린을 바라보았다."
+#     play audio "Equip2.ogg"
+
+#     "아르망은 천천히 투구를 벗으며,"
+#     extend "부드럽고 슬픈 표정으로 아델린을 바라보았다."
+
+#     m "아델린, 미안해. 내가 잘못 생각했어."
+
+#     g "아르망...? 어째서...? 너는는 나를 이해하는거 아니였어...?"
+
+#     m "그래, 이해한다고 믿었어. 하지만 나도 너처럼 과거에 얽매여 있었던 것 같아."
+
+#     m "나는 기사였던 시절이 그리워서, 그 시절의 낭만과 명예만을 좇아왔지."
+
+#     m "하지만 지금 세상은 더 이상 나 같은 기사를 필요로 하지 않아."
+
+#     m "시대는 변했고, 나는 그 변화를 외면하며 계속 과거에만 머물렀지."
+
+#     "g는 흔들리며 눈물을 글썽인다."
+
+#     g "그럼... 나는...? 나 역시 이대로 과거에 갇혀 살아야만 하는 거야...?"
+
+#     m "아니야, 아델린. 이제 너도, 나도 더 이상 그렇게 살아선 안 돼."
+
+#     m "너를 만난 시간은 나에게 정말 소중했어."
+
+#     m "마치... 아름답고 낭만적이던 그 옛날로 돌아간 것 같았지."
+
+#     m "하지만, 이 이야기도 이제 끝낼 때가 된 거야. 너와 나 모두 과거로부터 벗어나야만 해."
+
+#     "g는 눈물을 흘리며 떨리는 목소리로 묻는다."
+
+#     g "그럼 난... 어디로 가야 하는 거지...? 나는 언제나 혼자였는데..."
+
+#     m "아니, 넌 혼자가 아니었어. 네 곁을 지키던 사람들이 있었잖아. 집사, 유모, 그리고 주방장... 그들은 너를 사랑했어."
+
+#     "g의 얼굴에 희미한 미소가 떠오른다."
+
+#     g "맞아... 그들은 언제나... 나를 걱정했었지..."
+
+#     "g는 잠시 생각에 잠기더니 조용히 입을 연다."
+
+#     g "지하에서 가져온 성수... 가지고 있지? 그거면... 될 거야."
+
+#     m "정말 괜찮겠어?"
+
+#     g "응. 그저 나를 위해 기도해줘, 기사님... 부탁할게."
+
+#     "아르망은 성수를 들어 조용히 뿌린 뒤, 부드럽고 단호한 눈빛으로 아델린을 바라본다."
+
+#     m "편히 쉬어, 아델린. 나도 이제 앞으로 나아가야겠지."
+
+#     "성수의 빛 속에서 아델린은 환하게 미소 지으며 서서히 사라진다."
+
+#     scene ending1
+
+#     m "안녕, 아델린. 이제는 나도 진정으로 앞으로 나아갈 때가 왔어."
+
+# label bad_ending:
     
-    play music "bgm_감동.mp3"
+#     "아르망은 투구를 벗지 않고 성수를 들며 냉정한 눈빛으로 아델린을 응시한다."
 
-    m "아델린, 미안해."
+#     "g는 배신감을 느끼며 아프게 웃는다."
 
-    g "아르망...? 어째서...? 너는 나를 이해하는거 아니였어...?"
+#     g "그랬구나... 결국 너도... 결국 날 버리는 거구나!"
 
-    m "그래, 이해한다고 믿었어. 하지만 나도 너처럼 과거에 얽매여 있었던 것 같아."
-    
-    m "나는 기사였던 시절이 그리워서, 그 시절의 낭만과 명예만을 좇아왔지."
-    
-    scene black with fade
-    
-    show 마주 at Transform(xalign=0.5, yalign=0.2) with dissolve
+#     m "나는 벨포르 가의 아르망, 기사로서 마땅히 해야할 일을 할 뿐이다다!"
 
-    m "하지만 지금 세상은 더 이상 나 같은 기사를 필요로 하지 않아."
+#     m "이 성수로 너를 보내고, 이 저택의 저주를 끝내겠다!"
 
-    m "시대는 변했고, 나는 그 변화를 외면하며 계속 과거에만 머물렀지."
-    
-    hide 마주  with dissolve
-    
-    scene bg dream with dissolve
-    
-    show 아델린 눈물 at Transform(xalign=0.5, yalign=0.2)
+#     "g는 절규하며 비명을 지른다."
 
-    g "그럼... 나는...? 나 역시 이대로 과거에 갇혀 살아야만 하는 거야...?"
+#     g "결국 너도 똑같아! 이기적인 인간들! 다 똑같아!!"
 
-    m "아니야, 아델린. 이제 너도, 나도 더 이상 그렇게 살아선 안 돼."
+#     "g는 괴로운 듯 비명을 지르며 사라진다."
 
-    m "너를 만난 시간은 나에게 정말 소중했어."
+#     "아르망은 차가운 눈빛으로 사라진 아델린의 자리를 바라보며 조용히 중얼거린다."
 
-    m "마치... 아름답고 낭만적이던 그 옛날로 돌아간 것 같았지."
+#     m "나는 명예로운 기사.. 나는 기사로서의 내 의무를 다한 것이다."
 
-    m "하지만, 이 이야기도 이제 끝낼 때가 된 거야. 너와 나 모두 과거로부터 벗어나야만 해."
+#     "칼을 허리에 다시 차고, 아르망은 무거운 발걸음으로 저택의 정문을 나선다."
 
-    show 아델린 눈물2 at Transform(xalign=0.5, yalign=0.2)
+#     scene bad_ending
 
-    g "그럼 난... 어디로 가야 하는 거지...? 나는 언제나 혼자였는데..."
+#     "그 후 아르망은 마을에 돌아가 자신이 저택의 유령을 정화했다고 외쳤지만, 마을 사람들은 그를 미친 사람 취급하며 외면했다."
 
-    m "아니, 넌 혼자가 아니었어. 네 곁을 지키던 사람들이 있었잖아. 집사, 유모, 그리고 주방장... 그들은 너를 사랑했어."
+#     "결국 아르망은 자신을 이해해주는 사람 하나 없이, 홀로 과거에 집착한 채 쓸쓸히 살아간다."
 
-    show 아델린 울다웃음 at Transform(xalign=0.5, yalign=0.2)
+#     "-END-"
 
-    g "맞아... 그들은 언제나... 나를 걱정했줬줬지..."
-
-    g "......"
-
-    g "지하에서 가져온 성수..."
-
-    g "가지고 있지? 그거면... 될 거야."
-
-    m "정말 괜찮겠어?"
-
-    show 아델린 마지막 at Transform(xalign=0.5, yalign=0.2)
-
-    g "응. 그저 나를 위해 기도해줘, 기사님... 부탁할게."
-
-    "아르망은 성수를 들어 조용히 뿌린 뒤, 부드럽고 단호한 눈빛으로 아델린을 바라본다."
-
-    m "편히 쉬어, 아델린. 나도 이제 앞으로 나아가야겠지."
-
-    "성수의 빛 속에서 아델린은 환하게 미소 지으며 서서히 사라졌다."
-    hide 아델린 마지막 with dissolve
-
-    pause 3
-    
-    scene black with fade
-
-    ".........."
-
-    m "휴.. 다 됐군"
-    
-    scene true_ending with dissolve 
-
-    m "그럼 안녕, 아델린. 이제는 나도 진정으로 앞으로 나아갈 때가 왔어."
-
-    centered "{size=+40}{font=tway_sky.ttf}TRUE END \n{/font}{/size}"
-    extend "{size=+40}{font=tway_sky.ttf}안녕, 아델린 {/font}{/size}"
-    
-    scene black with fade
-    pause 5
-
-    return
-
-label happy_end:
-    
-    scene black with fade
-    
-    show 마주 at Transform(xalign=0.5, yalign=0.2) with dissolve
-
-    "아르망의 머릿속에 낡아빠진 갑옷처럼 무거웠던 기억들이 떠오른다."
-    
-    "그를 손가락질하던 사람들, 그를 조롱하며 등 돌렸던 동료들, 과거의 영광에 사로잡혀 홀로 고독했던 수많은 밤들."
-    
-    hide 마주 with dissolve
-    
-    play music "bgm_main.mp3"
-
-    scene bg dream with dissolve
-    
-    m "…여기라면…"
-    
-    m "이곳이라면 내가 억지로 기사가 될 필요도"
-    
-    m "세상에 내 가치를 증명하려 애쓰지 않아도 되겠지."
-
-    m "이제야 알겠군, 난 줄곧 과거의 망령을 쫓고 있었던 거야."
-
-    show adeline idle at Transform(xalign=0.5, yalign=0.2) with dissolve
-
-    m "하지만 너와 함께라면, 그 모든 망상에서 벗어나 진정한 나 자신으로 살아갈 수 있을 것 같아."
-
-    m "아델린, 이젠 네 곁에서 쉬고 싶어."
-
-    scene happy_end with dissolve
-
-    "아델린의 눈가에 조용히 눈물이 맺히며, 부드럽고 따스한 미소가 피어난다."
-
-    "아르망과 아델린은 서로의 손을 다정히 맞잡은 채, 천천히 어둠 속 저택으로 들어선다."
-
-    "뒤로 남겨진 바깥 세상은 조금씩 희미해지며, 두 사람은 어둠 속에서 처음으로 평화를 느낀다."
-    scene black with fade
-    centered "{size=+40}{font=tway_sky.ttf} HAPPY END \n {/font}{/size}"
-    extend "{size=+40}{font=tway_sky.ttf} 동화 속 이야기 {/font}{/size}"
-
-    scene black with fade
-    pause 5
-
-    return
-
-label bad_end:
-    
-    "아르망은 성수를 들며 냉정한 눈빛으로 아델린을 응시한다."
-
-    play music "bgm_매력적인 그녀.mp3"
-    
-    show adeline_음흉 at Transform(xalign=0.5, yalign=0.2)
-
-    g "그랬구나... 결국 너도..."
-
-    g "결국 날 버리는 거구나!"
-    
-    m "나는 벨포르 가의 아르망, 기사로서 마땅히 해야할 일을 할 뿐이다!"
-
-    m "이 성수로 너를 죽이고, 이 저택의 저주를 끝내겠다!"
-
-    hide adeline_음흉 
-
-    show adeline 광기 at Transform(xalign=0.5, yalign=0.2)
-
-    g "하하하하하"
-
-    g "정말 자기가 기사라고 생각하는거야?"
-
-    g "이 멍청한 녀석 같으니!!"
-
-    g "결국 너도 똑같아! 나랑!!"
-
-    "성수를 뿌리자 아델린은 광기 어린 웃음과 비명을 지르며 사라졌다."
-    
-    hide adeline 광기 with dissolve
-
-    "아르망은 차가운 눈빛으로 사라진 아델린의 자리를 바라보며 조용히 중얼거린다."
-
-    m "나는 명예로운 기사.. 나는 기사로서의 내 의무를 다한 것이다."
-
-    "칼을 허리에 다시 차고, 아르망은 무거운 발걸음으로 저택의 정문을 나선다."
-    
-    scene black with fade
-
-    ".........."
-
-    m "내 말을 들어보게! 내가 해냈다고!"
-
-    scene bad_ending with dissolve
-
-    m "그 저택을 지배하던 사악한 유령을 내 손으로 쓰러뜨렸다니까!"
-
-    m "벨포르 가문의 마지막 기사인 내가, 칼날에 깃든 정의로 어둠을 물리쳤다고!"
-
-    m "자네들 모두 이 사실을 기억해야 하네!"
-
-    "마을 사람들은 아르망의 허황된 외침을 듣고 고개를 돌리며 속삭인다."
-    
-    "그 누구도 아르망의 말을 믿지 않았고, 사람들은 그를 불쌍하다는 듯 차갑게 외면할 뿐이었다."
-
-    "아르망은 홀로 웃으며 계속해서 허공에 대고 외친다."
-
-    centered "{size=+40}{font=tway_sky.ttf} BAD END \n {/font}{/size}"
-    extend "{size=+40}{font=tway_sky.ttf} 돈키호테 {/font}{/size}"
-    
-    scene black with fade
-    pause 5
-
-    return
-
-label dead_end:
-
-    m "…안 돼. 난 이곳에 갇힐 순 없어. 나는 밖으로 나가야 해."
-    
-    play music "bgm_매력적인 그녀.mp3"
-
-    show adeline 정색 at Transform(xalign=0.5, yalign=0.2)
-
-    g "어째서…?"
-
-    g "너마저 날 버리는 거야…? "
-    extend "아빠와 엄마처럼?"
-
-    hide adeline 정색 
-
-    show adeline_음흉 at Transform(xalign=0.5, yalign=0.2)
-
-    g "아니야… 그럴 순 없어. "
-    g "너만큼은 나와 영원히 함께 해야 해."
-
-    "공포에 질려 도망치는 아르망. 그의 뒤로 그림자처럼 아델린이 따라온다."
-
-    "도망치다 넘어진 아르망의 발목을 아델린이 붙잡는다."
-    
-    g "이제 도망칠 수 없어."
-
-    g "넌, 나와 영원히 함께하는 거야."
-    
-    hide adeline_음흉
-
-    show adeline 광기 at Transform(xalign=0.5, yalign=0.2)
-
-    g "후후후……흐흐하하하하하하…!"
-    
-    hide adeline 광기 with dissolve
-    
-    scene black with fade
-
-    "아델린의 손에 이끌려, 아르망은 절망적인 표정으로 어둠에 휩싸인 저택 안으로 끌려 들어간다."
-
-    "저택의 문이 천천히 닫히며, 두 사람의 모습은 완전히 어둠 속으로 사라진다."
-
-    "아르망은 저택 안에 영원히 갇혀, 결코 밖으로 나오지 못한다."
-    
-    centered "{size=+40}{font=tway_sky.ttf} DEAD END \n{/font}{/size}"
-    extend "{size=+40}{font=tway_sky.ttf} 광대 {/font}{/size}"
+# label bad_ending:

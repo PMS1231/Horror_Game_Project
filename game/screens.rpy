@@ -3,7 +3,11 @@
 ################################################################################
 
 init offset = -1
+init:
+    transform small_icon:
+        zoom 0.2
 
+default icon_menu_open = False
 
 ################################################################################
 ## 스타일
@@ -233,27 +237,60 @@ style choice_button_text is default:
 ## 퀵메뉴는 게임 외 메뉴 접근성을 높여주기 위해 게임 내에 표시됩니다.
 
 screen quick_menu():
-
-    ## 다른 화면 위에 표시되는지 확인합니다.
     zorder 100
 
     if quick_menu:
+        fixed:
+            xpos 20
+            ypos 20
 
-        hbox:
-            style_prefix "quick"
+            hbox:
+                spacing 10  
+                imagebutton:
+                    idle  "images/ui/menu_idle.png"
+                    hover "images/ui/menu_hover.png"
+                    action ToggleVariable("icon_menu_open", True, False)
+                    at small_icon
 
-            xalign 0.5
-            yalign 1.0
+                if icon_menu_open:
+                    hbox:
+                        spacing 10
 
-            textbutton _("되감기") action Rollback()
-            textbutton _("대사록") action ShowMenu('history')
-            textbutton _("넘기기") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("자동진행") action Preference("auto-forward", "toggle")
-            textbutton _("저장하기") action ShowMenu('save')
-            textbutton _("Q.저장하기") action QuickSave()
-            textbutton _("Q.불러오기") action QuickLoad()
-            textbutton _("설정") action ShowMenu('preferences')
+                        imagebutton:
+                            idle  "images/ui/skip_idle.png"
+                            hover "images/ui/skip_hover.png"
+                            action Skip() alternate Skip(fast=True, confirm=True)
+                            at small_icon
 
+                        imagebutton:
+                            idle  "images/ui/q_save_idle.png"
+                            hover "images/ui/q_save_hover.png"
+                            action QuickSave()
+                            at small_icon
+
+                        imagebutton:
+                            idle  "images/ui/q_load_idle.png"
+                            hover "images/ui/q_load_hover.png"
+                            action QuickLoad()
+                            at small_icon
+
+                        imagebutton:
+                            idle  "images/ui/save_idle.png"
+                            hover "images/ui/save_hover.png"
+                            action ShowMenu('save')
+                            at small_icon
+
+                        imagebutton:
+                            idle  "images/ui/load_idle.png"
+                            hover "images/ui/load_hover.png"
+                            action ShowMenu('load')
+                            at small_icon
+
+                        imagebutton:
+                            idle  "images/ui/setting_idle.png"
+                            hover "images/ui/setting_hover.png"
+                            action ShowMenu("preferences")
+                            at small_icon
 
 ## 플레이어가 UI(스크린)을 일부러 숨기지 않는 한 퀵메뉴가 게임 내에 오버레이로
 ## 출력되게 합니다.
@@ -1294,6 +1331,7 @@ screen nvl(dialogue, items=None):
 
         has vbox:
             spacing gui.nvl_spacing
+            yalign 0.2
 
         ## vpgrid나 vbox 내에 대사를 출력합니다.
         if gui.nvl_height:
