@@ -276,11 +276,12 @@ label start:
     m "{alpha=*0.5}두려움으로부터 진실을 외면하는 것은, 기사로서 가장 비겁한 일{/alpha}"
     m "벨포르 가의 이름으로 맹세하노니"
     scene 저택 with vpunch
-
+    play audio "쿵.mp3"
     m "{size=+10}내가 이 저택에 깃든 모든 어둠을 밝혀내리라!{/size}"
     
     show 마주생각 at Transform(xalign=0.5, yalign=0.2) 
     h "음...?"
+    play audio "궁금.mp3"
     h "벨포르 가문이라고 했소?"
     h "벨포르라… 오랜만에 듣는 이름이로군"
     h "허허, 그 가문도 한때는 꽤 이름을 날렸지"
