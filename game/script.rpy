@@ -162,7 +162,7 @@ init:
 # 게임에서 사용할 캐릭터를 정의합니다.
 define h = Character("마부", callback=type_sound2, font="tway_sky.ttf", what_font="tway_fly.ttf")
 define m = Character('아르망', color="#044604", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
-define g = Character("아델린", callback=type_sound2, font="tway_sky.ttf", what_font="tway_air.ttf")
+define g = Character("아델린", color="#d4c10e",callback=type_sound2, font="tway_sky.ttf", what_font="tway_air.ttf")
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")
@@ -349,7 +349,7 @@ label first_event:
 
     "처절하고 놀란, 분명 여자아이의 비명소리가 터져나온다."
 
-    "아르망의 검이 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
+    "아르망의 검은 허공을 베었고, 그도 순간 움찔하며 눈을 뜬다."
     scene mainhall
     show adeline surprise at Transform(xalign=0.5, yalign=0.2) with dissolve
 
@@ -357,7 +357,7 @@ label first_event:
     "그리고… 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
 
     m "…소녀…?"
-
+    
     "깜짝 놀란 눈으로 그를 바라보다가, 잠시 정적이 흐른 뒤, 마치 스스로도 민망한 듯 눈을 깜빡인다."
     show adeline embrassed at Transform(xalign=0.5, yalign=0.2) 
     g "…아, 맞다. 나… 이미 죽었지…"
@@ -382,6 +382,7 @@ label first_event:
     
     g "너가 그 악령을 처리해준다면..." 
     g "나에게도 좋은 일이니까..."
+
     g "그 악령은... 나를 괴롭히거든..."
 
     m "그런가..." 
@@ -868,7 +869,8 @@ label dining_room:
 
         "어둡고 넓은 식당 내부, 오래된 식탁과 의자들이 줄지어 놓여있다."
 
-        m "(테이블을 바라보며) 기묘하군... 의자가 모두 붙어 있는데, 저 하나만 왜 저렇게 떨어져 있지?"
+        m "(테이블을 바라본다)"
+        m "기묘하군... 의자가 모두 붙어 있는데, 저 의자 하나만 왜 저렇게 떨어져 있지?"
     
     scene 식당
 
