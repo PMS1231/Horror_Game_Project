@@ -164,9 +164,6 @@ define g = Character("아델린", color="#bdaa00", callback=type_sound2, font="t
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")
-define s = Character("오르골 유령",)
-define M = Character("괴물")
-
 define G = Character('???', font="tway_sky.ttf", what_font="tway_fly.ttf")
 define s = Character("오르골 유령", color="#58328d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define M = Character("괴물", color="#040404", font="tway_sky.ttf", what_font="tway_fly.ttf")
@@ -201,6 +198,7 @@ default room_event = False
 default orgel_adeline = True
 default underground_event = True
 default inner_room_event = True
+default last_room_count = True
 # $ p_bar[0] += 10 기사도 증가
 # $ p_bar[1] += 10 호감도 증가
 
@@ -230,7 +228,7 @@ label start:
     m "벨포르 가의 이름으로 맹세하노니"
     scene 저택 with vpunch
     play audio "쿵.mp3"
-    m "{size=+10}내가 이 저택에 깃든 모든 어둠을 밝혀내리라!{/size}"
+    m "{size=+10}내가 이 저택에 깃든 모든 어둠을 밝혀 내리라!{/size}"
     
     show 마주생각 at Transform(xalign=0.5, yalign=0.2) 
     play audio "궁금.mp3"
@@ -241,16 +239,16 @@ label start:
     h "하지만 요즘은 그 이름을 아는 이조차 많지 않겠소만"
     
     m "저택 근처에서는 유령이 나타나서 사람을 잡아간다고 들었소"
-    m "그대는 혹시 이 이야기에 대해 알고있는가?"
+    m "그대는 혹시 이 이야기에 대해 알고 있는가?"
     hide 마주생각
     show 마주 at Transform(xalign=0.5, yalign=0.2) 
     h "하하 그게 언제적 얘기요?"
     h "유령이니 실종이니, 다 뻔한 헛소문 아니오"
-    h "물론 이 근방에 사는 사람들이라면 모두 알고있는 내용이네만"
+    h "물론 이 근방에 사는 사람들이라면 모두 알고 있는 내용이네만"
     h "이제는 다들 웃어넘기는 옛 소문일뿐이오"
     h "유령보다는 세금이 더 무섭지"    
 
-    h "요즘 세상에 기사도니 명예니 따지는 양반은 아마 선생밖에 없을거요."
+    h "요즘 세상에 기사도니 명예니 따지는 양반은 아마 선생밖에 없을 거요."
     h "하하하"
     
     hide 마주 with dissolve
@@ -429,6 +427,9 @@ label mainhall:
     # 엔딩 조건 
     if diary_0 and diary_1 and diary_2 and diary_3:
         jump hallway
+
+    if diary_1 and diary_2 and diary_3:
+        $ last_room_count = False
 
     # 샹들리에 이벤트
     if chandelier_count == 5:
@@ -725,7 +726,7 @@ label room:
             play audio "책넘김.mp3"
             n "유모의 일기장"
             n "오늘은 도련님이 태어나셨다."
-            n "백작님과 부인께선 갈수록 도련님에게만 신경을 쏟는다."
+            n "백작님과 부인께선 갈수록 도련님에게만 신경을 쓰신다."
             n "아가씨는 자꾸 혼잣말을 하거나, 거울을 오래 바라보신다."
             n "아가씨가 걱정된다..."
             nvl clear
@@ -777,7 +778,7 @@ label ghost_chase_loop:
         $ ghost_lines = [
             "여기야~ 여기~!",
             "아슬아슬했는걸~?",
-            "으하하! 잡아봐라~!"
+            "으히히! 잡아봐라~!"
             ]
         $ player_lines = [
             "헉... 헉... 거기냐?!",
@@ -949,6 +950,8 @@ label dining_room:
                 "당신은 주방장의 일기를 획득 했다."
                 m "일기라..."
                 m "아까 전 방도 확인해 볼 필요가 있겠군"
+                play audio "item1.ogg"
+                "일기에 관한 정보를 획득 했다."
                 jump dining_room
 
         "나간다":
@@ -1299,8 +1302,9 @@ label inner_room:
                     m "아까 얻은 종이에 뭔가 단서가 있을 것 같아..."
                     hide 금고
                     show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) with dissolve
-                    m "단어를 찾아 입력해보자."
-                    $ correct_answer = "아델린"       
+                    m "뒷면에 무언가 적혀있다."
+                    "나의 가장 사랑하는 딸."
+                    $ correct_answer = "아델린"
                     jump input_loop
                 else:
                     "안쪽 구석에 무언가가 있군"
@@ -1596,7 +1600,11 @@ label hallway:
     scene black with dissolve
     pause 2
     scene hallway1_base with dissolve
-    m "뭐지... 분명 난 2층에서 내려왔을텐데"
+
+    if last_room_count:
+        m "뭐지... 분명 난 2층에서 내려왔을텐데"
+    else:
+        m "뭐지.. 문을 열고 나오니 왜 2층이...."
 
     menu:
         "내려간다":
