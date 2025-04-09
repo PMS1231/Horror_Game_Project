@@ -164,9 +164,13 @@ define g = Character("아델린", color="#bdaa00", callback=type_sound2, font="t
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")
-define G = Character('???')
 define s = Character("오르골 유령",)
 define M = Character("괴물")
+
+define G = Character('???', font="tway_sky.ttf", what_font="tway_fly.ttf")
+define s = Character("오르골 유령", color="#58328d", font="tway_sky.ttf", what_font="tway_fly.ttf")
+define M = Character("괴물", color="#040404", font="tway_sky.ttf", what_font="tway_fly.ttf")
+
 
 default p_bar = [50, 0]
 default diary_0 = False
@@ -233,7 +237,7 @@ label start:
     play audio "궁금.mp3"
     h "음...?"
     h "벨포르 가문이라고 했소?"
-    h "벨포르라… 오랜만에 듣는 이름이로군"
+    h "벨포르라.. 오랜만에 듣는 이름이로군"
     h "허허, 그 가문도 한때는 명망이 높았지"
     h "하지만 요즘은 그 이름을 아는 이조차 많지 않겠소만"
     
@@ -273,7 +277,7 @@ label prologue:
                 
                 $ door = False
                 
-                m "하등한 자는 담장을 넘고, 도둑은 어둠을 틈타지만… 그러나 나는 기사."
+                m "하등한 자는 담장을 넘고, 도둑은 어둠을 틈타지만.. 그러나 나는 기사."
                 m "벨포르 가문의 아르망! 명예로운 자는 언제나 정문으로 들어가는 법"
                 play audio "검으로 벽을 두드리는 소리.mp3"
                 "검을 들어 자물쇠를 단숨에 내리친다."
@@ -299,9 +303,9 @@ label prologue:
             "아르망은 조심스레 개구멍 앞에 쪼그려 앉는다."
             scene black
             play audio "기어가다.mp3"
-            m "명예란 때로…"
-            extend "상황에 따라 형태를 바꾸는 법이지… "
-            extend "하아…"
+            m "명예란 때로.."
+            extend "상황에 따라 형태를 바꾸는 법이지.. "
+            extend "하아.."
             jump first_event
 
 label first_event:
@@ -309,7 +313,7 @@ label first_event:
     stop audio
 
     scene black
-    m "오래된 저택이여, 나는 벨포르 가문의 이름으로…"
+    m "오래된 저택이여, 나는 벨포르 가문의 이름으로.."
     m "{size=+10}너의 침묵 속에 감춰진 진실을 밝히러 왔노라!{/size}"
 
     "그 순간, "
@@ -318,7 +322,7 @@ label first_event:
     "갑자기 저 멀리 2층 복도 끝에서 끼익 하고 문이 열리는 소리가 들렸다."
 
     play audio "걷는소리 구두.mp3"
-    "또각… 또각… 구두굽 소리가 허공에 메아리친다."
+    "또각.. 또각.. 구두굽 소리가 허공에 메아리친다."
 
     play music "여자 콧노래.mp3"
     
@@ -335,7 +339,7 @@ label first_event:
 
     scene surprise_attack
 
-    "……!!"
+    "....!!"
     play audio "칼소리.mp3"
     "순간, 아르망은 비명을 지르며 칼을 휘두른다."
 
@@ -346,7 +350,7 @@ label first_event:
     "그 순간—"
     
     play audio "여자비명.mp3"
-    g "꺄아아아악!!!!!"
+    "꺄아아아악!!!!!"
 
     "처절하고 놀란, 분명 여자아이의 비명소리가 터져나온다."
 
@@ -356,15 +360,15 @@ label first_event:
     show adeline surprise at Transform(xalign=0.5, yalign=0.2) with dissolve
 
     play music "bgm_main.mp3"
-    "그리고… 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
+    "그리고.. 거기. 눈앞에 선 채 놀란 얼굴로 그를 쳐다보는 소녀가 서 있다."
 
-    m "…소녀…?"
+    m "..소녀..?"
     
     "깜짝 놀란 눈으로 그를 바라보다가, 잠시 정적이 흐른 뒤, 마치 스스로도 민망한 듯 눈을 깜빡인다."
     show adeline embrassed at Transform(xalign=0.5, yalign=0.2) 
-    g "…아, 맞다. 나… 이미 죽었지…"
+    g "..아, 맞다. 나.. 이미 죽었지.."
     
-    g "후훗… 미안, 네가 그렇게까지 반응할 줄은 몰랐어. 오랜만에 만난 사람이라."
+    g "후훗.. 미안, 네가 그렇게까지 반응할 줄은 몰랐어. 오랜만에 만난 사람이라."
     
     play audio"아델린 웃음소리.mp3"
 
@@ -404,7 +408,7 @@ label first_event:
 
     m "그런가..." 
 
-    m "그렇다면 나는 악령을 처리하러 가겠다."
+    m "그렇다면 내가 그 악령을 처리해주마."
     
     show adeline idle at Transform(xalign=0.5, yalign=0.2) 
 
@@ -537,7 +541,7 @@ label mainhall:
                         "어둠 속으로 들어가려한 그 순간," 
                         play audio "Monster5.ogg"
                         scene 지하실괴물
-                        "괴물의 울음소리가 들리며 무언가가 아르망을 덮쳤다"
+                        "기괴한 울음소리가 들리며 무언가가 아르망을 덮쳤다"
                         scene black
                         "아르망은 어떠한 힘에 의해 뒤로 밀려 넘어져 들어가지 못하였다."
                         m "크윽... 내가 이런 굴욕을 받다니..."
@@ -585,7 +589,7 @@ label mainhall:
                         jump mainhall
                     else:
                         play audio "Monster5.ogg"
-                        m "흠 다른 방법을 찾아봐야겠군."
+                        m "흠 저 괴물을 처리할 다른 방법을 찾아봐야겠군."
                         jump mainhall
 
         "방":
@@ -721,7 +725,7 @@ label room:
             m "다시 이 방에 돌아왔다..."
             show 일기 at Transform(xalign=0.5, yalign=0.2)
             "구석에서 아까는 보지 못했던 일기장을 발견했다."
-            m "…이건 뭐지? 일기장인가? 누구의 일기지…?"
+            m "..이건 뭐지? 일기장인가? 누구의 일기지..?"
             play audio "책넘김.mp3"
             n "유모의 일기장"
             n "오늘은 도련님이 태어나셨다."
@@ -932,7 +936,6 @@ label dining_room:
                 "식기서랍 안에 무언가 있다."
                 show 일기 at Transform(xalign=0.5, yalign=0.2) 
                 "이건 일기인가?"
-
                 n "주방장의 일기장"
                 play audio "책넘김.mp3"
                 n "오늘도 아가씨는 혼자서 밥을 드신다."
@@ -981,7 +984,7 @@ label underground:
 
         "차디찬 기운이 바닥 너머에서부터 스며올라와, 갑옷 너머로 그의 몸을 조용히 휘감는다."
 
-        m "내 발걸음조차...이곳의 침묵에 흠집을 내는구나..."
+        m "내 발걸음이...이곳의 침묵에 흠집을 내는구나..."
 
         "그때, 무언가 발끝에 걸린다."
 
@@ -1017,8 +1020,9 @@ label underground:
         play audio "책넘김.mp3"
         n "18xx년 4월 10일"
         n "성수를 사용해봤지만 상처가 아물지 않는다."
-        n "아마 유령의 저주때문 일것이다."
-        n "지하실에는 누군가가 생활한 흔적이 있다…"
+        n "유령의 저주가 상처에 깊이 스며든거 같다"
+        n "앞으로 얼마나 더 버틸지...."
+        n "안쪽에는 누군가가 생활한 흔적이 있다.."
         n "혹시 그녀의 공간이었던 걸까."
         nvl clear
 
@@ -1026,7 +1030,7 @@ label underground:
         n "18xx년 4월 11일"
         n "\"그녀는 단순한 유령이 아니다.\""
         n "\"‘감정’이, ‘고독’이 실체가 되어 움직이고 있다.\""
-        n "\"누구든… 이 일기를 본다면… 제발… 청록 머리의 그녀를…"
+        n "\"누구든.. 이 일기를 본다면.. 제발.. 청록 머리의 그녀를.."
         nvl clear
         window hide
         pause(1.5)
@@ -1034,7 +1038,7 @@ label underground:
         m "그리고 청록 머리라면..."
         scene black with fade
         show adeline idle at Transform(xalign=0.5, yalign=0.2) with dissolve 
-        "아델린을 말하는 건가…?"
+        "아델린을 말하는 건가..?"
         hide adeline idle with dissolve
 
         "그 순간, 지하의 어둠 속에서 희미한 숨소리가 들려온다."
@@ -1042,7 +1046,7 @@ label underground:
         play audio "monster5.ogg"
         "조심스레 안으로 들어서자, 고요한 어둠 속에서 짐승의 울음소리가 울려퍼진다."
         
-        M "……크르르르릉……"
+        M "....크르르르릉...."
 
         "거대한 그림자. 사람보다 크고, 형체가 일그러진 괴물이 서서히 모습을 드러낸다."
         "괴물이 포효하며 전속력으로 달려든다."
@@ -1054,7 +1058,7 @@ label underground:
         play audio "Monster 2.mp3"
         M "키에에에에엑!"
 
-        m "악령이든 짐승이든…"
+        m "악령이든 짐승이든.."
         m "너 따위에게 무너질 내가 아니야!!"
         play audio "칼 휘두름.mp3"
         play aduio "검으로 벽을 두드리는 소리.mp3"
@@ -1086,7 +1090,8 @@ label underground:
             if underground_first:
                 $ underground_first = False
                 scene 지하실깊 with dissolve
-                "지하실 안쪽 끝, 낡은 옷장과 책상, 침대가 놓여있다. 누군가가 생활했던 흔적이 있다."
+                "지하실 안쪽 끝, 낡은 옷장과 책상, 침대가 놓여있다." 
+                "확실히, 누군가가 생활했던 흔적으로 보인다."
                 m "일기의 내용대로 누군가 살았던 흔적이 있군."
                 "희미한 빛이 벽장 너머에서 반사되어 새어나온다."  
                 show 성수 at Transform(xalign=0.5, yalign=0.2) 
@@ -1353,15 +1358,15 @@ label diary4:
 
     n "처음엔, 그가 나를 구하러 온 줄 알았어."
 
-    n "그는 어쩌면… 내 외로움을 이해해줄지도 모른다고 생각했지."
+    n "그는 어쩌면.. 내 외로움을 이해해줄지도 모른다고 생각했지."
 
     n "하지만 그는 나를 구원하러 온 게 아니었어."
 
     n "그의 입은 ‘악령 퇴치’만을 말했고,"
 
-    n "그의 눈엔… 내가 사람이 아니었던거야."
+    n "그의 눈엔.. 내가 사람이 아니었던거야."
 
-    n "그래서… 나는 결심했어."
+    n "그래서.. 나는 결심했어."
 
     n "그를 멈추기로"
 
@@ -1388,7 +1393,7 @@ label diary4:
 
     n "가끔은 그 신부의 얼굴이 떠오른다."
 
-    n "그때 그냥… 잠시만 참았더라면…"
+    n "그때 그냥.. 잠시만 참았더라면.."
 
     n ""
     nvl clear
@@ -1399,7 +1404,7 @@ label diary4:
 
     n "말하는 연습도 했다."
 
-    n "혹시라도 누군가 오면… 반갑게 맞이하고 싶었으니까."
+    n "혹시라도 누군가 오면.. 반갑게 맞이하고 싶었으니까."
 
     n "하지만 오지 않았다."
 
@@ -1413,9 +1418,9 @@ label diary4:
     
     n "애초에 이미 죽었지만."
 
-    n "지하에 있는 성수라면 나의 고독을 끝낼 수 있겠지만"
+    n "그때 그 신부가 가지고 있던 성수라면...."
 
-    n "나는 그 성수에 닿을 수 없다."
+    n "하지만 그 신부는 사라졌어..."
 
     n ""
     nvl clear
@@ -1434,7 +1439,7 @@ label diary4:
 
     n "정말 이상한 사람이다."
 
-    n "시끄럽고 허세도 많고… 좀 무례하고…"
+    n "시끄럽고 허세도 많고.. 좀 무례하고.."
 
     n "그런데 묘하게, 따뜻했다."
     
@@ -1451,7 +1456,7 @@ label diary4:
 
     n "생각해봤다."
 
-    n "이번엔… 놓치지 않을 거야."
+    n "이번엔.. 놓치지 않을 거야."
 
     n "어차피 이 집은 나 혼자 쓰기엔 너무 넓고, 너무 외로우니까."
 
@@ -1739,10 +1744,13 @@ label hallway_loop:
 
 label next_room:
     stop music
-    "기나긴 계단을 내려오니 문이 하나 보였다."
+    scene black
+    #문 일러필요
+    "기나긴 복도를 지나서, 도착한 곳에는 특이한 문이 하나 보인다."
+    "그리고, 그 밑에..."
     m "음? 이 낙서는..."
-    n "이야기의 종지부를 찍을 때가 왔다."
-    m "......"
+    n "{alpha=*0.3}{size=+15}이야기의 종지부를 찍을 때가 왔다.{/size}{/alpha}"
+    m "......" #낙서 일러스트 필요
     
     nvl clear
 
@@ -1751,25 +1759,38 @@ label next_room:
     scene bg dream with dissolve
        
     m "여긴... 대체...?"
-    g "어때, 이 꽃? 정말 예쁘지 않아?"
-    g "어렸을 땐 부모님이 날 이 꽃밭에 데려다 주셨어. "
-    extend "햇살 가득한 날, 엄마가 내 머리에 꽃을 꽂아주며 웃으셨지."
+    G "어때, 이 꽃? 정말 예쁘지 않아?"
+    G "어렸을 땐 부모님이 날 이 꽃밭에 데려다 주셨어. "
+    show adeline 무표정 at Transform(xalign=0.5, yalign=0.2) with dissolve
+    g "햇살이 가득한 날, 엄마가 내 머리에 꽃을 꽂아주며 웃으셨지."
     g "그때는 세상이 다 따뜻하고, "
     extend"모든 게 가능할 것 같았어."
     g "하지만 남동생이 태어난 이후로, "
+
     g "{size=+10}모든 것이 끝나버렸어.{/size}"
     g "부모님의 관심은 전부 남동생에게로 가버렸고"
     g "그 후로 난..." 
-    g "점점 잊혀져만 갔어..."
-    g "늘 외롭고, 차가운 현실 속에 홀로 남겨졌어."
+    hide show adeline 무표정
+    show adeline 비웃음 at Transform(xalign=0.5, yalign=0.2) with dissolve
+    g "{alpha=*0.5}점점 잊혀져만 갔어...{/alpha}"
+    g "늘 외롭고, 차가운 현실 속에 홀로 남겨졌지."
 
     m "아델린..."
 
-    g "이 어둠 속, 이 쓸쓸한 곳에 너가 와준 건 마치 한 줄기 빛 같았어."
-    g "처음엔 네 시끄럽고 거칠게 들리는 말투, 허세 섞인 태도에 나도 모르게 마음을 닫으려 했어."
-    g "그런데, 네가 점차 보여준 항상 당당한 모습, 그리고 눈빛 속에 숨겨진 고독을 알게 된 후, "
-    extend "내 심장은 미친 듯이 뛰기 시작했어."
-    g "나와 함께 하자. 영원히.....!"
+    g "끝없는 어둠 속, 차갑고 쓸쓸한 이곳에"
+    g "네가 와준건 마치 한 줄기 빛 같았어."
+    g "처음엔 네 시끄럽고 거친 말투, 허세 섞인 태도가 마음에 들진 않았어."
+    g "하지만, 너의 그 당당한 모습 속에,"
+    extend " 숨겨져 있는 고독한 눈빛을 알아채고 나서는" 
+    g "깨달았어."
+    hide adeline 비웃음
+    show adeline 광기 at Transform(xalign=0.5, yalign=0.2) with hpunch
+    play audio "쿵.mp3"
+    "{size=+10}너도 나와 같구나...!{/size}"
+    g "그때부터 내 심장은 미친 듯이 뛰기 시작했어."
+    g "나와 함께 하자." 
+    play audio "광기어린 웃음.mp3"
+    extend" 영원히.....!"
 
     if holy_water:
         if p_bar[0] > 50:
@@ -1888,7 +1909,7 @@ label happy_end:
 
     scene bg dream with dissolve
     
-    m "…여기라면…"
+    m "..여기라면.."
     
     m "이곳이라면 내가 억지로 기사가 될 필요도"
     
@@ -1921,18 +1942,21 @@ label happy_end:
 label bad_end:
     
     "아르망은 성수를 들며 냉정한 눈빛으로 아델린을 응시한다."
+    hide adeline 광기
 
     play music "bgm_매력적인 그녀.mp3"
     
-    show adeline_음흉 at Transform(xalign=0.5, yalign=0.2)
+    show adeline 정색 at Transform(xalign=0.5, yalign=0.2)
 
     g "그랬구나... 결국 너도..."
-
-    g "결국 날 버리는 거구나!"
+    play audio "쿵.mp3"
+    #분노한 묘사
+    g "결국 날 버리는 거구나!!!"
     
-    m "나는 벨포르 가의 아르망, 기사로서 마땅히 해야할 일을 할 뿐이다!"
-
-    m "이 성수로 너를 죽이고, 이 저택의 저주를 끝내겠다!"
+    m "나는 벨포르 가의 아르망,"
+    m "기사로서 마땅히 해야할 일을 할 뿐이다!"
+    m "이 성수로 너를 죽이고" 
+    m "이 저택의 저주를 끝내겠다!"
 
     hide adeline_음흉 
 
@@ -1944,34 +1968,34 @@ label bad_end:
 
     g "이 멍청한 녀석 같으니!!"
 
-    g "결국 너도 똑같아! 나랑!!"
-
-    "성수를 뿌리자 아델린은 광기 어린 웃음과 비명을 지르며 사라졌다."
-    
+    g "너도 나와 같다고 느꼈는데..!! 그렇다고 생각했는데!!!!!"
     hide adeline 광기 with dissolve
+    play audio "여자비명2.mp3"
+    "성수를 뿌리자 아델린은 광기 어린 웃음과 비명을 지르며 사라졌다."  
 
     "아르망은 차가운 눈빛으로 사라진 아델린의 자리를 바라보며 조용히 중얼거린다."
 
-    m "나는 명예로운 기사.. 나는 기사로서의 내 의무를 다한 것이다."
+    m "나는 명예로운 기사... 나는 기사로서 내 의무를 다한 것 뿐이다."
 
-    "칼을 허리에 다시 차고, 아르망은 무거운 발걸음으로 저택의 정문을 나선다."
-    
+    "칼을 다시 허리에 채운 뒤, 아르망은 무거운 발걸음으로 저택의 정문을 나선다."
+    play audio "뛰는소리 숏.mp3"
     scene black with fade
 
-    ".........."
+    centered "{size=+40}{font=tway_sky.ttf}수 개월 후{/font}{/size}"
+    play audio "남자 웃음소리.mp3"
+    m "아하하하하!!"
+    m "내 말을 들어보게!!  내가 해냈다고!!"
+    
+    scene bad_end with dissolve
 
-    m "내 말을 들어보게! 내가 해냈다고!"
-
-    scene bad_ending with dissolve
-
-    m "그 저택을 지배하던 사악한 유령을 내 손으로 쓰러뜨렸다니까!"
+    m "그 저택을 지배하던 사악한 유령을 내 손으로 쓰러뜨렸다니까!!"
 
     m "벨포르 가문의 마지막 기사인 내가, 칼날에 깃든 정의로 어둠을 물리쳤다고!"
 
     m "자네들 모두 이 사실을 기억해야 하네!"
 
-    "마을 사람들은 아르망의 허황된 외침을 듣고 고개를 돌리며 속삭인다."
-    
+    "마을 사람들은 아르망의 허황된 외침을 듣고, 고개를 돌리며 속삭인다."
+        
     "그 누구도 아르망의 말을 믿지 않았고, 사람들은 그를 불쌍하다는 듯 차갑게 외면할 뿐이었다."
 
     "아르망은 홀로 웃으며 계속해서 허공에 대고 외친다."
@@ -1986,22 +2010,22 @@ label bad_end:
 
 label dead_end:
 
-    m "…안 돼. 난 이곳에 갇힐 순 없어. 나는 밖으로 나가야 해."
+    m "..안 돼. 난 이곳에 갇힐 순 없어. 나는 밖으로 나가야 해."
     
     play music "bgm_매력적인 그녀.mp3"
 
     show adeline 정색 at Transform(xalign=0.5, yalign=0.2)
 
-    g "어째서…?"
+    g "어째서..?"
 
-    g "너마저 날 버리는 거야…? "
+    g "너마저 날 버리는 거야..? "
     extend "아빠와 엄마처럼?"
 
     hide adeline 정색 
 
     show adeline_음흉 at Transform(xalign=0.5, yalign=0.2)
 
-    g "아니야… 그럴 순 없어. "
+    g "아니야.. 그럴 순 없어. "
     g "너만큼은 나와 영원히 함께 해야 해."
 
     "공포에 질려 도망치는 아르망. 그의 뒤로 그림자처럼 아델린이 따라온다."
@@ -2016,7 +2040,7 @@ label dead_end:
 
     show adeline 광기 at Transform(xalign=0.5, yalign=0.2)
 
-    g "후후후……흐흐하하하하하하…!"
+    g "후후후....흐흐하하하하하하..!"
     
     hide adeline 광기 with dissolve
     
