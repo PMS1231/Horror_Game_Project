@@ -160,7 +160,7 @@ init:
 # 게임에서 사용할 캐릭터를 정의합니다.
 define h = Character("마부", callback=type_sound2, font="tway_sky.ttf", what_font="tway_fly.ttf")
 define m = Character('아르망', color="#044604", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
-define g = Character("아델린", color="#d4c10e", callback=type_sound2, font="tway_sky.ttf", what_font="tway_air.ttf")
+define g = Character("아델린", color="#bdaa00", callback=type_sound2, font="tway_sky.ttf", what_font="tway_air.ttf")
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")

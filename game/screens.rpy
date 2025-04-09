@@ -336,7 +336,7 @@ screen navigation():
 
             textbutton _("대사록") action ShowMenu("history")
 
-            textbutton _("저장하기") action ShowMenu("save")
+            textbutton _("{size=-2}저장하기{/size}") action ShowMenu("save")
 
         textbutton _("불러오기") action ShowMenu("load")
 
@@ -348,7 +348,7 @@ screen navigation():
 
         elif not main_menu:
 
-            textbutton _("메인 메뉴") action MainMenu()
+            textbutton _("{size=-2}메인 메뉴{/size}") action MainMenu()
 
         # textbutton _("버전정보") action ShowMenu("about")
 
@@ -505,7 +505,7 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
     use navigation
 
-    textbutton _("돌아가기"):
+    textbutton _("{size=-10}돌아가기{/size}"):
         style "return_button"
 
         action Return()
@@ -690,29 +690,30 @@ screen file_slots(title):
 
                     spacing gui.page_spacing
 
-                    textbutton _("<") action FilePagePrevious()
+                    textbutton _("{size=-10}<{/size}") action FilePagePrevious()
                     key "save_page_prev" action FilePagePrevious()
 
                     if config.has_autosave:
-                        textbutton _("{#auto_page}자동") action FilePage("auto")
+                        textbutton _("{#auto_page}{size=-10}자동{/size}") action FilePage("auto")
 
                     if config.has_quicksave:
-                        textbutton _("{#quick_page}퀵") action FilePage("quick")
+                        textbutton _("{#quick_page}{size=-10}퀵{/size}") action FilePage("quick")
 
                     ## 범위(1, 10)는 1부터 9까지 숫자를 제공합니다.
                     for page in range(1, 10):
-                        textbutton "[page]" action FilePage(page)
+                        textbutton "{size=-10}[page]{/size}" action FilePage(page)
+                        
 
-                    textbutton _(">") action FilePageNext()
+                    textbutton _("{size=-10}>{/size}") action FilePageNext()
                     key "save_page_next" action FilePageNext()
 
                 if config.has_sync:
                     if CurrentScreenName() == "save":
-                        textbutton _("동기화 업로드"):
+                        textbutton _("{size=-10}동기화 업로드{/size}"):
                             action UploadSync()
                             xalign 0.5
                     else:
-                        textbutton _("동기화 다운로드"):
+                        textbutton _("{size=-10}동기화 다운로드{/size}"):
                             action DownloadSync()
                             xalign 0.5
 
@@ -1034,51 +1035,51 @@ screen keyboard_help():
 
     hbox:
         label _("엔터(Enter)")
-        text _("대사 진행 및 UI (선택지 포함) 선택.")
+        text _("{size=-15}대사 진행 및 UI (선택지 포함) 선택.{/size}")
 
     hbox:
         label _("스페이스(Space)")
-        text _("대사를 진행하되 선택지는 선택하지 않음.")
+        text _("{size=-15}대사를 진행하되 선택지는 선택하지 않음.{/size}")
 
     hbox:
         label _("화살표 키")
-        text _("UI 이동.")
+        text _("{size=-15}UI 이동.{/size}")
 
     hbox:
         label _("이스케이프(Esc)")
-        text _("게임 메뉴 불러옴.")
+        text _("{size=-15}게임 메뉴 불러옴.{/size}")
 
     hbox:
         label _("컨트롤(Ctrl)")
-        text _("누르고 있는 동안 대사를 스킵.")
+        text _("{size=-15}누르고 있는 동안 대사를 스킵.{/size}")
 
     hbox:
         label _("탭(Tab)")
-        text _("대사 스킵 토글.")
+        text _("{size=-15}대사 스킵 토글.{/size}")
 
     hbox:
         label _("페이지 업(Page Up)")
-        text _("이전 대사로 롤백.")
+        text _("{size=-15}이전 대사로 롤백.{/size}")
 
     hbox:
         label _("페이지 다운(Page Down)")
-        text _("이후 대사로 롤포워드.")
+        text _("{size=-15}이후 대사로 롤포워드.{/size}")
 
     hbox:
         label "H"
-        text _("UI를 숨김.")
+        text _("{size=-15}UI를 숨김.{/size}")
 
     hbox:
         label "S"
-        text _("스크린샷 저장.")
+        text _("{size=-15}스크린샷 저장.{/size}")
 
     hbox:
         label "V"
-        text _("{a=https://www.renpy.org/l/voicing}대사 읽어주기 기능{/a} 토글.")
+        text _("{size=-15}{a=https://www.renpy.org/l/voicing}대사 읽어주기 기능{/a} 토글.{/size}")
 
     hbox:
         label "Shift+A"
-        text _("접근성 메뉴를 엽니다.")
+        text _("{size=-15}접근성 메뉴를 엽니다.{/size}")
 
 
 screen mouse_help():
