@@ -381,31 +381,36 @@ label first_event:
             m "네가 소문의 악령인가?"     
      
     play audio"아델린 웃음소리.mp3"
-    g "나의 이름은 아델린. 이 저택의 관리자야!."
+    g "나의 이름은 아델린. 이 저택의 하녀야!."
+
     m "너가 소문의 악령인가?"
 
     show adeline idle at Transform(xalign=0.5, yalign=0.2) 
-
-    g "아니. 로르망 백작가의 하녀지!."
     
-    g "너가 찾는 유령은 아마도 저택 깊은 곳에 있는 악령일꺼야."
+    g "아니. 너가 찾는 유령은 아마도 저택 깊은 곳에 있는 악령일꺼야."
 
     m "그런 정보를 왜 나에게 알려주지?"
 
     show adeline sad at Transform(xalign=0.5, yalign=0.2) 
     
     g "너가 그 악령을 처리해준다면..." 
+
     g "나에게도 좋은 일이니까..."
+
     play audio "우는소리 숏.mp3"
+
     g "그 악령은... 나를 괴롭히거든..."
 
     m "그런가..." 
+
     m "그렇다면 나는 악령을 처리하러 가겠다."
     
     show adeline idle at Transform(xalign=0.5, yalign=0.2) 
 
     g "후훗..." 
+
     g "이 집에는 많은 유령들이 있어." 
+
     g "그들은 너를 괴롭히고 해치려 할거야. 괜찮겠어?"
 
     m "헛된 걱정이다!"
@@ -990,7 +995,7 @@ label underground:
         play audio "책넘김.mp3"
         n "18xx년 4월 3일"
         n "나에게 임무가 내려왔다."
-        n "저택이 어떤 유령에의해 저주받았다는 이야기였다."
+        n "저택이 어떤 유령에 의해 저주받았다는 이야기였다."
         n "나는 퇴마를 위해 성수를 준비했다."
         nvl clear
 
@@ -1015,11 +1020,12 @@ label underground:
         n "18xx년 4월 11일"
         n "\"그녀는 단순한 유령이 아니다.\""
         n "\"‘감정’이, ‘고독’이 실체가 되어 움직이고 있다.\""
-        n "\"누구든… 이 일기를 본다면… 제발… 그녀를…"
+        n "\"누구든… 이 일기를 본다면… 제발… 청록 머리의 그녀를…"
         nvl clear
         window hide
         pause(1.5)
-        m "‘감정’이, ‘고독’이 실체가 되어 움직이고 있다...? 이건..."
+        m "‘감정’이, ‘고독’이 실체가 되어 움직이고 있다...?"
+        m "그리고 청록 머리라면..."
         scene black with fade
         show adeline idle at Transform(xalign=0.5, yalign=0.2) with dissolve 
         "아델린을 말하는 건가…?"
@@ -1066,17 +1072,6 @@ label underground:
         "검 끝에 묻은 피가 천천히 사라지고, 주위는 다시 고요해진다."
 
         scene 지하실  with dissolve
-        menu:
-            "더 깊은 곳으로 들어가볼까?":
-                if underground_first:
-                    $ underground_first = False
-                    "지하실의 안쪽 끝, 낡은 옷장과 책상, 침대가 놓여있다." 
-                    "분명.. 이곳은 누군가가 생활했던 공간으로 보인다."
-                    m "일기의 내용대로 누군가 살았던 흔적이 있군."
-                    "희미한 빛이 벽장 너머에서 반사되어 새어나온다.."  
-                    show 성수 at Transform(xalign=0.5, yalign=0.2) 
-                    m "이게 일기에 적혀있던 성수인가..."
-                    "성수가 있다."
     
     scene 지하실
 
@@ -1190,8 +1185,11 @@ label library:
                 show 메모 at Transform(xalign=0.5, yalign=0.2) 
                 "서랍 안에 메모가 있다."
                 n "주인님의 건망증이 점점 심해지고 있습니다."
+
                 n "안방의 금고 비밀번호를 계속 까먹으셔서 따로 메모 해두겠습니다."
+
                 m "안방에 금고가 있었군."
+
                 m "다시 한번 찾아봐야겠어."
                 nvl clear
 
@@ -1300,8 +1298,10 @@ label inner_room:
                     $ correct_answer = "아델린"       
                     jump input_loop
                 else:
+                    "안쪽 구석에 무언가가 있군"
                     show 금고 at Transform(xalign=0.5, yalign=0.2)
-                    "금고가 있지만 비밀번호를 모르겠다."
+                    "저게 메모에서 본 금고인가..."
+                    "{alpha=*0.5}금고가 있지만 비밀번호를 모르겠다.{/alpha}"
                     jump inner_room
             else:
                 "주변에 아무것도 안보인다."
@@ -1329,9 +1329,10 @@ label input_loop:
 
 label diary4:
 
+    m "이 일기장은.. 아델린?"
     play music "bgm_반전.mp3"
 
-    n "금고 -일기장"
+    n "금고 - 아델린의 일기장"
     play audio "책넘김.mp3"
     n "18xx년 4월 6일"
 
@@ -1401,6 +1402,14 @@ label diary4:
 
     n "아니면 울고 있는 걸까?"
 
+    n "죽고 싶어도 죽을 수 가 없다."
+    
+    n "애초에 이미 죽었지만."
+
+    n "지하에 있는 성수라면 나의 고독을 끝낼 수 있겠지만"
+
+    n "나는 그 성수에 닿을 수 없다."
+
     n ""
     nvl clear
     play audio "책넘김.mp3"
@@ -1421,10 +1430,17 @@ label diary4:
     n "시끄럽고 허세도 많고… 좀 무례하고…"
 
     n "그런데 묘하게, 따뜻했다."
+    
+    n "그 와의 놀이는 즐겁다."
 
+    n "그 많은 유령들이 전부 나라는 사실도 모르고 하하 "
+    
     n "정말 오랜만에, 무언가가 내 안에서 움직이는 느낌이 들었다."
 
-    n ""
+    nvl clear
+    play audio "책넘김.mp3"
+
+    n "......"
 
     n "생각해봤다."
 
