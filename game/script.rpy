@@ -2030,35 +2030,42 @@ label bad_end:
     return
 
 label dead_end:
-
-    m "..안 돼. 난 이곳에 갇힐 순 없어. 나는 밖으로 나가야 해."
-    
+    scene black 
+    play audio "심장박동.mp3"
+    m "......"
+    m "..안 돼... 난 이곳에 갇힐 순 없어... "
+    m "나는..."
+    extend" 나는 밖으로 나가야만 해!!"
+    scene dream
     play music "bgm_매력적인 그녀.mp3"
-
-    show adeline 정색 at Transform(xalign=0.5, yalign=0.2)
-
-    g "어째서..?"
-
+    show adeline 분노 at Transform(xalign=0.5, yalign=0.2) with dissolve
+    g "......"
+    show adeline 분노 at Transform(xalign=0.5, yalign=0.2) with vpunch
+    g "진심이야...?!"
+    play sound "와장창.mp3"
+    g "어째서...?!!"
     g "너마저 날 버리는 거야..? "
-    extend "아빠와 엄마처럼?"
+    hide adeline 정색
+    show adeline 분노 at Transform(xalign=0.5, yalign=0.2)
+    extend "날 버린 아빠와 엄마처럼?!!"
 
-    hide adeline 정색 
+    hide adeline 분노 
 
-    show adeline_음흉 at Transform(xalign=0.5, yalign=0.2)
+    show adeline 광기 at Transform(xalign=0.5, yalign=0.2) with dissolve
 
     g "아니야.. 그럴 순 없어. "
-    g "너만큼은 나와 영원히 함께 해야 해."
-
+    g "너는 나와 영원히 함께 해야 해."
+    play audio "광기어린 웃음.mp3"
+    play sound "심장박동 롱.mp3"
     "공포에 질려 도망치는 아르망. 그의 뒤로 그림자처럼 아델린이 따라온다."
-
+    
     "도망치다 넘어진 아르망의 발목을 아델린이 붙잡는다."
     
-    g "이제 도망칠 수 없어."
-
-    g "넌, 나와 영원히 함께하는 거야."
+    g "이젠 도망칠 수 없어."
     
-    hide adeline_음흉
+    g "넌, 나와 영원히 함께하는 거야."
 
+    play audio "광기어린 웃음.mp3"
     show adeline 광기 at Transform(xalign=0.5, yalign=0.2)
 
     g "후후후....흐흐하하하하하하..!"
@@ -2067,7 +2074,9 @@ label dead_end:
     
     scene black with fade
 
-    "아델린의 손에 이끌려, 아르망은 절망적인 표정으로 어둠에 휩싸인 저택 안으로 끌려 들어간다."
+    "아델린의 손에 이끌린 아르망은..." 
+    
+    "절망적인 표정으로 어둠에 휩싸인 저택 안으로 끌려 들어간다."
 
     "저택의 문이 천천히 닫히며, 두 사람의 모습은 완전히 어둠 속으로 사라진다."
 
