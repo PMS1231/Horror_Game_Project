@@ -165,8 +165,8 @@ define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define G = Character('???')
-define s = Character("오르골 유령",)
-define M = Character("괴물")
+define s = Character("오르골 유령", color="#58328d", font="tway_sky.ttf", what_font="tway_fly.ttf")
+define M = Character("괴물", color="#040404", font="tway_sky.ttf", what_font="tway_fly.ttf")
 
 default p_bar = [50, 0]
 default diary_0 = False
@@ -1405,9 +1405,9 @@ label diary4:
     
     n "애초에 이미 죽었지만."
 
-    n "지하에 있는 성수라면 나의 고독을 끝낼 수 있겠지만"
+    n "그때 그 신부가 가지고 있던 성수라면...."
 
-    n "나는 그 성수에 닿을 수 없다."
+    n "하지만 그 신부는 사라졌어..."
 
     n ""
     nvl clear
