@@ -229,8 +229,8 @@ label start:
     m "{size=+10}내가 이 저택에 깃든 모든 어둠을 밝혀내리라!{/size}"
     
     show 마주생각 at Transform(xalign=0.5, yalign=0.2) 
-    h "음...?"
     play audio "궁금.mp3"
+    h "음...?"
     h "벨포르 가문이라고 했소?"
     h "벨포르라… 오랜만에 듣는 이름이로군"
     h "허허, 그 가문도 한때는 명망이 높았지"
