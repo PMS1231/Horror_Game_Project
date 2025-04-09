@@ -1128,6 +1128,8 @@ label library:
                 "책장 위를 살펴보니 그곳엔 책이 1권 있었다."
                 show 일기 at Transform(xalign=0.5, yalign=0.2) 
                 m "이건 일기장인가?"
+                
+                play audio "책넘김.mp3"
 
                 n "집사의 일기장"
 
