@@ -939,6 +939,7 @@ label dining_room:
 
                 n "너무 안타깝다"
 
+                m "주방장이라..... 몰락해가는 우리 가문에 마지막까지 남아서 나에게 식사를 차려줬었지"
                 nvl clear
                     
                 play audio "item1.ogg"
@@ -1166,12 +1167,12 @@ label library:
                 n "아가씨를 마지막으로 본게 언제 였더라...."
                 
                 n "건강은 좀 나아지셨으려나..."
-                
+                m "우리 집사도 내 건강을 챙기고는 했지... "
                 nvl clear
-                
+                                
                 play audio "item1.ogg"
                 "당신은 집사의 일기를 획득 했다."
-
+                
                 jump library
             else:
                 "여기엔 더 이상 볼 것이 없다."
@@ -1266,7 +1267,7 @@ label inner_room:
                 "............."
                 scene mainhall
                 show adeline surprise at Transform(xalign=0.5, yalign=0.2) with dissolve
-                g "정신이 좀 들어? 너 갑자기 기절했더라고."  ## 대사 수정 필요?
+                g "정신이 좀 들어? 너 갑자기 기절했어."  ## 대사 수정 필요?
                 play audio "거친 숨소리.mp3"
                 m "헉..헉.. 방금 그건 뭐였지?"
                 g "뭘 봤길래 호들갑이야?"
@@ -1276,7 +1277,7 @@ label inner_room:
                 g "이 저택에 초상화 같은건 없는데?"
                 m "뭐..?"
                 show adeline idle at Transform(xalign=0.5, yalign=0.2)
-                g "잘못본거겠지.. 안좋은 꿈이라도 꾼거야?"
+                g "잘못본거겠지..아니면 꿈이라도 꾼거야?"
                 m "아니야 그럴리가 없어.."
                 scene black with dissolve
                 jump mainhall
@@ -1297,8 +1298,10 @@ label inner_room:
                     $ correct_answer = "아델린"       
                     jump input_loop
                 else:
+                    "안쪽 구석에 무언가가 있군"
                     show 금고 at Transform(xalign=0.5, yalign=0.2)
-                    "금고가 있지만 비밀번호를 모르겠다."
+                    "저게 메모에서 본 금고인가..."
+                    "{alpha=*0.5}금고가 있지만 비밀번호를 모르겠다.{/alpha}"
                     jump inner_room
             else:
                 "주변에 아무것도 안보인다."
@@ -1509,8 +1512,9 @@ label orgel_test:
 
                 $ renpy.pause(10.0, hard=True)
                 s "이 오르골 소리가 참 곱지?"
+                s "정겨운 그 시절이 다시 돌아오는 것 같아"
                 m "언제까지 들어야 하지?"
-                s "더 들어봐"
+                s "조금 더 들어봐"
 
                 # play "기믹_오르골_단어1.mp3"
                 play audio "기믹_오르골_단어2.mp3"
@@ -1518,9 +1522,10 @@ label orgel_test:
                 window hide
 
                 $ renpy.pause(10.0, hard=True)
-                s "첫째아이가 태어난 날 내가 만든 오르골이야"
-                m "하고 싶은 말이 뭐지?"
-                s "그 아이가 커서 이 노래를 기억하길 바랬지"
+                s "내가 첫째에게 준 오르골이야"
+                s "그 아이는 매일 이 오르골을 들었어"
+                m "그 아이는 지금 어디 있지?"
+                s "...몰라. 다 잊어버렸거든."
 
                 play audio "기믹_오르골_단어3.mp3"
 
@@ -1744,6 +1749,7 @@ label next_room:
     g "{size=+10}모든 것이 끝나버렸어.{/size}"
     g "부모님의 관심은 전부 남동생에게로 가버렸고"
     g "그 후로 난..." 
+    g "점점 잊혀져만 갔어..."
     g "늘 외롭고, 차가운 현실 속에 홀로 남겨졌어."
 
     m "아델린..."
