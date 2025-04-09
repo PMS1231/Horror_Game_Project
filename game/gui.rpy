@@ -29,7 +29,7 @@ define gui.accent_color = '#000000'
 
 ## 텍스트 버튼(text button)이 선택(selected)됐거나 커서를 올리지(hovered) 않았을
 ## 때 사용됩니다.
-define gui.idle_color = '#707070'
+define gui.idle_color = '#bac0a2'
 
 ## 작은(small) 색상은 같은 효과를 내기 위해 더 밝거나 어두워야 하는 작은 글자에
 ## 사용됩니다.
@@ -74,7 +74,7 @@ define gui.text_size = 33
 define gui.name_text_size = 45
 
 ## 게임의 유저 인터페이스에서 글자의 크기입니다.
-define gui.interface_text_size = 33
+define gui.interface_text_size = 50
 
 ## 게임의 유저 인터페이스에서 레이블(label)들의 글자 크기입니다.
 define gui.label_text_size = 36
