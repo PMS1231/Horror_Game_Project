@@ -164,9 +164,6 @@ define g = Character("아델린", color="#bdaa00", callback=type_sound2, font="t
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")
-define s = Character("오르골 유령",)
-define M = Character("괴물")
-
 define G = Character('???', font="tway_sky.ttf", what_font="tway_fly.ttf")
 define s = Character("오르골 유령", color="#58328d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define M = Character("괴물", color="#040404", font="tway_sky.ttf", what_font="tway_fly.ttf")
