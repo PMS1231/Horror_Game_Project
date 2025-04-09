@@ -466,10 +466,10 @@ label mainhall:
                 $ safe_password = True
                 m "이건.."
                 show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) 
-                "정체불명의 종이를 주웠다."
-                m "어딘가의 암호처럼 보이는데"
+                "수상한 종이를 주웠다."
+                m "흠.. 무언가의 암호처럼 보이는데"
                 play audio "item1.ogg"
-                "당신은 비밀번호 힌트를 획득 했다."
+                "당신은 수상한 종이를 획득 했다."
                 hide 단어퍼즐
         hide 샹들리에
 
