@@ -168,6 +168,7 @@ define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what
 define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define G = Character('???')
 define s = Character("오르골 유령",)
+define M = Character("괴물")
 default p_bar = [50, 0]
 default diary_0 = False
 default diary_1 = False
@@ -998,7 +999,7 @@ label underground:
         "조심스레 안으로 들어서자, 고요한 어둠 속에서 짐승의 울음소리가 울려퍼진다."
         play audio "monster5.ogg"
 
-        m "……크르르르릉……"
+        M "……크르르르릉……"
 
         "거대한 그림자. 사람보다 크고, 형체가 일그러진 괴물이 서서히 모습을 드러낸다."
         "괴물이 포효하며 전속력으로 달려든다."
@@ -1008,7 +1009,7 @@ label underground:
 
         scene 괴물싸움 with hpunch
         play audio "Monster 2.mp3"
-        m "키에에에에엑!"
+        M "키에에에에엑!"
 
         m "악령이든 짐승이든…"
         m "너 따위에게 무너질 내가 아니야!!"
@@ -1026,7 +1027,7 @@ label underground:
         "괴성, 그리고 한 줄기 연기와 함께 괴물의 육체가 무너지기 시작한다."
 
         scene black  
-        m "외....로.....워...."
+        M "외....로.....워...."
 
         "괴물의 형체가 녹아 사라진다. 아르망은 거친 숨을 쉬며 바닥에 주저앉는다."
 
