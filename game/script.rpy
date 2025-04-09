@@ -466,10 +466,10 @@ label mainhall:
                 $ safe_password = True
                 m "이건.."
                 show 단어퍼즐 at Transform(xalign=0.5, yalign=0.2) 
-                "정체불명의 종이를 주웠다."
-                m "어딘가의 암호처럼 보이는데"
+                "수상한 종이를 주웠다."
+                m "흠.. 무언가의 암호처럼 보이는데"
                 play audio "item1.ogg"
-                "당신은 비밀번호 힌트를 획득 했다."
+                "당신은 수상한 종이를 획득 했다."
                 hide 단어퍼즐
         hide 샹들리에
 
@@ -1742,16 +1742,18 @@ label hallway_loop:
 label next_room:
     stop music
     scene black
-    #문 일러필요
-    "기나긴 복도를 지나서, 도착한 곳에는 특이한 문이 하나 보인다."
-    "그리고, 그 밑에..."
+    
+    "기나긴 복도를 지나서, 도착한 곳에는" 
+    "세월의 흔적이 느껴지는 낙서가 하나 보인다."
     m "음? 이 낙서는..."
-    n "{alpha=*0.3}{size=+15}이야기의 종지부를 찍을 때가 왔다.{/size}{/alpha}"
+    "{alpha=*0.3}{size=+15}이야기의 종지부가.. "
+    extend "다가오...{/size}{/alpha}"
     m "......" #낙서 일러스트 필요
+
     
     nvl clear
 
-    "문을 열고 안으로 들어갔다."
+    "누가 적은 글씨일까"
     
     scene bg dream with dissolve
        
@@ -1789,6 +1791,7 @@ label next_room:
     play audio "광기어린 웃음.mp3"
     extend" 영원히.....!"
 
+
     if holy_water:
         if p_bar[0] > 50:
             jump true_end
@@ -1801,7 +1804,8 @@ label next_room:
             jump dead_end
 
 label true_end:
-
+    scene bg dream
+    show adeline 광기 at Transform(xalign=0.5, yalign=0.2)
     play audio "Equip2.ogg"
 
     "아르망은 천천히 투구를 벗으며, "
@@ -1809,31 +1813,38 @@ label true_end:
     
     play music "bgm_감동.mp3"
 
-    m "아델린, 미안해."
+    m "아델린... "
+    m "그럴수는 없어... "
+    extend"미안.."
+    hide adeline 광기 at Transform(xalign=0.5, yalign=0.2)
+    show 아델린 눈물 at Transform(xalign=0.5, yalign=0.2)
+    g "아르망...? "
+    g "어째서야...? 너는 나를 이해한다고 생각했는데...?"
 
-    g "아르망...? 어째서...? 너는 나를 이해하는거 아니였어...?"
-
-    m "그래, 이해한다고 믿었어. 하지만 나도 너처럼 과거에 얽매여 있었던 것 같아."
+    m "그래, 나도 너를 이해한다고 믿었어, " 
+    extend"하지만 어쩌면 우리는 그저.. "
+    m "과거에만 얽매여 있는 것일지도 몰라..."
     
-    m "나는 기사였던 시절이 그리워서, 그 시절의 낭만과 명예만을 좇아왔지."
+    m "나는 기사였던 시절이 그리워서, 그 시절의 낭만과 명예만을 쫓아왔지."
     
     scene black with fade
     
     show 마주 at Transform(xalign=0.5, yalign=0.2) with dissolve
 
-    m "하지만 지금 세상은 더 이상 나 같은 기사를 필요로 하지 않아."
+    m "하지만 지금, 세상은 더 이상 나 같은 기사를 필요로 하지 않아."
 
-    m "시대는 변했고, 나는 그 변화를 외면하며 계속 과거에만 머물렀지."
+    m "시대는 변했고, 나는 그 변화를 외면하며 계속 과거에만 머물러 있었어."
     
     hide 마주  with dissolve
     
     scene bg dream with dissolve
-    
-    show 아델린 눈물 at Transform(xalign=0.5, yalign=0.2)
+    hide 아델린 눈물
+    show 아델린 눈물2 at Transform(xalign=0.5, yalign=0.2)
 
-    g "그럼... 나는...? 나 역시 이대로 과거에 갇혀 살아야만 하는 거야...?"
+    g "그럼... 나는...? 나는 계속 이대로만 갇혀 살아야만 하는 거야...?"
 
-    m "아니야, 아델린. 이제 너도, 나도 더 이상 그렇게 살아선 안 돼."
+    m "아니야, 아델린. 이제는... "
+    extend"너도, 나도 더이상 그렇게 살아선 안돼."
 
     m "너를 만난 시간은 나에게 정말 소중했어."
 
@@ -1852,23 +1863,26 @@ label true_end:
     g "맞아... 그들은 언제나... 나를 걱정했줬줬지..."
 
     g "......"
+    g "에르망"
 
     g "지하에서 가져온 성수..."
 
-    g "가지고 있지? 그거면... 될 거야."
+    extend " 가지고 있지? "
+    g "그거면... 될 거야."
 
     m "정말 괜찮겠어?"
 
     show 아델린 마지막 at Transform(xalign=0.5, yalign=0.2)
 
-    g "응. 그저 나를 위해 기도해줘, 기사님... 부탁할게."
+    g "응. 그저 나를 위해 기도해줘, "
+    extend"기사님... 부탁할게."
 
     "아르망은 성수를 들어 조용히 뿌린 뒤, 부드럽고 단호한 눈빛으로 아델린을 바라본다."
 
-    m "편히 쉬어, 아델린. 나도 이제 앞으로 나아가야겠지."
-
-    "성수의 빛 속에서 아델린은 환하게 미소 지으며 서서히 사라졌다."
+    m "편히 쉬어, 아델린... 나도 이제 앞으로 나아가야겠지."
     hide 아델린 마지막 with dissolve
+    "성수의 빛 속에서 아델린은 환하게 미소 지으며 서서히 사라졌다."
+    
 
     pause 3
     
@@ -1878,9 +1892,11 @@ label true_end:
 
     m "휴.. 다 됐군"
     
-    scene true_ending with dissolve 
+    scene true_end with dissolve 
 
-    m "그럼 안녕, 아델린. 이제는 나도 진정으로 앞으로 나아갈 때가 왔어."
+    m "그럼 안녕, 아델린. "
+    extend"나도 이제는 앞으로 나아갈 때가 왔어."
+    "{size=+10}{alpha=*0.5}고마웠어...{/alpha}{/size}"
 
     centered "{size=+40}{font=tway_sky.ttf}TRUE END \n{/font}{/size}"
     extend "{size=+40}{font=tway_sky.ttf}안녕, 아델린 {/font}{/size}"
