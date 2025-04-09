@@ -196,6 +196,7 @@ default orgel_try = True
 default room_event = False
 default orgel_adeline = True
 default underground_event = True
+default inner_room_event = True
 # $ p_bar[0] += 10 기사도 증가
 # $ p_bar[1] += 10 호감도 증가
 
@@ -443,6 +444,7 @@ label mainhall:
                 play audio "호감도 상승.mp3"
                 "아델린의 호감도가 20 상승했다."
                 hide adeline embrassed with dissolve
+                hide screen stat_overlay with dissolve
             "샹들리에를 바라본다.":
                 hide adeline surprise
                 show 샹들리에 at Transform(xalign=0.5, yalign=0.2)
@@ -485,6 +487,7 @@ label mainhall:
                         play audio "호감도 상승.mp3"
                         "아델린의 호감도가 10 상승했다."
                         hide adeline embrassed with dissolve
+                        hide screen stat_overlay with dissolve
                         jump mainhall
                     "유령에 대해 얘기한다.":
                         m "아, 소름끼치는 유령이 있더군."
@@ -497,6 +500,7 @@ label mainhall:
                         play audio "호감도 하락.mp3"
                         "아델린의 호감도가 10 하락했다."
                         hide adeline embrassed with dissolve
+                        hide screen stat_overlay with dissolve
                         jump mainhall
                         
     menu:       
@@ -850,7 +854,6 @@ label ghost_chase_success:
                         $ p_bar[0] -= 10
                         play audio "호감도 하락.mp3"
                         "아델린의 호감도가 10 하락했다."
-
             hide screen stat_overlay with dissolve
             jump mainhall
 
@@ -935,6 +938,8 @@ label dining_room:
                     
                 play audio "item1.ogg"
                 "당신은 주방장의 일기를 획득 했다."
+                m "일기라..."
+                m "아까 전 방도 확인해 볼 필요가 있겠군"
                 jump dining_room
 
         "나간다":
@@ -1208,16 +1213,35 @@ label inner_room:
         "안방의 문을 열어 들어갔다."
         scene 안방 with dissolve
         m "음... 여기가 안방인가."
-    
-    scene 안방
+        m "흠?"
+        scene 초상화
+        m "이상하게 생긴 초상화가 있군"
+        menu:
+            "초상화를 자세히 들여다본다.":
+                $ photo_count += 1
+                "...."
+                m "소름끼치게도 생겼군 그래."
+                scene 안방 with dissolve
+                play audio "아이 웃는소리.mp3"
+                m "음? 무슨 소리가 들린 것 같은데?"
+
+            "무시한다":
+                jump inner_room
+
+    scene 안방 with dissolve
 
     menu:
         "초상화를 살펴본다.":
             if photo_count == 0:
                 $ photo_count += 1
                 scene 초상화 with dissolve
-                m "흠, 이상하게 생긴 초상화군"
+                "...."
+                m "소름끼치게도 생겼군 그래."
+                scene 안방 with dissolve
+                play audio "아이 웃는소리 숏.mp3"
+                m "음? 무슨 소리가 들린 것 같은데?"
                 jump inner_room
+
             elif photo_count == 1:
                 $ photo_count += 1
                 scene 초상화_눈 with dissolve
@@ -1228,7 +1252,12 @@ label inner_room:
                 m "..!"
                 m "역시 이상해 방금 그 초상화!"
                 jump inner_room
-            else:
+
+            elif photo_count == 2:
+                $ photo_count += 1
+                scene 초상화 with dissolve
+                m "이상해.."
+                m "분명 아까 전에는 눈을 뜨고 있었는데"
                 play audio "스크림1.mp3"
                 scene 초상화_공포 
                 m "으악!"
@@ -1252,6 +1281,9 @@ label inner_room:
                 m "아니야 그럴리가 없어.."
                 scene black with dissolve
                 jump mainhall
+            else:
+                m "초상화가 있던 자리에는 아무것도 없다..."
+                jump inner_room
 
         "주변을 살펴본다.":
             if safe_info:
@@ -1287,6 +1319,7 @@ label input_loop:
         hide 단어퍼즐답
         $ safe_password = False
         $ diary_3 = True
+        $ photo_count = 3
         jump diary4
     else:
         m "그건 아닌 것 같아... 다시 생각해보자."
