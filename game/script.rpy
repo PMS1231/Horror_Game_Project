@@ -595,7 +595,7 @@ label mainhall:
                 jump mainhall
             else:
                 jump dining_room
-        "계단":
+        "올라간다":
             play audio "걷는소리 구두.mp3"
             scene black with fade
             jump two_stair
