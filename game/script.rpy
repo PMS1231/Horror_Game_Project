@@ -686,7 +686,8 @@ label garret_first:
 label room:
     stop music
     scene room
-    play audio "old door2.mp3"
+    if bgm_not_playing():
+        play music "bgm_main.mp3"
 
     if room_first_visit:
         $ room_first_visit = False
@@ -1204,10 +1205,10 @@ label library:
             jump two_stair
 
 label inner_room:
-
+        
     stop music
-
-    if inner_room_first:
+    
+    if inner_room_first:        
         $ inner_room_first = False
         play audio "old door3.mp3"
         "안방의 문을 열어 들어갔다."
@@ -1229,7 +1230,7 @@ label inner_room:
                 jump inner_room
 
     scene 안방 with dissolve
-
+   
     menu:
         "초상화를 살펴본다.":
             if photo_count == 0:
