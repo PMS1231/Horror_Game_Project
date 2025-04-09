@@ -1298,8 +1298,10 @@ label inner_room:
                     $ correct_answer = "아델린"       
                     jump input_loop
                 else:
+                    "안쪽 구석에 무언가가 있군"
                     show 금고 at Transform(xalign=0.5, yalign=0.2)
-                    "금고가 있지만 비밀번호를 모르겠다."
+                    "저게 메모에서 본 금고인가..."
+                    "{alpha=*0.5}금고가 있지만 비밀번호를 모르겠다.{/alpha}"
                     jump inner_room
             else:
                 "주변에 아무것도 안보인다."
