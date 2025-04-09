@@ -160,7 +160,7 @@ init:
 # 게임에서 사용할 캐릭터를 정의합니다.
 define h = Character("마부", callback=type_sound2, font="tway_sky.ttf", what_font="tway_fly.ttf")
 define m = Character('아르망', color="#044604", font="tway_sky.ttf", what_font="tway_fly.ttf", callback=type_sound)
-define g = Character("아델린", color="#d4c10e", callback=type_sound2, font="tway_sky.ttf", what_font="tway_air.ttf")
+define g = Character("아델린", color="#bdaa00", callback=type_sound2, font="tway_sky.ttf", what_font="tway_air.ttf")
 define n = nvl_narrator #n을 나레이터 캐릭터로 설정
 define l = Character('꼬마 유령', color="#879c0d", font="tway_sky.ttf", what_font="tway_fly.ttf")
 define l2 = Character('꼬마 유령', color="#d4840b", font="tway_sky.ttf", what_font="tway_fly.ttf")
@@ -389,7 +389,7 @@ label first_event:
 
     g "아니. 로르망 백작가의 하녀지!."
     
-    g "너가 찾는 유령은 아마도 저택 지하실 깊은 곳에 있는 악령일꺼야."
+    g "너가 찾는 유령은 아마도 저택 깊은 곳에 있는 악령일꺼야."
 
     m "그런 정보를 왜 나에게 알려주지?"
 
@@ -698,7 +698,7 @@ label room:
         hide 열쇠 
         show 꼬마 유령 at Transform(xalign=-1.2, yalign=0.2) with move
         play audio "천소리.mp3"
-        "어둠 속 무엇인가, 내 손을 낚아챘다."
+        "어둠 속 무엇인가, 열쇠를 낚아챘다."
 
         play audio "아이 웃는소리 숏.mp3"
     
@@ -811,7 +811,7 @@ label ghost_chase_success:
     l "즐거웠어! 자, 여기 가져가~ 꺄르륵!"
     show 열쇠 at Transform(xalign=0.5, yalign=0.2) 
     play audio "item1.ogg"    
-    "당신은 열쇠를 되찾았다."
+    "당신은 열쇠를 받았다."
     hide 열쇠
     play audio "거친 숨소리.mp3"
     m "헉... 헉... 이게 무슨......"
@@ -834,8 +834,8 @@ label ghost_chase_success:
                 g "어때? 숨바꼭질은 재밌었어?"
                 menu:
                     "재밌었다.":
-                        m "상대가 꼬마라 할지 언정, 최선을 다하는 것."
-                        m "그것이 옳게된 기사의 도리지."
+                        m "상대가 꼬마라 하여 힘을 아끼는 건, 기사로선 부끄러운 일이네."
+                        m "누구든 정정 당당하게 마주하는 것. 그것이 곧 기사의 길이지"
                         g "풉"
                         show adeline 폭소 at Transform(xalign=0.5, yalign=0.2)
                         g "하하하하하하하"
@@ -846,7 +846,7 @@ label ghost_chase_success:
                         "아델린의 호감도가 10 상승했다."
                     "재미없었다":
                         m "장난하나?"
-                        m "웬 꼬마녀석 덕분에 힘들어 죽기 직전이다."
+                        m "웬 이상한 꼬마의 장난 덕분에 힘들어 죽기 직전이다."
                         g "...."
                         show adeline 정색 at Transform(xalign=0.5, yalign=0.2)
                         g "기사라 할 땐 언제고"
@@ -955,23 +955,24 @@ label underground:
         scene black with dissolve
 
         play audio "돌풍.mp3"
-        "지하실로 들어가려 하자 또다시 바람이 불어온다."
+        "지하실 입구에 다다르자, 거센 돌풍이 몰아쳤다."
 
         play audio "등불 점화.mp3"
         scene 지하실 with dissolve
-        "바람을 등지고 등불에 불을 켜고 앞으로 나아가자 바람이 멈췄다."
+        "몸을 낮추고, 바람을 등진 채 등불에 불을 붙였다."
+        "작은 불꽃이 깜빡이며 피어오르자, 거짓말처럼 주변이 고요해진다."
 
-        m "이 불빛만이... 어둠 속 길을 비춰주리라...."
+        m "이 불빛만이... 어둠을 가르고 길을 밝혀주리라...."
 
         play audio "걷는소리 구두.mp3"
 
-        "등불을 켠 채 지하실 안으로 들어서자, 발소리가 메아리치며 울려 퍼진다."
+        "등불을 높이 든 채 지하실 안으로 발을 들이자, 그의 걸음이 적막한 공기를 갈라내며 울려 퍼진다."
 
-        "차가운 기운이 바닥에서부터 올라오는 듯, 그의 몸을 감싼다."
+        "차디찬 기운이 바닥 너머에서부터 스며올라와, 갑옷 너머로 그의 몸을 조용히 휘감는다."
 
-        m "나의 발걸음 소리마저... 이곳의 침묵을 깨뜨리는군...."
+        m "내 발걸음조차...이곳의 침묵에 흠집을 내는구나..."
 
-        "무언가 발에 걸린다"
+        "그때, 무언가 발끝에 걸린다."
 
         m "뭐지 이건..?"
 
@@ -1065,7 +1066,6 @@ label underground:
         "검 끝에 묻은 피가 천천히 사라지고, 주위는 다시 고요해진다."
 
         scene 지하실  with dissolve
-
     
     scene 지하실
 
