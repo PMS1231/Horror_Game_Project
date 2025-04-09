@@ -206,12 +206,12 @@ label start:
     stop music 
     play audio "마차소리.mp3"
     scene black 
-    centered "{size=+40}{font=tway_sky.ttf}1 9 X X{/font}{/size}"
+    centered "{size=+40}{font=tway_sky.ttf}{color=#FFFFFF}1 9 X X{/color}{/font}{/size}"
     stop audio 
     play audio "마차소리 도착.mp3"
     scene black 
     play music "bgm_garden.mp3"
-    centered "{size=+40}{font=tway_sky.ttf}영국, 어느 지방{/font}{/size}"
+    centered "{size=+40}{font=tway_sky.ttf}{color=#FFFFFF}영국, 어느 지방{/color}{/font}{/size}"
     stop audio
     play audio "비.mp3"
     scene black 
@@ -1914,7 +1914,9 @@ label happy_end:
 
     "아르망의 머릿속에 낡아빠진 갑옷처럼 무거웠던 기억들이 떠오른다."
     
-    "그를 손가락질하던 사람들, 그를 조롱하며 등 돌렸던 동료들, 과거의 영광에 사로잡혀 홀로 고독했던 수많은 밤들."
+    "그를 손가락질하던 사람들,   "
+    extend"그를 조롱하며 등 돌렸던 동료들, "
+    extend"  과거의 영광에 사로잡혀 홀로 고독했던 수많은 밤."
     
     hide 마주 with dissolve
     
@@ -1925,7 +1927,6 @@ label happy_end:
     m "..여기라면.."
     
     m "이곳이라면 내가 억지로 기사가 될 필요도, \n"
-    
     extend "세상에 내 가치를 증명하려 애쓰지 않아도 되겠지."
 
     m "이제야 알겠군, 난 줄곧 과거의 망령을 쫓고 있었던 거야."
@@ -1936,13 +1937,14 @@ label happy_end:
 
     m "아델린, 이젠 네 곁에서 쉬고 싶어."
 
-    scene happy_end with dissolve
-
+    
+    hide adeline idle
+    show 아델린 마지막 at Transform(xalign=0.5, yalign=0.2) with dissolve
     "아델린의 눈가에 조용히 눈물이 맺히며, 부드럽고 따스한 미소가 피어난다."
-
+    g "응, 아르망..."
+    scene happy_end with dissolve
     "아르망과 아델린은 서로의 손을 다정히 맞잡은 채, 천천히 어둠 속 저택으로 들어선다."
-
-    "뒤로 남겨진 바깥 세상은 조금씩 희미해지며, 두 사람은 어둠 속에서 처음으로 평화를 느낀다."
+    "뒤로 남겨진 바깥 세상은 조금씩 희미해지며, 두 사람은 처음으로 평화를 느낀다."
     scene black with fade
     centered "{size=+40}{font=tway_sky.ttf}{color=#FFFFFF} HAPPY END \n{/color}{/font}{/size}"
     extend "{size=+40}{font=tway_sky.ttf}{color=#FFFFFF} 동화 속 이야기 {/color}{/font}{/size}"
@@ -1953,17 +1955,18 @@ label happy_end:
     return
 
 label bad_end:
-    
+    scene bg dream
+    show  adeline 광기 at Transform(xalign=0.5, yalign=0.2)
     "아르망은 성수를 들며 냉정한 눈빛으로 아델린을 응시한다."
-    hide adeline 광기
+    hide adeline 광기 
 
     play music "bgm_매력적인 그녀.mp3"
     
-    show adeline 정색 at Transform(xalign=0.5, yalign=0.2)
+    show adeline 분노 at Transform(xalign=0.5, yalign=0.2) with vpunch
 
     g "그랬구나... 결국 너도..."
+    show adeline 분노 at Transform(xalign=0.5, yalign=0.2) with vpunch
     play audio "쿵.mp3"
-    #분노한 묘사
     g "결국 날 버리는 거구나!!!"
     
     m "나는 벨포르 가의 아르망,"
@@ -1974,14 +1977,17 @@ label bad_end:
     hide adeline_음흉 
 
     show adeline 광기 at Transform(xalign=0.5, yalign=0.2)
-
+    play audio "광기어린 웃음.mp3"
     g "하하하하하"
 
-    g "정말 자기가 기사라고 생각하는거야?"
+    g "정말로 자기가 기사라고 생각하는거야?"
 
     g "이 멍청한 녀석 같으니!!"
-
-    g "너도 나와 같다고 느꼈는데..!! 그렇다고 생각했는데!!!!!"
+    hide adeline 광기
+    show adeline 분노 at Transform(xalign=0.5, yalign=0.2) with vpunch
+    g "너도 나와 같다고 느꼈는데..!! "
+    show adeline 분노 at Transform(xalign=0.5, yalign=0.2) with vpunch
+    extend"그렇다고 생각했는데!!!!!"
     hide adeline 광기 with dissolve
     play audio "여자비명2.mp3"
     "성수를 뿌리자 아델린은 광기 어린 웃음과 비명을 지르며 사라졌다."  
@@ -2013,8 +2019,8 @@ label bad_end:
 
     "아르망은 홀로 웃으며 계속해서 허공에 대고 외친다."
 
-    centered "{size=+40}{font=tway_sky.ttf} BAD END \n {/font}{/size}"
-    extend "{size=+40}{font=tway_sky.ttf} 돈키호테 {/font}{/size}"
+    centered "{size=+40}{font=tway_sky.ttf}{color=#722F37} BAD END \n {/color}{/font}{/size}"
+    extend "{size=+40}{font=tway_sky.ttf}{color=#722F37} 돈키호테 {/color}{/font}{/size}"
     
     scene black with fade
     pause 5
@@ -2022,35 +2028,42 @@ label bad_end:
     return
 
 label dead_end:
-
-    m "..안 돼. 난 이곳에 갇힐 순 없어. 나는 밖으로 나가야 해."
-    
+    scene black 
+    play audio "심장박동.mp3"
+    m "......"
+    m "..안 돼... 난 이곳에 갇힐 순 없어... "
+    m "나는..."
+    extend" 나는 밖으로 나가야만 해!!"
+    scene dream
     play music "bgm_매력적인 그녀.mp3"
-
-    show adeline 정색 at Transform(xalign=0.5, yalign=0.2)
-
-    g "어째서..?"
-
+    show adeline 분노 at Transform(xalign=0.5, yalign=0.2) with dissolve
+    g "......"
+    show adeline 분노 at Transform(xalign=0.5, yalign=0.2) with vpunch
+    g "진심이야...?!"
+    play sound "와장창.mp3"
+    g "어째서...?!!"
     g "너마저 날 버리는 거야..? "
-    extend "아빠와 엄마처럼?"
+    hide adeline 정색
+    show adeline 분노 at Transform(xalign=0.5, yalign=0.2)
+    extend "날 버린 아빠와 엄마처럼?!!"
 
-    hide adeline 정색 
+    hide adeline 분노 
 
-    show adeline_음흉 at Transform(xalign=0.5, yalign=0.2)
+    show adeline 광기 at Transform(xalign=0.5, yalign=0.2) with dissolve
 
     g "아니야.. 그럴 순 없어. "
-    g "너만큼은 나와 영원히 함께 해야 해."
-
+    g "너는 나와 영원히 함께 해야 해."
+    play audio "광기어린 웃음.mp3"
+    play sound "심장박동 롱.mp3"
     "공포에 질려 도망치는 아르망. 그의 뒤로 그림자처럼 아델린이 따라온다."
-
+    
     "도망치다 넘어진 아르망의 발목을 아델린이 붙잡는다."
     
-    g "이제 도망칠 수 없어."
-
-    g "넌, 나와 영원히 함께하는 거야."
+    g "이젠 도망칠 수 없어."
     
-    hide adeline_음흉
+    g "넌, 나와 영원히 함께하는 거야."
 
+    play audio "광기어린 웃음.mp3"
     show adeline 광기 at Transform(xalign=0.5, yalign=0.2)
 
     g "후후후....흐흐하하하하하하..!"
@@ -2059,11 +2072,13 @@ label dead_end:
     
     scene black with fade
 
-    "아델린의 손에 이끌려, 아르망은 절망적인 표정으로 어둠에 휩싸인 저택 안으로 끌려 들어간다."
+    "아델린의 손에 이끌린 아르망은..." 
+    
+    "절망적인 표정으로 어둠에 휩싸인 저택 안으로 끌려 들어간다."
 
     "저택의 문이 천천히 닫히며, 두 사람의 모습은 완전히 어둠 속으로 사라진다."
 
     "아르망은 저택 안에 영원히 갇혀, 결코 밖으로 나오지 못한다."
     
-    centered "{size=+40}{font=tway_sky.ttf} DEAD END \n{/font}{/size}"
-    extend "{size=+40}{font=tway_sky.ttf} 광대 {/font}{/size}"
+    centered "{size=+40}{font=tway_sky.ttf}{color=#722F37} DEAD END \n{/color}{/font}{/size}"
+    extend "{size=+40}{font=tway_sky.ttf}{color=#722F37} 광대 {/color}{/font}{/size}"
